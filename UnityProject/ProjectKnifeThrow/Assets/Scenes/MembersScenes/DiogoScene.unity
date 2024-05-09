@@ -380,19 +380,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.93821156
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.3460624
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -400,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -40.493
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -688,10 +688,11 @@ MonoBehaviour:
   shootDist: 20
   shootRate: 0.5
   playerObj: {fileID: 427631473}
-  collidesWithWall: 0
   wallDist: 1
   charPitch: 30
   onAir: 0
+  canWallRun: 1
+  runTimer: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
