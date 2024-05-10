@@ -36,6 +36,8 @@ public class wallRun : MonoBehaviour
     [SerializeField] bool canWallRun = true;
     [SerializeField] float runTimer;
 
+    public bool playerCanMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,8 +79,9 @@ public class wallRun : MonoBehaviour
             }
         }
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        controller.Move(moveDir * playerSpeed * Time.deltaTime);
-
+        if (playerCanMove) {
+            controller.Move(moveDir * playerSpeed * Time.deltaTime);
+        }
        sprint();
 
         if(Input.GetButton("Fire1") && !isShooting)
@@ -93,8 +96,11 @@ public class wallRun : MonoBehaviour
             onAir = true;
         }
 
-        playerVel.y -= gravity * Time.deltaTime;
-        controller.Move(playerVel * Time.deltaTime);
+        if (!onWallRight && !onWallLeft)
+        {
+            playerVel.y -= gravity * Time.deltaTime;
+            controller.Move(playerVel * Time.deltaTime);
+        }
     }
 
     void sprint()
@@ -132,7 +138,7 @@ public class wallRun : MonoBehaviour
     {
         if (colHit.collider.gameObject.name == "wallrunWall" && onAir && canWallRun)
         {
-            CollisionFlags.
+           // CollisionFlags.
             //Identify where it hit
             RaycastHit wallDetect;
             Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right*2;
@@ -145,10 +151,11 @@ public class wallRun : MonoBehaviour
             //Pitch the character accordingly
             if (Physics.Raycast(Camera.main.transform.position, rightRayShoot, out wallDetect, wallDist))
             {
-                //Vector3 wallNormal = wallDetect.normal;
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
+                wallDirection = -wallDirection;
                 onWallRight = true;
                 canSprint = false;
+                playerCanMove = false;
 
             }
             else if (Physics.Raycast(Camera.main.transform.position, leftRayShoot, out wallDetect, wallDist))
@@ -156,6 +163,7 @@ public class wallRun : MonoBehaviour
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
                 onWallLeft = true;
                 canSprint = false;
+                playerCanMove = false;
             }
 
         }
@@ -163,35 +171,24 @@ public class wallRun : MonoBehaviour
 
     void WallRun(int wallRunSide)
     {
-        Vector3 temp = playerObj.transform.localEulerAngles;
-        
-
-        if (wallRunSide == 0)
-        {
-            playerObj.transform.localRotation = Quaternion.Euler(temp.x, temp.y, -charPitch);
-            controller.Move(wallDirection * playerSpeed * Time.deltaTime);
-        }
-        else if(wallRunSide == 1)
-        {
-            playerObj.transform.localRotation = Quaternion.Euler(temp.x, temp.y, charPitch);
-            controller.Move((-wallDirection) * playerSpeed * Time.deltaTime);
-        }
+        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
 
         if (runTimer > 0)
         {
-            gravity = 10;
+            gravity = 0;
             runTimer -= Time.deltaTime;
         }
         else
         {
             playerSpeed = playerSpeedStorage;
-            controller.Move(moveDir * playerSpeed * Time.deltaTime);
+            controller.Move(moveDir * (playerSpeed+1) * Time.deltaTime);
             gravity = gravityStorage;
             runTimer = timerStorage;
             onWallRight = false;
             onWallLeft = false;
             canWallRun = false;
-            playerObj.transform.localRotation = Quaternion.Euler(0, temp.y, 0);
+            playerCanMove = true;
+           // playerObj.transform.localRotation = Quaternion.Euler(0, temp.y, 0);
         }
 
     }

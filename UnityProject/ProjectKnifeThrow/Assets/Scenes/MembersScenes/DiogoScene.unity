@@ -364,7 +364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.3542
+      value: 0.12793925
       objectReference: {fileID: 0}
     - target: {fileID: 123634934057578162, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -693,6 +693,7 @@ MonoBehaviour:
   onAir: 0
   canWallRun: 1
   runTimer: 0.6
+  playerCanMove: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
