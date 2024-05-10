@@ -22,18 +22,19 @@ public class wallRun : MonoBehaviour
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
+
     //Wallrun Variables
-    [SerializeField] int wallDist;
-    [SerializeField] float charPitch;
-    [SerializeField] bool onAir = false;
-    [SerializeField] bool canWallRun = true;
-    bool onWallLeft = false, onWallRight = false;
-    [SerializeField] float runTimer;
-    Vector3 wallDirection;
     float timerStorage;
     int gravityStorage;
     int playerSpeedStorage;
     bool canSprint = true;
+    bool onWallLeft = false, onWallRight = false;
+    Vector3 wallDirection;
+    [SerializeField] int wallDist;
+    [SerializeField] float charPitch;
+    [SerializeField] bool onAir = false;
+    [SerializeField] bool canWallRun = true;
+    [SerializeField] float runTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class wallRun : MonoBehaviour
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+
         if(onWallRight || onWallLeft)
         {
             if(onWallLeft) { WallRun(0); }
@@ -130,10 +132,11 @@ public class wallRun : MonoBehaviour
     {
         if (colHit.collider.gameObject.name == "wallrunWall" && onAir && canWallRun)
         {
+            CollisionFlags.
             //Identify where it hit
             RaycastHit wallDetect;
-            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right;
-            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right);
+            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right*2;
+            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right*2);
 
             Debug.DrawRay(Camera.main.transform.position, rightRayShoot * wallDist, Color.blue);
             Debug.DrawRay(Camera.main.transform.position, leftRayShoot * wallDist, Color.green);

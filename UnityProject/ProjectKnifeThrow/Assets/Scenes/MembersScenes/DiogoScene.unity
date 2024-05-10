@@ -686,13 +686,13 @@ MonoBehaviour:
   sprintMod: 2
   shootDamage: 1
   shootDist: 20
-  shootRate: 0.5
+  shootRate: 0.65
   playerObj: {fileID: 427631473}
   wallDist: 1
   charPitch: 30
   onAir: 0
   canWallRun: 1
-  runTimer: 1
+  runTimer: 0.6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
