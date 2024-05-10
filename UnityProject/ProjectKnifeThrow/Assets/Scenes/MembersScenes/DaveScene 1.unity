@@ -297,6 +297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall
       objectReference: {fileID: 0}
+    - target: {fileID: 1962392262550135904, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -311,12 +315,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 427631479}
-  - component: {fileID: 427631478}
+  - component: {fileID: 427631480}
   - component: {fileID: 427631477}
   - component: {fileID: 427631476}
   - component: {fileID: 427631475}
   - component: {fileID: 427631474}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,28 +426,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &427631478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427631473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c55ccd548bcfb28429af5a75d46179ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 427631477}
-  playerSpeed: 5
-  jumpMax: 2
-  jumpSpeed: 12
-  gravity: 25
-  sprintMod: 2
-  shootDamage: 1
-  shootDist: 20
-  shootRate: 0.5
-  cube: {fileID: 0}
 --- !u!4 &427631479
 Transform:
   m_ObjectHideFlags: 0
@@ -453,13 +435,41 @@ Transform:
   m_GameObject: {fileID: 427631473}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.92, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427631480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427631473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88c62325dad5734783d53d9351b474c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 427631477}
+  playerBaseSpeed: 6
+  jumpMax: 2
+  jumpSpeed: 12
+  gravity: 25
+  sprintMod: 2
+  HP: 10
+  shootDamage: 1
+  shootDist: 20
+  shootRate: 0.5
+  cube: {fileID: 0}
+  currSpeed: 5
+  playerHeight: 2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +651,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.87999994, z: 0.37}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -714,6 +724,10 @@ PrefabInstance:
     - target: {fileID: 2595622948191844821, guid: fedcffe62153a51469a3adf15d06590d, type: 3}
       propertyPath: m_Name
       value: Floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595622948191844821, guid: fedcffe62153a51469a3adf15d06590d, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
