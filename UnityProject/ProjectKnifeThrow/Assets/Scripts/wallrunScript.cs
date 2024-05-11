@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -53,7 +54,6 @@ public class wallRun : MonoBehaviour
     {
         Vector3 test = playerObj.transform.right * 25;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-        Debug.DrawRay(Camera.main.transform.position, test * wallDist, Color.blue);
 
         if (onWallRight || onWallLeft)
         {
@@ -140,47 +140,50 @@ public class wallRun : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit colHit)
     {
-        if (colHit.collider.gameObject.name == "wallrunWall" && onAir && canWallRun)
+        if (colHit.collider.gameObject.tag == "enableWallRun" && onAir && canWallRun)
         {
-           // CollisionFlags.
+            // CollisionFlags.
             //Identify where it hit
             RaycastHit wallDetect;
-            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right*2;
-            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right*2);
-
-            Debug.DrawRay(Camera.main.transform.position, rightRayShoot * wallDist, Color.blue);
-            Debug.DrawRay(Camera.main.transform.position, leftRayShoot * wallDist, Color.green);
-
+            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right * 2;
+            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right * 2);
 
             //Pitch the character accordingly
             if (Physics.Raycast(Camera.main.transform.position, rightRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
-                wallDirection = -wallDirection;
-                isWallRunning = true;
-                onWallRight = true;
-                canSprint = false;
-                playerCanMove = false;
+                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
+                {
+                    wallDirection = -wallDirection;
+                }
                 targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
+                onWallRight = true;
             }
             else if (Physics.Raycast(Camera.main.transform.position, leftRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
-                onWallLeft = true;
-                isWallRunning = true;
-                canSprint = false;
-                playerCanMove = false;
+                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
+                {
+                    wallDirection = -wallDirection;
+                }
                 targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
+                onWallLeft = true;
             }
 
-
+            isWallRunning = true;
+            canSprint = false;
+            playerCanMove = false;
         }
     }
 
     void WallRun(int wallRunSide)
     {
         Vector3 wallTouchChecker;
-
+        //Reset jumps
+        if(jumpCount == 2)
+        {
+            jumpCount = 1;
+        }
         if (wallRunSide == 1)
         {
             wallTouchChecker = playerObj.transform.right * 1;
@@ -193,16 +196,18 @@ public class wallRun : MonoBehaviour
         playerObj.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRot, 2);
         controller.Move(wallDirection * playerSpeed * Time.deltaTime);
 
-        Debug.DrawRay(Camera.main.transform.position, wallTouchChecker * wallDist, Color.blue);
-
-        //if (runTimer > 0)
-        //{
-        //    gravity = 0;
-        //    runTimer -= Time.deltaTime;
-        //}
-        //else
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
+
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    Vector3 planarDir = Camera.main.transform.forward + -wallTouchChecker;
+        //    Vector3 dirResult = planarDir + playerObj.transform.up;
+        //    isWallRunning = false;
+        //    Debug.DrawRay(Camera.main.transform.position, dirResult * 10, Color.blue);
+        //    controller.Move(dirResult * playerSpeed*5 * Time.deltaTime);
+        //}
+
         if (!TouchCheck || Input.GetButtonDown("Jump"))
         {
             playerSpeed = playerSpeedStorage;
@@ -214,7 +219,6 @@ public class wallRun : MonoBehaviour
             canWallRun = true;
             playerCanMove = true;
             isWallRunning = false;
-           // playerObj.transform.localRotation = Quaternion.Euler(0, temp.y, 0);
         }
 
     }
