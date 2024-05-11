@@ -10,29 +10,34 @@ public class editingPlayerController : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] int sprintMod;
+    [SerializeField] int startingHP;
     [SerializeField] int HP;
 
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-    [SerializeField] GameObject cube;
+
+    public Item item;
 
     Vector3 moveDir;
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
     bool wasSprinting = false;
-    [SerializeField]int currSpeed; //this is serialized for now just so I can see the players current speed change while testing
+    [SerializeField] int currSpeed; //this is serialized for now just so I can see the players current speed change while testing
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
 
+    private bool isInRange;
+    public GameObject messagePanel;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        startingHP = HP;
     }
 
     // Update is called once per frame
@@ -43,11 +48,19 @@ public class editingPlayerController : MonoBehaviour, IDamage
         //Every platform that the player can walk on has to have the layer set to whatIsGround for sprint to work
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        Debug.Log("Grounded: " + grounded);
+        //Debug.Log("Grounded: " + grounded);
 
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         movement();
+
+
+        if (isInRange && Input.GetKeyDown(KeyCode.F))
+        {
+            item.PickUpItem();
+            HP = startingHP;
+            CloseMessagePanel("");
+        }
     }
 
     void movement()
@@ -148,5 +161,34 @@ public class editingPlayerController : MonoBehaviour, IDamage
         {
             Destroy(gameObject);
         }
+    }
+
+
+    //Opens and closes the "press f to pickup" message
+    public void OpenMessagePanel(string text)
+    {
+        messagePanel.SetActive(true);
+    }
+
+    public void CloseMessagePanel(string text)
+    {
+        messagePanel.SetActive(false);
+    }
+
+    //triggers the ability to pickup
+    private void OnTriggerEnter(Collider other)
+    {
+        isInRange = true;
+        Item item = other.GetComponent<Item>();
+        if (item != null)
+        {
+            OpenMessagePanel("");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isInRange = false;
+        CloseMessagePanel("");
     }
 }
