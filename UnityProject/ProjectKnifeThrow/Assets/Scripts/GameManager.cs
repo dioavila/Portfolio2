@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,8 +16,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        referential = GameObject.FindWithTag("PlayerReferential");
-        playerScript = player.GetComponent<wallRun>();
+        //playerScript = player.GetComponent<wallRun>();
     }
 
     // Update is called once per frame
