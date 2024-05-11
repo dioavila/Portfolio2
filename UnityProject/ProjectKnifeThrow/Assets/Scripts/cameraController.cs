@@ -40,6 +40,15 @@ public class cameraController : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
         //Rotate the player on the Y-axis
-        transform.parent.Rotate(Vector3.up * mouseX);
+        if (!GameManager.instance.playerScript.isWallRunning)
+        {
+            transform.parent.Rotate(Vector3.up * mouseX);
+        }
+     //   else
+     //   {
+    //        transform.localRotation = Quaternion.Euler(mouseX, 0, 0);
+    //    }
+
+
     }
 }

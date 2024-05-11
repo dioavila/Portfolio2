@@ -17,6 +17,7 @@ public class wallRun : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
+    [SerializeField] GameObject playerRef;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -37,7 +38,8 @@ public class wallRun : MonoBehaviour
     [SerializeField] float runTimer;
 
     public bool playerCanMove = true;
-
+    public bool isWallRunning = false;
+    Quaternion targetRot;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,11 +51,13 @@ public class wallRun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 test = playerObj.transform.right * 25;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        Debug.DrawRay(Camera.main.transform.position, test * wallDist, Color.blue);
 
-        if(onWallRight || onWallLeft)
+        if (onWallRight || onWallLeft)
         {
-            if(onWallLeft) { WallRun(0); }
+            if (onWallLeft) { WallRun(0); }
             else if(onWallRight) { WallRun(1); }
         }
         movement();
@@ -96,7 +100,7 @@ public class wallRun : MonoBehaviour
             onAir = true;
         }
 
-        if (!onWallRight && !onWallLeft)
+        if (!isWallRunning)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
@@ -153,32 +157,53 @@ public class wallRun : MonoBehaviour
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
                 wallDirection = -wallDirection;
+                isWallRunning = true;
                 onWallRight = true;
                 canSprint = false;
                 playerCanMove = false;
-
+                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
             }
             else if (Physics.Raycast(Camera.main.transform.position, leftRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
                 onWallLeft = true;
+                isWallRunning = true;
                 canSprint = false;
                 playerCanMove = false;
+                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
             }
+
 
         }
     }
 
     void WallRun(int wallRunSide)
     {
-        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
+        Vector3 wallTouchChecker;
 
-        if (runTimer > 0)
+        if (wallRunSide == 1)
         {
-            gravity = 0;
-            runTimer -= Time.deltaTime;
+            wallTouchChecker = playerObj.transform.right * 1;
         }
         else
+        {
+            wallTouchChecker = (-playerObj.transform.right * 1);
+        }
+        
+        playerObj.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRot, 2);
+        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
+
+        Debug.DrawRay(Camera.main.transform.position, wallTouchChecker * wallDist, Color.blue);
+
+        //if (runTimer > 0)
+        //{
+        //    gravity = 0;
+        //    runTimer -= Time.deltaTime;
+        //}
+        //else
+        RaycastHit wallTouch;
+        bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
+        if (!TouchCheck || Input.GetButtonDown("Jump"))
         {
             playerSpeed = playerSpeedStorage;
             controller.Move(moveDir * (playerSpeed+1) * Time.deltaTime);
@@ -186,8 +211,9 @@ public class wallRun : MonoBehaviour
             runTimer = timerStorage;
             onWallRight = false;
             onWallLeft = false;
-            canWallRun = false;
+            canWallRun = true;
             playerCanMove = true;
+            isWallRunning = false;
            // playerObj.transform.localRotation = Quaternion.Euler(0, temp.y, 0);
         }
 
