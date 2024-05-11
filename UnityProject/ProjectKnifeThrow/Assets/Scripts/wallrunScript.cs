@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class wallRun : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
+    [SerializeField] GameObject playerRef;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -37,7 +39,8 @@ public class wallRun : MonoBehaviour
     [SerializeField] float runTimer;
 
     public bool playerCanMove = true;
-
+    public bool isWallRunning = false;
+    Quaternion targetRot;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,11 +52,12 @@ public class wallRun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 test = playerObj.transform.right * 25;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
-        if(onWallRight || onWallLeft)
+        if (onWallRight || onWallLeft)
         {
-            if(onWallLeft) { WallRun(0); }
+            if (onWallLeft) { WallRun(0); }
             else if(onWallRight) { WallRun(1); }
         }
         movement();
@@ -96,7 +100,7 @@ public class wallRun : MonoBehaviour
             onAir = true;
         }
 
-        if (!onWallRight && !onWallLeft)
+        if (!isWallRunning)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
@@ -136,49 +140,75 @@ public class wallRun : MonoBehaviour
 
     void OnControllerColliderHit(ControllerColliderHit colHit)
     {
-        if (colHit.collider.gameObject.name == "wallrunWall" && onAir && canWallRun)
+        if (colHit.collider.gameObject.tag == "enableWallRun" && onAir && canWallRun)
         {
-           // CollisionFlags.
+            // CollisionFlags.
             //Identify where it hit
             RaycastHit wallDetect;
-            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right*2;
-            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right*2);
-
-            Debug.DrawRay(Camera.main.transform.position, rightRayShoot * wallDist, Color.blue);
-            Debug.DrawRay(Camera.main.transform.position, leftRayShoot * wallDist, Color.green);
-
+            Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right * 2;
+            Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right * 2);
 
             //Pitch the character accordingly
             if (Physics.Raycast(Camera.main.transform.position, rightRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
-                wallDirection = -wallDirection;
+                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
+                {
+                    wallDirection = -wallDirection;
+                }
+                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
                 onWallRight = true;
-                canSprint = false;
-                playerCanMove = false;
-
             }
             else if (Physics.Raycast(Camera.main.transform.position, leftRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
+                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
+                {
+                    wallDirection = -wallDirection;
+                }
+                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
                 onWallLeft = true;
-                canSprint = false;
-                playerCanMove = false;
             }
 
+            isWallRunning = true;
+            canSprint = false;
+            playerCanMove = false;
         }
     }
 
     void WallRun(int wallRunSide)
     {
-        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
-
-        if (runTimer > 0)
+        Vector3 wallTouchChecker;
+        //Reset jumps
+        if(jumpCount == 2)
         {
-            gravity = 0;
-            runTimer -= Time.deltaTime;
+            jumpCount = 1;
+        }
+        if (wallRunSide == 1)
+        {
+            wallTouchChecker = playerObj.transform.right * 1;
         }
         else
+        {
+            wallTouchChecker = (-playerObj.transform.right * 1);
+        }
+        
+        playerObj.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRot, 2);
+        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
+
+        RaycastHit wallTouch;
+        bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
+
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    Vector3 planarDir = Camera.main.transform.forward + -wallTouchChecker;
+        //    Vector3 dirResult = planarDir + playerObj.transform.up;
+        //    isWallRunning = false;
+        //    Debug.DrawRay(Camera.main.transform.position, dirResult * 10, Color.blue);
+        //    controller.Move(dirResult * playerSpeed*5 * Time.deltaTime);
+        //}
+
+        if (!TouchCheck || Input.GetButtonDown("Jump"))
         {
             playerSpeed = playerSpeedStorage;
             controller.Move(moveDir * (playerSpeed+1) * Time.deltaTime);
@@ -186,9 +216,9 @@ public class wallRun : MonoBehaviour
             runTimer = timerStorage;
             onWallRight = false;
             onWallLeft = false;
-            canWallRun = false;
+            canWallRun = true;
             playerCanMove = true;
-           // playerObj.transform.localRotation = Quaternion.Euler(0, temp.y, 0);
+            isWallRunning = false;
         }
 
     }
