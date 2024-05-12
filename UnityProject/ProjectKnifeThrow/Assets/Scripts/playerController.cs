@@ -37,8 +37,6 @@ public class playerController : MonoBehaviour
 
     void movement()
     {
-        // moveDir = new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical"));
-        //transform.position += moveDir * playerSpeed * Time.deltaTime; Does not account for collision
         if (controller.isGrounded)
         {
             jumpCount = 0;
@@ -96,5 +94,10 @@ public class playerController : MonoBehaviour
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return controller.transform.position;
     }
 }
