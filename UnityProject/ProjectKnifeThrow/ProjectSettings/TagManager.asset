@@ -6,7 +6,6 @@ TagManager:
   tags:
   - PlayerReferential
   - enableWallRun
-  - critPoint
   layers:
   - Default
   - TransparentFX

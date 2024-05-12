@@ -26,20 +26,18 @@ public class wallRun : MonoBehaviour
     bool isShooting;
 
     //Wallrun Variables
-    [SerializeField] int wallDist;
-    [SerializeField] float charPitch;
-    [SerializeField] bool onAir = false;
-    [SerializeField] bool canWallRun = true;
-    [SerializeField] float runTimer;
-    [SerializeField] bool flagCheck;
-    //Privates
     float timerStorage;
     int gravityStorage;
     int playerSpeedStorage;
     bool canSprint = true;
     bool onWallLeft = false, onWallRight = false;
     Vector3 wallDirection;
-    //Publics
+    [SerializeField] int wallDist;
+    [SerializeField] float charPitch;
+    [SerializeField] bool onAir = false;
+    [SerializeField] bool canWallRun = true;
+    [SerializeField] float runTimer;
+
     public bool playerCanMove = true;
     public bool isWallRunning = false;
     Quaternion targetRot;
@@ -62,10 +60,7 @@ public class wallRun : MonoBehaviour
             if (onWallLeft) { WallRun(0); }
             else if(onWallRight) { WallRun(1); }
         }
-        if (!isWallRunning) { 
-        
         movement();
-        }
     }
 
     void movement()
@@ -147,10 +142,13 @@ public class wallRun : MonoBehaviour
     {
         if (colHit.collider.gameObject.tag == "enableWallRun" && onAir && canWallRun)
         {
+            // CollisionFlags.
+            //Identify where it hit
             RaycastHit wallDetect;
             Vector3 rightRayShoot = Camera.main.transform.forward + Camera.main.transform.right * 2;
             Vector3 leftRayShoot = Camera.main.transform.forward + (-Camera.main.transform.right * 2);
 
+            //Pitch the character accordingly
             if (Physics.Raycast(Camera.main.transform.position, rightRayShoot, out wallDetect, wallDist))
             {
                 wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
@@ -181,31 +179,39 @@ public class wallRun : MonoBehaviour
     void WallRun(int wallRunSide)
     {
         Vector3 wallTouchChecker;
-
+        //Reset jumps
         if(jumpCount == 2)
         {
             jumpCount = 1;
         }
         if (wallRunSide == 1)
         {
-            wallTouchChecker = playerObj.transform.right * 10;
+            wallTouchChecker = playerObj.transform.right * 1;
         }
         else
         {
-            wallTouchChecker = (-playerObj.transform.right * 10);
+            wallTouchChecker = (-playerObj.transform.right * 1);
         }
+        
+        playerObj.transform.rotation = Quaternion.Lerp(Quaternion.identity, targetRot, 2);
+        controller.Move(wallDirection * playerSpeed * Time.deltaTime);
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
 
-        flagCheck = controller.collisionFlags == CollisionFlags.Sides;
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    Vector3 planarDir = Camera.main.transform.forward + -wallTouchChecker;
+        //    Vector3 dirResult = planarDir + playerObj.transform.up;
+        //    isWallRunning = false;
+        //    Debug.DrawRay(Camera.main.transform.position, dirResult * 10, Color.blue);
+        //    controller.Move(dirResult * playerSpeed*5 * Time.deltaTime);
+        //}
 
-        
-         controller.Move(wallDirection * playerSpeed * Time.deltaTime);
-
-        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump"))
+        if (!TouchCheck || Input.GetButtonDown("Jump"))
         {
             playerSpeed = playerSpeedStorage;
+            controller.Move(moveDir * (playerSpeed+1) * Time.deltaTime);
             gravity = gravityStorage;
             runTimer = timerStorage;
             onWallRight = false;
@@ -214,6 +220,7 @@ public class wallRun : MonoBehaviour
             playerCanMove = true;
             isWallRunning = false;
         }
+
     }
 
 }
