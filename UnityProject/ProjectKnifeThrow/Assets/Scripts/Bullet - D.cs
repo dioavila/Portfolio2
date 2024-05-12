@@ -8,9 +8,12 @@ public class testDBullet : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float timeToDestroy;
     [SerializeField] int damage;
+    public Transform playerLocation;
+
     // Start is called before the first frame update
     void Start()
     {
+        transform.rotation = transform.parent.rotation;
         rb.velocity = transform.forward * speed;
         Destroy(gameObject, timeToDestroy);
     }

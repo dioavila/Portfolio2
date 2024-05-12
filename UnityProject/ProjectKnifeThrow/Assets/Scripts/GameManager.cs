@@ -23,4 +23,9 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void FindPlayer()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 }

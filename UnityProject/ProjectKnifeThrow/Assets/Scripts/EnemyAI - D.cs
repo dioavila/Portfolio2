@@ -15,8 +15,8 @@ public class enemyAITest : MonoBehaviour//, IDamage
     [SerializeField] float shootRate;
 
     bool isShooting;
-    bool playerInRange;
-
+    public bool playerInRange;
+    public Transform playerLocation;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,7 @@ public class enemyAITest : MonoBehaviour//, IDamage
     {
         if (playerInRange)
         {
-            //agent.SetDestination(GameManager.instance.player.transform.position);
+            agent.SetDestination(GameManager.instance.player.transform.position);
 
             if (!isShooting)
             {
@@ -61,16 +61,25 @@ public class enemyAITest : MonoBehaviour//, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
-        if(shootPos[0] != null)
-            Instantiate(bullet, shootPos[0].position, transform.rotation);
-        if (shootPos[1] != null)
-            Instantiate(bullet, shootPos[1].position, transform.rotation);
+        if (shootPos[0] != null)
+        {
+            Instantiate(bullet, shootPos[0].position, transform.rotation, shootPos[0]); 
+            yield return new WaitForSeconds(0.2f);
+        }
+        if (shootPos[1] != null) {
+            Instantiate(bullet, shootPos[1].position, transform.rotation, shootPos[1]); 
+            yield return new WaitForSeconds(0.4f);
+        }
         if (shootPos[2] != null)
-            Instantiate(bullet, shootPos[2].position, transform.rotation);
+        {
+            Instantiate(bullet, shootPos[2].position, transform.rotation, shootPos[2]); 
+            yield return new WaitForSeconds(0.1f);
+        }
         if (shootPos[3] != null)
-            Instantiate(bullet, shootPos[3].position, transform.rotation);
-
-        yield return new WaitForSeconds(shootRate);
+        {
+            Instantiate(bullet, shootPos[3].position, transform.rotation, shootPos[3]); 
+            yield return new WaitForSeconds(0.3f);
+        }
         isShooting = false;
     }
 
