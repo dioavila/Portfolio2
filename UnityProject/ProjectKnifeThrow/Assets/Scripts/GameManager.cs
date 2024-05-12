@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     
     public GameObject player;
-    public GameObject referential;
     public wallRun playerScript;
 
     // Start is called before the first frame update
@@ -16,7 +15,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        //playerScript = player.GetComponent<wallRun>();
+        playerScript = player.GetComponent<wallRun>();
     }
 
     // Update is called once per frame
