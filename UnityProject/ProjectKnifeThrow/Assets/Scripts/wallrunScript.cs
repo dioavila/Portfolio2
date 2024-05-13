@@ -211,7 +211,7 @@ public class wallRun : MonoBehaviour
 
         void ValuesReset()
         {
-            playerSpeed = playerSpeedStorage;
+            //playerSpeed = playerSpeedStorage;
             gravity = gravityStorage;
             runTimer = timerStorage;
             onWallRight = false;
