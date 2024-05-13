@@ -535,6 +535,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1962392262550135904, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
+      propertyPath: m_TagString
+      value: enableWallRun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -604,6 +608,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1962392262550135904, guid: 0708aba1b020571408a47a0d86a386c4, type: 3}
+      propertyPath: m_TagString
+      value: enableWallRun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -618,7 +626,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 427631479}
-  - component: {fileID: 427631480}
   - component: {fileID: 427631483}
   - component: {fileID: 427631477}
   - component: {fileID: 427631476}
@@ -724,36 +731,6 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &427631480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427631473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88c62325dad5734783d53d9351b474c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 427631477}
-  playerBaseSpeed: 10
-  jumpMax: 2
-  jumpSpeed: 15
-  gravity: 25
-  sprintMod: 2
-  startingHP: 10
-  HP: 5
-  shootDamage: 2
-  shootDist: 50
-  shootRate: 0.5
-  item: {fileID: 690135309}
-  currSpeed: 5
-  playerHeight: 2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  messagePanel: {fileID: 244220605}
 --- !u!65 &427631481
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -801,7 +778,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427631473}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b1754d70fcbad4459c6e890408af53b, type: 3}
   m_Name: 
@@ -812,20 +789,22 @@ MonoBehaviour:
   jumpSpeed: 8
   gravity: 25
   sprintMod: 2
+  startingHP: 10
+  HP: 0
   shootDamage: 50
   shootDist: 52
   shootRate: 1
   playerObj: {fileID: 427631473}
-  playerRef: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   wallDist: 10
   charPitch: 0
   onAir: 0
   canWallRun: 1
-  runTimer: 0
-  flagCheck: 0
   playerCanMove: 1
   isWallRunning: 0
+  item:
+  - {fileID: 0}
+  messagePanel: {fileID: 244220605}
 --- !u!1001 &477378213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1025,17 +1004,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf67e32ae4a431d4ba4f57eb7de915ab, type: 3}
---- !u!114 &690135309 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2914108474004518778, guid: 4cdfc98b2d69f674d8a1d70a13da20f0, type: 3}
-  m_PrefabInstance: {fileID: 135393980491026398}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c795a38cffe1292498afbd04fd5ee2e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,7 +2021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2814985093166360324, guid: 4cdfc98b2d69f674d8a1d70a13da20f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.2
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2814985093166360324, guid: 4cdfc98b2d69f674d8a1d70a13da20f0, type: 3}
       propertyPath: m_LocalPosition.z
