@@ -202,8 +202,14 @@ public class wallRun : MonoBehaviour
 
         
          controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+        
 
-        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump"))
+        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
+        {
+            ValuesReset();
+        }
+
+        void ValuesReset()
         {
             playerSpeed = playerSpeedStorage;
             gravity = gravityStorage;
