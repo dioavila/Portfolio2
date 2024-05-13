@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
-public class wallRun : MonoBehaviour
+public class wallRun : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
     [SerializeField] int playerSpeed;
@@ -13,42 +14,47 @@ public class wallRun : MonoBehaviour
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] int sprintMod;
-
+    [SerializeField] int startingHP;
+    [SerializeField] int HP;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
-    [SerializeField] GameObject playerRef;
 
     public Vector3 moveDir;
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
-
     //Wallrun Variables
+    [Header("Wall Detection")]
     [SerializeField] int wallDist;
     [SerializeField] float charPitch;
     [SerializeField] bool onAir = false;
     [SerializeField] bool canWallRun = true;
-    [SerializeField] float runTimer;
-    [SerializeField] bool flagCheck;
+    
     //Privates
-    float timerStorage;
     int gravityStorage;
     int playerSpeedStorage;
     bool canSprint = true;
     bool onWallLeft = false, onWallRight = false;
     Vector3 wallDirection;
+
     //Publics
+    [Header("Char States")]
     public bool playerCanMove = true;
     public bool isWallRunning = false;
-    Quaternion targetRot;
+
+    [Header("Item Pickup")]
+    public Item[] item = new Item[3];
+    private bool isInRange;
+    public GameObject messagePanel;
+
     // Start is called before the first frame update
     void Start()
     {
         playerSpeedStorage = playerSpeed;
-        timerStorage = runTimer;
         gravityStorage = gravity;
+        HP = startingHP;
     }
 
     // Update is called once per frame
@@ -63,8 +69,14 @@ public class wallRun : MonoBehaviour
             else if(onWallRight) { WallRun(1); }
         }
         if (!isWallRunning) { 
-        
-        movement();
+            movement();
+        }
+
+        if (isInRange && Input.GetKeyDown(KeyCode.F))
+        {
+            item[0].PickUpItem();
+            HP = startingHP;
+            CloseMessagePanel("");
         }
     }
 
@@ -85,6 +97,7 @@ public class wallRun : MonoBehaviour
             if (!canSprint)
             {
                 canSprint = true;
+                playerSpeed = playerSpeedStorage;
             }
         }
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
@@ -100,6 +113,7 @@ public class wallRun : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            canSprint = false;
             ++jumpCount;
             playerVel.y = jumpSpeed;
             onAir = true;
@@ -153,28 +167,18 @@ public class wallRun : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.transform.position, rightRayShoot, out wallDetect, wallDist))
             {
-                wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
-                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
-                {
-                    wallDirection = -wallDirection;
-                }
-                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
                 onWallRight = true;
+                wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
             }
             else if (Physics.Raycast(Camera.main.transform.position, leftRayShoot, out wallDetect, wallDist))
             {
-                wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
-                if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
-                {
-                    wallDirection = -wallDirection;
-                }
-                targetRot = Quaternion.LookRotation(wallDirection, wallDetect.transform.up);
                 onWallLeft = true;
+                wallDirection = Vector3.Cross(wallDetect.transform.up, wallDetect.transform.forward).normalized;
             }
-
-            isWallRunning = true;
-            canSprint = false;
-            playerCanMove = false;
+            if ((playerObj.transform.forward - wallDirection).magnitude > (playerObj.transform.forward - -wallDirection).magnitude)
+            {
+                wallDirection = -wallDirection;
+            }
         }
     }
 
@@ -197,29 +201,74 @@ public class wallRun : MonoBehaviour
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
-
-        flagCheck = controller.collisionFlags == CollisionFlags.Sides;
-
         
-         controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
-        
+        controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+        isWallRunning = true;
 
-        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
+        if(playerCanMove)
+        {
+            canSprint = false;
+            playerCanMove = false;
+        }
+
+        if (controller.collisionFlags != CollisionFlags.Sides && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
         {
             ValuesReset();
         }
 
         void ValuesReset()
         {
-            //playerSpeed = playerSpeedStorage;
             gravity = gravityStorage;
-            runTimer = timerStorage;
             onWallRight = false;
             onWallLeft = false;
             canWallRun = true;
             playerCanMove = true;
             isWallRunning = false;
+        }       
+    }
+
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        StartCoroutine(flashScreenRed());
+        if (HP <= 0)
+        {
+            GameManager.instance.youLose();
         }
+    }
+    //Opens and closes the "press f to pickup" message
+    public void OpenMessagePanel(string text)
+    {
+        messagePanel.SetActive(true);
+    }
+
+    public void CloseMessagePanel(string text)
+    {
+        messagePanel.SetActive(false);
+    }
+
+    //triggers the ability to pickup
+    private void OnTriggerEnter(Collider other)
+    {
+        isInRange = true;
+        Item item = other.GetComponent<Item>();
+        if (item != null)
+        {
+            OpenMessagePanel("");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isInRange = false;
+        CloseMessagePanel("");
+    }
+
+    IEnumerator flashScreenRed()
+    {
+        GameManager.instance.playerFlashDamage.SetActive(true);
+        yield return new WaitForSeconds(.1f);
+        GameManager.instance.playerFlashDamage.SetActive(false);
     }
 
 }
