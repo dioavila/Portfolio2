@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class testDBullet : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
-
+    [SerializeField] float speed;
+    [SerializeField] float timeToDestroy;
     [SerializeField] int damage;
-    [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    public Transform playerLocation;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb.velocity = (transform.forward + (-transform.up / 2)) * speed;
-        Destroy(gameObject, destroyTime);
+        transform.rotation = transform.parent.rotation;
+        rb.velocity = transform.forward * speed;
+        Destroy(gameObject, timeToDestroy);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,14 +23,13 @@ public class Bullet : MonoBehaviour
         if (other.isTrigger)
             return;
 
-        IDamage dmg = other.gameObject.GetComponent<IDamage>();
+        IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null)
+        if(dmg != null)
         {
             dmg.TakeDamage(damage);
         }
 
         Destroy(gameObject);
     }
-
 }

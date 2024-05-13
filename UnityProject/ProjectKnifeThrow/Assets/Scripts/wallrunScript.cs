@@ -20,7 +20,7 @@ public class wallRun : MonoBehaviour
     [SerializeField] GameObject playerObj;
     [SerializeField] GameObject playerRef;
 
-    Vector3 moveDir;
+    public Vector3 moveDir;
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
@@ -120,7 +120,7 @@ public class wallRun : MonoBehaviour
         }
         else if(Input.GetButtonUp("Sprint") && canSprint)
         {
-            playerSpeed /= sprintMod;
+            playerSpeed = playerSpeedStorage;
         }
     }
 
@@ -201,9 +201,15 @@ public class wallRun : MonoBehaviour
         flagCheck = controller.collisionFlags == CollisionFlags.Sides;
 
         
-         controller.Move(wallDirection * playerSpeed * Time.deltaTime);
+         controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+        
 
-        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump"))
+        if (!flagCheck && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
+        {
+            ValuesReset();
+        }
+
+        void ValuesReset()
         {
             playerSpeed = playerSpeedStorage;
             gravity = gravityStorage;
