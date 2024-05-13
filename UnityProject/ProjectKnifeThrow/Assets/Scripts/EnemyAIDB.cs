@@ -8,12 +8,17 @@ public class enemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] Transform shootPos;
+    [SerializeField] Transform shootPos1;
+    [SerializeField] Transform shootPos2;
+    [SerializeField] Transform shootPos3;
+    [SerializeField] Transform shootPos4;
 
     [SerializeField] int HP;
 
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
+
+    public Transform player;
 
     bool isShooting;
     bool playerInRange;
@@ -56,8 +61,24 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
+        transform.LookAt(player);
         isShooting = true;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        if (shootPos1  != null)
+        {
+            Instantiate(bullet, shootPos1.position, transform.rotation);
+        }
+        if (shootPos2 != null) 
+        {
+            Instantiate(bullet, shootPos2.position, transform.rotation);
+        }
+        if(shootPos3 != null)
+        {
+            Instantiate(bullet, shootPos3.position, transform.rotation);
+        }
+        if(shootPos4 != null)
+        { 
+            Instantiate(bullet, shootPos4.position, transform.rotation);
+        }
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;

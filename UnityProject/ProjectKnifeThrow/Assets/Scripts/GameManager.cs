@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public GameObject referential;
     public wallRun playerScript;
+    public GameObject playerFlashDamage;
 
     // Start is called before the first frame update
     void Awake()
