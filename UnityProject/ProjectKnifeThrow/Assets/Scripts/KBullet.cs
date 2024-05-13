@@ -17,7 +17,6 @@ public class KBullet : MonoBehaviour
    
     private void OnTriggerEnter(Collider other)
     {
-        
         IDamage dmg = other.gameObject.GetComponent<IDamage>();
         if(dmg != null )
         {
