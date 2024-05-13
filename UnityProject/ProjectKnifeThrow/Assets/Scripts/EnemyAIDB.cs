@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField] GameObject bullet;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
     [SerializeField] Transform shootPos2;
@@ -14,14 +14,14 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos4;
 
     [SerializeField] int HP;
-
-    [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    public NavMeshAgent agent;
     public Transform player;
 
     bool isShooting;
     bool playerInRange;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+
         if (playerInRange)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);

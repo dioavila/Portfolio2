@@ -159,7 +159,8 @@ public class editingPlayerController : MonoBehaviour, IDamage
         HP -= amount;
         if (HP <= 0)
         {
-            Destroy(gameObject);
+            StartCoroutine(flashScreenRed());
+            GameManager.instance.youLose();
         }
     }
 
@@ -190,5 +191,12 @@ public class editingPlayerController : MonoBehaviour, IDamage
     {
         isInRange = false;
         CloseMessagePanel("");
+    }
+
+    IEnumerator flashScreenRed()
+    {
+        GameManager.instance.playerFlashDamage.SetActive(true);
+        yield return new WaitForSeconds(.1f);
+        GameManager.instance.playerFlashDamage.SetActive(false);
     }
 }
