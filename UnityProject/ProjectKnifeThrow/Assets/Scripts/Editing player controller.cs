@@ -37,7 +37,7 @@ public class editingPlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        startingHP = HP;
+        HP = startingHP;
     }
 
     // Update is called once per frame

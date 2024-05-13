@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
+    [SerializeField] int HP;
     [SerializeField] int playerSpeed;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;
@@ -20,6 +22,7 @@ public class playerController : MonoBehaviour
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
+    bool isDamaged;
 
     // Start is called before the first frame update
     void Start()
@@ -99,5 +102,18 @@ public class playerController : MonoBehaviour
     public Vector3 GetPosition()
     {
         return controller.transform.position;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        StartCoroutine(flashScreenRed());
+    }
+    
+    IEnumerator flashScreenRed()
+    {
+        GameManager.instance.playerFlashDamage.SetActive(true);
+        yield return new WaitForSeconds(.1f);
+        GameManager.instance.playerFlashDamage.SetActive(false);
     }
 }
