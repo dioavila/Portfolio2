@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
+//using static UnityEditor.Progress;
 
 public class wallRun : MonoBehaviour, IDamage
 {
+    [SerializeField] GameObject playerBullet;
+    [SerializeField] Transform playerShootPos;
     [SerializeField] CharacterController controller;
     [SerializeField] int playerSpeed;
     [SerializeField] int jumpMax;
@@ -48,6 +50,7 @@ public class wallRun : MonoBehaviour, IDamage
     public Item[] item = new Item[3];
     private bool isInRange;
     public GameObject messagePanel;
+    string itemTag;
 
     // Start is called before the first frame update
     void Start()
@@ -74,9 +77,16 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
-            item[0].PickUpItem();
-            HP = startingHP;
-            CloseMessagePanel("");
+            for(int i = 0; i < item.Length; i++) 
+            {
+                if (item[i] != null && item[i].tag == itemTag)
+                {
+                    item[i].PickUpItem();
+                    HP = startingHP;
+                    CloseMessagePanel("");
+                    break;
+                }
+            }
         }
     }
 
@@ -141,16 +151,13 @@ public class wallRun : MonoBehaviour, IDamage
     IEnumerator shoot()
     {
         isShooting = true;
+        Instantiate(playerBullet, playerShootPos.position, Camera.main.transform.rotation);
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist))
+        IDamage dmg = playerBullet.gameObject.GetComponent<IDamage>();
+
+        if (playerBullet.transform != transform && dmg != null)
         {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if(hit.transform != transform && dmg != null)
-            {
-                dmg.TakeDamage(shootDamage);
-            }
+            dmg.TakeDamage(shootDamage);
         }
 
         yield return new WaitForSeconds(shootRate);
@@ -250,11 +257,15 @@ public class wallRun : MonoBehaviour, IDamage
     //triggers the ability to pickup
     private void OnTriggerEnter(Collider other)
     {
-        isInRange = true;
-        Item item = other.GetComponent<Item>();
-        if (item != null)
+        if(other.gameObject.CompareTag("Health Pickup1") || other.gameObject.CompareTag("Health Pickup2"))
         {
-            OpenMessagePanel("");
+            itemTag = other.gameObject.tag;
+            isInRange = true;
+            Item item = other.GetComponent<Item>();
+            if (item != null)
+            {
+                OpenMessagePanel("");
+            }
         }
     }
 
