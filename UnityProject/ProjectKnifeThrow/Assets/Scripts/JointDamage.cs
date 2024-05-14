@@ -10,6 +10,7 @@ public class JointDamage : enemyAITest, IDamage
     Quaternion currRot;
     int origHP;
     enemyAITest enemyScript;
+
     // Start is called before the first frame update
     void Start()
     {

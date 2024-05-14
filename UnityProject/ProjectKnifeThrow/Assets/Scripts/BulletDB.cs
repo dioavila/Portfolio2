@@ -20,7 +20,13 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
+        {
             return;
+        }
+        if (!other.gameObject.CompareTag("Player")){
+            Destroy(gameObject);
+            return;
+        }
 
         IDamage dmg = other.gameObject.GetComponent<IDamage>();
 

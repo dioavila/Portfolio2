@@ -21,11 +21,18 @@ public class testDBullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
+        {
             return;
+        }
+        if (!other.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        IDamage dmg = other.GetComponent<IDamage>();
+        IDamage dmg = other.gameObject.GetComponent<IDamage>();
 
-        if(dmg != null)
+        if (dmg != null)
         {
             dmg.TakeDamage(damage);
         }

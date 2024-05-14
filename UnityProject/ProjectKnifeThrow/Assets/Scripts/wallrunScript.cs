@@ -84,6 +84,7 @@ public class wallRun : MonoBehaviour, IDamage
                 {
                     item[i].PickUpItem();
                     HP = startingHP;
+                    updatePlayerUI();
                     CloseMessagePanel("");
                     break;
                 }

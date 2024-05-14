@@ -51,15 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8a781f9eaf5045bc91a204eadade9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 5788853642099827682}
+  bullet: {fileID: 4348980476123300056, guid: 39a480c7b5fac72429dead6e5c2885d8, type: 3}
   model: {fileID: 5608353421627161811}
   shootPos1: {fileID: 591535796293272920}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
   shootPos4: {fileID: 0}
-  HP: 3
-  bullet: {fileID: 4348980476123300056, guid: 39a480c7b5fac72429dead6e5c2885d8, type: 3}
+  HP: 1
   shootRate: 0.5
+  agent: {fileID: 5788853642099827682}
   player: {fileID: 0}
 --- !u!195 &5788853642099827682
 NavMeshAgent:
