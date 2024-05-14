@@ -38,6 +38,7 @@ public class editingPlayerController : MonoBehaviour, IDamage
     void Start()
     {
         HP = startingHP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -157,6 +158,7 @@ public class editingPlayerController : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
         if (HP <= 0)
         {
             StartCoroutine(flashScreenRed());
@@ -198,5 +200,10 @@ public class editingPlayerController : MonoBehaviour, IDamage
         GameManager.instance.playerFlashDamage.SetActive(true);
         yield return new WaitForSeconds(.1f);
         GameManager.instance.playerFlashDamage.SetActive(false);
+    }
+
+    void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / startingHP;
     }
 }
