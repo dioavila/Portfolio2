@@ -20,7 +20,7 @@ public class enemyAITest : MonoBehaviour//, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        //GameManager.instance.updateGameGoal(1);
+        GameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
@@ -37,9 +37,11 @@ public class enemyAITest : MonoBehaviour//, IDamage
 
             if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
             {
+                GameManager.instance.updateGameGoal(-1);
                 Destroy(gameObject);
             }
         }
+
     }
 
     void OnTriggerEnter(Collider other)

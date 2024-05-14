@@ -16,12 +16,14 @@ public class GameManager : MonoBehaviour
 
     public Image playerHPBar;
     public bool isPaused;
-    int enemyCount;
+    public int enemyCount;
 
     
     public GameObject player;
     public wallRun playerScript;
     public GameObject playerFlashDamage;
+
+    public bool doorIsDestroyable = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<wallRun>();
+
     }
 
     // Update is called once per frame
@@ -79,7 +82,11 @@ public class GameManager : MonoBehaviour
         // F0 is how many numbers after a decimal place
         enemyCountText.text = enemyCount.ToString("F0");
 
-        if (enemyCount <= 0)
+        if (enemyCount == 2 && doorIsDestroyable)
+        {
+            Destroy(GameObject.FindWithTag("Door"));            
+        }
+        if (enemyCount <= 0) 
         {
             statePause();
             menuActive = menuWin;
