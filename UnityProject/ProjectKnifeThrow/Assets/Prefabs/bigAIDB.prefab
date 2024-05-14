@@ -91,7 +91,7 @@ MonoBehaviour:
   HP: 5
   shootRate: 3
   agent: {fileID: 2720905264209441693}
-  player: {fileID: 0}
+  player: {fileID: 7245864956220618916, guid: 5f5942114f75c10499d79e34a3e6b23c, type: 3}
 --- !u!195 &2720905264209441693
 NavMeshAgent:
   m_ObjectHideFlags: 0
