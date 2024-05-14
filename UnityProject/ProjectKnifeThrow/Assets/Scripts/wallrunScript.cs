@@ -155,7 +155,7 @@ public class wallRun : MonoBehaviour, IDamage
 
         IDamage dmg = playerBullet.gameObject.GetComponent<IDamage>();
 
-        if (playerBullet.transform != transform && dmg != null)
+        if (playerBullet.transform != transform.CompareTag("Player")&& dmg != null)
         {
             dmg.TakeDamage(shootDamage);
         }
