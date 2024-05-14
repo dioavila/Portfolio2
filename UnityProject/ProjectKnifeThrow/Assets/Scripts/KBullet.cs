@@ -15,9 +15,8 @@ public class KBullet : MonoBehaviour
         Destroy(gameObject, DestroyTime);
     }
    
-    private void OnTriggerEnter(Collider other)
-    {
-        
+    private void OnCollisionEnter(Collision other)
+    {   
         IDamage dmg = other.gameObject.GetComponent<IDamage>();
         if(dmg != null )
         {
