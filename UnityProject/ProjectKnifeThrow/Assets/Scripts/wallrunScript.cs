@@ -58,6 +58,7 @@ public class wallRun : MonoBehaviour, IDamage
         playerSpeedStorage = playerSpeed;
         gravityStorage = gravity;
         HP = startingHP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -234,15 +235,6 @@ public class wallRun : MonoBehaviour, IDamage
         }       
     }
 
-    public void TakeDamage(int amount)
-    {
-        HP -= amount;
-        StartCoroutine(flashScreenRed());
-        if (HP <= 0)
-        {
-            GameManager.instance.youLose();
-        }
-    }
     //Opens and closes the "press f to pickup" message
     public void OpenMessagePanel(string text)
     {
@@ -275,11 +267,26 @@ public class wallRun : MonoBehaviour, IDamage
         CloseMessagePanel("");
     }
 
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        updatePlayerUI();
+        StartCoroutine(flashScreenRed());
+        if (HP <= 0)
+        {
+            GameManager.instance.youLose();
+        }
+    }
     IEnumerator flashScreenRed()
     {
         GameManager.instance.playerFlashDamage.SetActive(true);
         yield return new WaitForSeconds(.1f);
         GameManager.instance.playerFlashDamage.SetActive(false);
+    }
+
+    void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / startingHP;
     }
 
 }
