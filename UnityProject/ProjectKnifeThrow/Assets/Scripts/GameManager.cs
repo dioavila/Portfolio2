@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text enemyCountText;
 
     public Image playerHPBar;
+    public Image playerBTBar;
     public bool isPaused;
     public int enemyCount;
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public wallRun playerScript;
     public GameObject playerFlashDamage;
+    public GameObject playerBPUI;
 
     public bool doorIsDestroyable = false;
 
@@ -50,6 +52,7 @@ public class GameManager : MonoBehaviour
                 stateUnPause();
             }
         }
+
     }
 
     public void FindPlayer()

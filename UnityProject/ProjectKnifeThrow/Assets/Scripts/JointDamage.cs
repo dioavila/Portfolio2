@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JointDamage : enemyAITest, IDamage
+public class JointDamage : MonoBehaviour, IDamage
 {
     [SerializeField] int jointHP;
     [SerializeField] Transform player;
     [SerializeField] float limbTurnRate;
     Quaternion currRot;
     int origHP;
-    enemyAITest enemyScript;
+    //enemyAITest enemyScript;
 
     // Start is called before the first frame update
     void Start()
     {
-        enemyScript = gameObject.GetComponentInParent<enemyAITest>();
+        //enemyScript = gameObject.GetComponentInParent<enemyAITest>();
         origHP = jointHP;
     }
 
