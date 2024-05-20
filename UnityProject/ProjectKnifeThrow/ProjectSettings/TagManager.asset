@@ -9,6 +9,7 @@ TagManager:
   - critPoint
   - Health Pickup1
   - Health Pickup2
+  - Door
   layers:
   - Default
   - TransparentFX

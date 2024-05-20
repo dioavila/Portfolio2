@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class wallRun : MonoBehaviour, IDamage
 {
+    [Header("General Settings")]
     [SerializeField] GameObject playerBullet;
     [SerializeField] Transform playerShootPos;
     [SerializeField] CharacterController controller;
@@ -22,29 +23,37 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
+    int gravityStorage;
+    int playerSpeedStorage;
 
     public Vector3 moveDir;
     Vector3 playerVel;
     int jumpCount;
     bool isShooting;
+    
     //Wallrun Variables
     [Header("Wall Detection")]
     [SerializeField] int wallDist;
     [SerializeField] float charPitch;
     [SerializeField] bool onAir = false;
     [SerializeField] bool canWallRun = true;
-    
-    //Privates
-    int gravityStorage;
-    int playerSpeedStorage;
-    bool canSprint = true;
-    bool onWallLeft = false, onWallRight = false;
     Vector3 wallDirection;
+    bool onWallLeft = false, onWallRight = false;
+
+    //Bullet Time
+    [Header("Bullet Time")]
+    [SerializeField] float timeDilationRate;
+    [SerializeField] float bTimeTotal;
+    public float bTimeCurrent;
+    bool bulletTimeActive = false;
+    [SerializeField] float barFillRate;
+    [SerializeField] float barEmptyRate;
 
     //Publics
     [Header("Char States")]
-    public bool playerCanMove = true;
-    public bool isWallRunning = false;
+    bool canSprint = true;
+    bool playerCanMove = true;
+    bool isWallRunning = false;
 
     [Header("Item Pickup")]
     public Item[] item = new Item[3];
@@ -55,27 +64,26 @@ public class wallRun : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
         gravityStorage = gravity;
         HP = startingHP;
         updatePlayerUI();
+        updateBPUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 test = playerObj.transform.right * 25;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
-        if (onWallRight || onWallLeft)
-        {
-            if (onWallLeft) { WallRun(0); }
-            else if(onWallRight) { WallRun(1); }
-        }
-        if (!isWallRunning) { 
-            movement();
-        }
+        //Bullet Time Check
+        BulletTimeCheck();
 
+        //Movement and WallRun Check
+        MovementCheck();
+
+        //Pick Up Logic
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
             for(int i = 0; i < item.Length; i++) 
@@ -84,6 +92,7 @@ public class wallRun : MonoBehaviour, IDamage
                 {
                     item[i].PickUpItem();
                     HP = startingHP;
+                    updatePlayerUI();
                     CloseMessagePanel("");
                     break;
                 }
@@ -120,6 +129,20 @@ public class wallRun : MonoBehaviour, IDamage
         if(Input.GetButton("Fire1") && !isShooting)
         {
             StartCoroutine(shoot());
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = timeDilationRate;
+                bulletTimeActive = true;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                bulletTimeActive = false;
+            }
         }
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
@@ -163,6 +186,22 @@ public class wallRun : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    /// <summary>
+    /// Wall Run Logic
+    /// </summary>
+    void MovementCheck()
+    {
+        if (onWallRight || onWallLeft)
+        {
+            if (onWallLeft) { WallRun(0); }
+            else if (onWallRight) { WallRun(1); }
+        }
+        if (!isWallRunning)
+        {
+            movement();
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit colHit)
@@ -235,7 +274,10 @@ public class wallRun : MonoBehaviour, IDamage
         }       
     }
 
-    //Opens and closes the "press f to pickup" message
+    /// <summary>
+    /// Pick Up Logic
+    /// </summary>
+    /// 
     public void OpenMessagePanel(string text)
     {
         messagePanel.SetActive(true);
@@ -267,6 +309,9 @@ public class wallRun : MonoBehaviour, IDamage
         CloseMessagePanel("");
     }
 
+    /// <summary>
+    /// Damage Logic
+    /// </summary>
     public void TakeDamage(int amount)
     {
         HP -= amount;
@@ -287,6 +332,50 @@ public class wallRun : MonoBehaviour, IDamage
     void updatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / startingHP;
+    }
+
+    /// <summary>
+    /// Bullet Time Logic
+    /// </summary>
+    void BulletTimeCheck()
+    {
+        if (bulletTimeActive)
+        {
+            if (bTimeCurrent > 0)
+            {
+                GameManager.instance.playerBPUI.SetActive(true);
+                BulletTimeActive();
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                bulletTimeActive = false;
+            }
+        }
+        else
+        {
+            GameManager.instance.playerBPUI.SetActive(false);
+            if (bTimeCurrent < bTimeTotal)
+            {
+                BulletTimeRefill();
+            }
+        }
+    }
+
+    void BulletTimeActive()
+    {
+        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        updateBPUI();
+    }
+    void BulletTimeRefill()
+    {
+        bTimeCurrent += Time.deltaTime * barFillRate;
+        updateBPUI();
+    }
+
+    void updateBPUI()
+    {
+        GameManager.instance.playerBTBar.fillAmount = bTimeCurrent / bTimeTotal;
     }
 
 }

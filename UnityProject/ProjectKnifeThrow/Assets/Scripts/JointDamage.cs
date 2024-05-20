@@ -2,29 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JointDamage : enemyAITest, IDamage
+public class JointDamage : MonoBehaviour, IDamage
 {
     [SerializeField] int jointHP;
     [SerializeField] Transform player;
     [SerializeField] float limbTurnRate;
     Quaternion currRot;
     int origHP;
-    enemyAITest enemyScript;
+    Renderer jointModel;
+    //enemyAITest enemyScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        enemyScript = gameObject.GetComponentInParent<enemyAITest>();
+        //enemyScript = gameObject.GetComponentInParent<enemyAITest>();
         origHP = jointHP;
+        jointModel = gameObject.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward *100, Color.green);
-      //  if (enemyScript.playerInRange)
-      //  {
-            jointMovement();
-      //  }
+        jointMovement();
     }
 
     private void jointMovement()
@@ -38,9 +38,19 @@ public class JointDamage : enemyAITest, IDamage
     public void TakeDamage(int damage)
     {
         jointHP -= damage;
+        StartCoroutine(flashred());
         if ( jointHP <= 0 ) 
         {
             Destroy(gameObject);
         }
+
+
+    }
+    IEnumerator flashred()
+    {
+        Color temp = jointModel.material.color;
+        jointModel.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        jointModel.material.color = temp;
     }
 }
