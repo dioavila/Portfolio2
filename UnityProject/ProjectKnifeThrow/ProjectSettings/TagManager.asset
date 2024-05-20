@@ -10,6 +10,7 @@ TagManager:
   - Health Pickup1
   - Health Pickup2
   - Door
+  - Swingable
   layers:
   - Default
   - TransparentFX

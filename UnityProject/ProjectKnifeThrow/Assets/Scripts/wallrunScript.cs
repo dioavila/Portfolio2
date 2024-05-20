@@ -11,7 +11,7 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("General Settings")]
     [SerializeField] GameObject playerBullet;
     [SerializeField] Transform playerShootPos;
-    [SerializeField] CharacterController controller;
+    [SerializeField] public CharacterController controller;
     [SerializeField] int playerSpeed;
     [SerializeField] int jumpMax;
     [SerializeField] int jumpSpeed;

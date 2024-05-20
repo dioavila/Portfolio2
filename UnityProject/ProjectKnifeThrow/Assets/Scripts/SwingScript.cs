@@ -27,7 +27,7 @@ public class SwingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.E) )//&& GameManager.instance.playerScript.onAir)
+        if (Input.GetKey(KeyCode.E)) //&& GameManager.instance.playerScript.onAir)
         {
             StartSwing();
         }
@@ -41,23 +41,29 @@ public class SwingScript : MonoBehaviour
     void StartSwing()
     {
         RaycastHit hit;
-        if (Physics.Raycast(gunPos.position, Camera.main.transform.forward, out hit, grappleDist, customMask) && swingPath != null)
+        if (Physics.Raycast(gunPos.position, Camera.main.transform.forward, out hit, grappleDist))// && swingPath != null)
         {
-            Debug.Log("Grapple Hit!");
-           // GameManager.instance.playerScript.swinging = true;
-            Vector3 semiCircleRadius = FindCenterCircle(hit);
-           // createCirclePath(semiCircleRadius);
-            //StartCoroutine(swingAction());
-           // GameManager.instance.playerScript.swinging = false;
+            if (hit.collider.CompareTag("Swingable"))
+            {
+                Debug.Log("Grapple Hit!");
+                GameManager.instance.playerScript.swinging = true;
+                Vector3 semiCircleRadius = FindCenterCircle(hit);
+                createCirclePath(semiCircleRadius);
+                StartCoroutine(swingAction());
+                GameManager.instance.playerScript.swinging = false;
+
+            }
         }
     }
 
     Vector3 FindCenterCircle(RaycastHit hit)
     {
-        Debug.DrawRay(hit.point, hit.normal * 100, Color.magenta);
-        float angle = Vector2.Angle(hit.point, hit.normal);
-        Debug.DrawRay(GameManager.instance.player.transform.position, GameManager.instance.player.transform.forward * (Mathf.Sin(angle) * hit.distance), Color.yellow);
-        Vector3 resultant = GameManager.instance.player.transform.forward * (Mathf.Sin(angle) * hit.distance);
+        Vector3 downVec = Vector3.Cross(hit.transform.forward, hit.transform.right);
+        Debug.DrawRay(hit.point, -downVec * 100, Color.magenta);
+        float angle = Mathf.Sin(Vector2.Angle(hit.barycentricCoordinate, downVec));
+        Debug.DrawRay(GameManager.instance.player.transform.position, GameManager.instance.player.transform.forward * (angle * hit.distance), Color.yellow);
+        Vector3 resultant = GameManager.instance.player.transform.forward * (angle * hit.distance);
+        resultant *= 1.25f;
         return resultant;
     }
 
@@ -65,7 +71,7 @@ public class SwingScript : MonoBehaviour
     {
         //Set up start and endpoints
         p0 = GameManager.instance.player.transform.position;
-        p3.x = radius.x*2;
+        p3.x = radius.x;
         p3.y = p0.y;
         p3.z = p0.z;
         //Set up midpoints
@@ -76,10 +82,10 @@ public class SwingScript : MonoBehaviour
         swingPath = new BezierCurve(p0,p1, p2,p3);
 
         //debug
-        Instantiate(deb, p0, transform.rotation);
-        Instantiate(deb, p1, transform.rotation);
-        Instantiate(deb, p2, transform.rotation);
-        Instantiate(deb, p3, transform.rotation);
+        //Instantiate(deb, p0, transform.rotation);
+        //Instantiate(deb, p1, transform.rotation);
+        //Instantiate(deb, p2, transform.rotation);
+        //Instantiate(deb, p3, transform.rotation);
     }
 
     IEnumerator swingAction()
@@ -90,6 +96,10 @@ public class SwingScript : MonoBehaviour
             timerVar += Time.deltaTime * speedMod;
             Vector3 newPoint = ReturnPoint(timerVar);
             transform.position = Vector3.Lerp(transform.position, newPoint, 0.5f);
+            if (GameManager.instance.playerScript.controller.isGrounded)
+            {
+                break;
+            }
             yield return new WaitForEndOfFrame();
         }
     }
