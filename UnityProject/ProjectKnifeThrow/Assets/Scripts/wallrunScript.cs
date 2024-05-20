@@ -23,6 +23,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
+    public bool swinging = false;
     int gravityStorage;
     int playerSpeedStorage;
 
@@ -35,7 +36,7 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Wall Detection")]
     [SerializeField] int wallDist;
     [SerializeField] float charPitch;
-    [SerializeField] bool onAir = false;
+    [SerializeField] public bool onAir = false;
     [SerializeField] bool canWallRun = true;
     Vector3 wallDirection;
     bool onWallLeft = false, onWallRight = false;
@@ -153,7 +154,7 @@ public class wallRun : MonoBehaviour, IDamage
             onAir = true;
         }
 
-        if (!isWallRunning)
+        if (!isWallRunning && !swinging)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
