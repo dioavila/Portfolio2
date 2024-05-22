@@ -43,10 +43,10 @@ public class wallRun : MonoBehaviour, IDamage
 
     //Bullet Time
     [Header("Bullet Time")]
-    [SerializeField] float timeDilationRate;
+    [SerializeField] public float timeDilationRate;
     [SerializeField] float bTimeTotal;
     public float bTimeCurrent;
-    bool bulletTimeActive = false;
+    public bool bulletTimeActive = false;
     [SerializeField] float barFillRate;
     [SerializeField] float barEmptyRate;
 

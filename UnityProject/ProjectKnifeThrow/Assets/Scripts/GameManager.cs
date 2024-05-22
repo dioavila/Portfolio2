@@ -7,24 +7,24 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    [Header("Menus")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
 
+    [Header("HUD Components")]
     public Image playerHPBar;
     public Image playerBTBar;
     public bool isPaused;
     public int enemyCount;
+    public GameObject playerBPUI;
+    public GameObject playerFlashDamage;
 
-    
+    [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
-    public GameObject playerFlashDamage;
-    public GameObject playerBPUI;
-
     public bool doorIsDestroyable = false;
 
     // Start is called before the first frame update
