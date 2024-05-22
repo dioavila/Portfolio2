@@ -103,4 +103,9 @@ public class GameManager : MonoBehaviour
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
     }
+
+    public void spawnEnemy()
+    {
+
+    }
 }
