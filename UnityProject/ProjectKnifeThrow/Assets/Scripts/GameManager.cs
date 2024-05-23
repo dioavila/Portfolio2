@@ -14,17 +14,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
 
-    public Image playerHPBar;
-    public Image playerBTBar;
-    public bool isPaused;
-    public int enemyCount;
-
-    
-    public GameObject player;
     public wallRun playerScript;
+
+    public GameObject player;
     public GameObject playerFlashDamage;
     public GameObject playerBPUI;
 
+    public Image playerHPBar;
+    public Image playerBTBar;
+
+    public int enemyCount;
+
+    public bool isPaused;
     public bool doorIsDestroyable = false;
 
     // Start is called before the first frame update
