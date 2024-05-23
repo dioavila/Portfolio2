@@ -7,41 +7,43 @@ using UnityEngine.Splines;
 
 public class GrindScript : MonoBehaviour
 {
-    [SerializeField] Transform gunPos;
-    [SerializeField] Transform cam;
-    [SerializeField] int grappleDist;
-    [SerializeField] float playerHeight;
-    [SerializeField] float lowerCirclePointsScale;
-    [SerializeField] LayerMask customMask;
-    [SerializeField] float speedMod;
-    [SerializeField] Transform deb;
-
+    [Header("Grind Detection")]
+    bool canGrind = false;
     public List<Transform> grindPoints;
 
+    [Header("Grind Settings")]
+    [SerializeField] [Range(0, 1)] float startPosLerpRate = 0.75f;
+    [SerializeField] [Range(0, 1)] float grindLerpRate = 0.5f;
+    [SerializeField] float speedMod;
+
     Vector3 p0, p1, p2, p3;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && grindPoints.Count == 4)
+        GrindCheck();
+
+        if(Input.GetKeyDown(KeyCode.E) && canGrind)
+        {
+            StartGrind();
+        }
+    }
+
+    void GrindCheck()
+    {
+        if (grindPoints.Count == 4)
         {
             if (grindPoints[0].GetComponentInParent<GrindPointsLogic>().inRangePlayer)
             {
-                Debug.Log("Grind Started");
-                StartGrind();
+                canGrind = true;
             }
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            GameManager.instance.playerScript.swinging = false;
-            Debug.Log("Grind Stopped");
+            else
+            {
+                if (canGrind)
+                {
+                    canGrind = false;
+                }
+            }
         }
     }
 
@@ -49,7 +51,8 @@ public class GrindScript : MonoBehaviour
     {
         createCirclePath();
         GameManager.instance.playerScript.swinging = true;
-        transform.position = p0;
+        GameManager.instance.playerScript.playerCanMove = false;
+        transform.position = Vector3.Lerp(transform.position, p0, startPosLerpRate);
         StartCoroutine(grindAction());
     }
 
@@ -65,21 +68,29 @@ public class GrindScript : MonoBehaviour
     IEnumerator grindAction()
     {
         float timerVar = 0;
+
+        //Grind Period
         while (timerVar < 1)
         {
             timerVar += Time.deltaTime * speedMod;
             Vector3 newPoint = ReturnPoint(timerVar);
-            transform.position = Vector3.Lerp(transform.position, newPoint, 0.5f);
+            transform.position = Vector3.Lerp(transform.position, newPoint, grindLerpRate);
             if (GameManager.instance.playerScript.controller.isGrounded)
             {
                 break;
             }
             yield return new WaitForEndOfFrame();
         }
+
+        //End of Grind
+        canGrind = false;
+        GameManager.instance.playerScript.playerCanMove = true;
+        GameManager.instance.playerScript.swinging = false;
     }
 
     Vector3 ReturnPoint(float timerSpot)
     {
+        //Bezier Curve Equation
         float3 pointC = Mathf.Pow(1 - timerSpot, 3) * p0 + 
             3 * Mathf.Pow(1 - timerSpot, 2) * timerSpot * p1 +
             3 * (1 - timerSpot) * Mathf.Pow(timerSpot, 2) * p2 +

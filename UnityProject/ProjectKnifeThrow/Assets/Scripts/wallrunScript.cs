@@ -56,7 +56,7 @@ public class wallRun : MonoBehaviour, IDamage
     //Publics
     [Header("Char States")]
     bool canSprint = true;
-    bool playerCanMove = true;
+    public bool playerCanMove = true;
     bool isWallRunning = false;
 
     [Header("Item Pickup")]
