@@ -9,28 +9,31 @@ using UnityEngine;
 public class wallRun : MonoBehaviour, IDamage
 {
     [Header("General Settings")]
-    [SerializeField] GameObject playerBullet;
-    [SerializeField] Transform playerShootPos;
     [SerializeField] public CharacterController controller;
-    [SerializeField] int playerSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-    [SerializeField] int sprintMod;
     [SerializeField] int startingHP;
     [SerializeField] int HP;
+    int gravityStorage;
+    
+    [Header("Shooting")]
+    [SerializeField] Transform playerShootPos;
+    [SerializeField] GameObject playerBullet;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
-    public bool swinging = false;
-    int gravityStorage;
-    int playerSpeedStorage;
+    bool isShooting;
 
+    [Header("Movement")]
+    [SerializeField] int jumpSpeed;
+    [SerializeField] int jumpMax;
+    [SerializeField] int playerSpeed;
+    [SerializeField] int sprintMod;
+    public bool swinging = false;
     public Vector3 moveDir;
+    int playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
-    bool isShooting;
     
     //Wallrun Variables
     [Header("Wall Detection")]
@@ -61,6 +64,8 @@ public class wallRun : MonoBehaviour, IDamage
     private bool isInRange;
     public GameObject messagePanel;
     string itemTag;
+    
+
 
     // Start is called before the first frame update
     void Start()

@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
+    public GrindScript grindScript;
     public bool doorIsDestroyable = false;
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<wallRun>();
+        grindScript = player.GetComponent<GrindScript>();
 
     }
 
