@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 0
+  jointHP: 1
   player: {fileID: 0}
   limbTurnRate: 1.1
 --- !u!1 &4626446012208540695
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 0
+  jointHP: 1
   player: {fileID: 0}
   limbTurnRate: 1.1
 --- !u!1 &5364239070386105772
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 0
+  jointHP: 1
   player: {fileID: 0}
   limbTurnRate: 1.1
 --- !u!1 &7368748072741791231
@@ -1244,6 +1244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 0
+  jointHP: 1
   player: {fileID: 0}
   limbTurnRate: 1.1

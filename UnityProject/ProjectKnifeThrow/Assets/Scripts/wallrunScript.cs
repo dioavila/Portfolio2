@@ -9,43 +9,47 @@ using UnityEngine;
 public class wallRun : MonoBehaviour, IDamage
 {
     [Header("General Settings")]
-    [SerializeField] GameObject playerBullet;
-    [SerializeField] Transform playerShootPos;
-    [SerializeField] CharacterController controller;
-    [SerializeField] int playerSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int jumpSpeed;
+    [SerializeField] public CharacterController controller;
     [SerializeField] int gravity;
-    [SerializeField] int sprintMod;
     [SerializeField] int startingHP;
     [SerializeField] int HP;
+    int gravityStorage;
+    
+    [Header("Shooting")]
+    [SerializeField] Transform playerShootPos;
+    [SerializeField] GameObject playerBullet;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
-    int gravityStorage;
-    int playerSpeedStorage;
+    bool isShooting;
 
+    [Header("Movement")]
+    [SerializeField] int jumpSpeed;
+    [SerializeField] int jumpMax;
+    [SerializeField] int playerSpeed;
+    [SerializeField] int sprintMod;
+    public bool swinging = false;
     public Vector3 moveDir;
+    int playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
-    bool isShooting;
     
     //Wallrun Variables
     [Header("Wall Detection")]
     [SerializeField] int wallDist;
     [SerializeField] float charPitch;
-    [SerializeField] bool onAir = false;
+    [SerializeField] public bool onAir = false;
     [SerializeField] bool canWallRun = true;
     Vector3 wallDirection;
     bool onWallLeft = false, onWallRight = false;
 
     //Bullet Time
     [Header("Bullet Time")]
-    [SerializeField] float timeDilationRate;
+    [SerializeField] public float timeDilationRate;
     [SerializeField] float bTimeTotal;
     public float bTimeCurrent;
-    bool bulletTimeActive = false;
+    public bool bulletTimeActive = false;
     [SerializeField] float barFillRate;
     [SerializeField] float barEmptyRate;
 
@@ -60,6 +64,8 @@ public class wallRun : MonoBehaviour, IDamage
     private bool isInRange;
     public GameObject messagePanel;
     string itemTag;
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -153,7 +159,7 @@ public class wallRun : MonoBehaviour, IDamage
             onAir = true;
         }
 
-        if (!isWallRunning)
+        if (!isWallRunning && !swinging)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
