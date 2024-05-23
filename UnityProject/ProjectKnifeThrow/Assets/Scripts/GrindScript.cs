@@ -32,8 +32,11 @@ public class GrindScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && grindPoints.Count == 4)
         {
-            Debug.Log("Grind Started");
-            StartGrind();
+            if (grindPoints[0].GetComponentInParent<GrindPointsLogic>().inRangePlayer)
+            {
+                Debug.Log("Grind Started");
+                StartGrind();
+            }
         }
         else if (Input.GetKeyUp(KeyCode.E))
         {

@@ -29,14 +29,22 @@ public class GrindPointsLogic : MonoBehaviour
         Destroy(gameObject, destructionTimer);
     }
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        inRangePlayer = true;
-    //    }
-    //}
-    ////private void OnDestroy()
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            inRangePlayer = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            inRangePlayer = false;
+        }
+    }
+    //private void OnDestroy()
     //{
     //    GameManager.instance.grindScript.grindPoints.Remove(gPoint);
     //}
