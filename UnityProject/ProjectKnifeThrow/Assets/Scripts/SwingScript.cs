@@ -16,7 +16,7 @@ public class SwingScript : MonoBehaviour
     [SerializeField] Transform deb;
     BezierCurve swingPath;
     Vector3 p0, p1, p2, p3;
-
+    bool swinging;
 
     // Start is called before the first frame update
     void Start()
@@ -46,11 +46,11 @@ public class SwingScript : MonoBehaviour
             if (hit.collider.CompareTag("Swingable"))
             {
                 Debug.Log("Grapple Hit!");
-                GameManager.instance.playerScript.swinging = true;
+                swinging = true;
                 Vector3 semiCircleRadius = FindCenterCircle(hit);
                 createCirclePath(semiCircleRadius);
                 StartCoroutine(swingAction());
-                GameManager.instance.playerScript.swinging = false;
+                swinging = false;
 
             }
         }

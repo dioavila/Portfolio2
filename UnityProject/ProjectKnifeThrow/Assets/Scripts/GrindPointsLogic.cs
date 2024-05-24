@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class GrindPointsLogic : MonoBehaviour
 {
+    [Header("Grind Logic")]
     [SerializeField] Transform gPoint;
-    [SerializeField] int destructionTimer;
     public bool inRangePlayer = false;
+
+    [Header("Destruction Settings")]
+    [SerializeField] int destructionTimerMax;
+    [SerializeField] [Range(0,3)] int destructionSpeed;
+    float destructionTimerCurr;
 
     // Start is called before the first frame update
     void Start()
     {
         //Can use start to initiate VFX
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
+        destructionTimerCurr = destructionTimerMax;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.instance.grindScript.grindPoints.Count == 4)
+        if(GameManager.instance.grindScript.grindPoints.Count >= 4)
         {
             DestroyStart();
         }
@@ -26,7 +32,14 @@ public class GrindPointsLogic : MonoBehaviour
 
     void DestroyStart()
     {
-        Destroy(gameObject, destructionTimer);
+        if (destructionTimerCurr > 0)
+        {
+            destructionTimerCurr -= Time.deltaTime * destructionSpeed;
+        }
+        else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -44,8 +57,8 @@ public class GrindPointsLogic : MonoBehaviour
             inRangePlayer = false;
         }
     }
-    //private void OnDestroy()
-    //{
-    //    GameManager.instance.grindScript.grindPoints.Remove(gPoint);
-    //}
+     void OnDestroy()
+    {
+        GameManager.instance.grindScript.grindPoints.Remove(gPoint);
+    }
 }

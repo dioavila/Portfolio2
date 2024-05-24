@@ -33,7 +33,7 @@ public class GrindScript : MonoBehaviour
     {
         if (grindPoints.Count == 4)
         {
-            if (grindPoints[0].GetComponentInParent<GrindPointsLogic>().inRangePlayer)
+            if (grindPoints[0].GetComponentInParent<GrindPointsLogic>().inRangePlayer && grindPoints[0] != null)
             {
                 canGrind = true;
             }
@@ -50,7 +50,7 @@ public class GrindScript : MonoBehaviour
     void StartGrind()
     {
         createCirclePath();
-        GameManager.instance.playerScript.swinging = true;
+        GameManager.instance.playerScript.isGrinding = true;
         GameManager.instance.playerScript.playerCanMove = false;
         transform.position = Vector3.Lerp(transform.position, p0, startPosLerpRate);
         StartCoroutine(grindAction());
@@ -75,7 +75,7 @@ public class GrindScript : MonoBehaviour
             timerVar += Time.deltaTime * speedMod;
             Vector3 newPoint = ReturnPoint(timerVar);
             transform.position = Vector3.Lerp(transform.position, newPoint, grindLerpRate);
-            if (GameManager.instance.playerScript.controller.isGrounded)
+            if (GameManager.instance.playerScript.controller.isGrounded || grindPoints.Count == 0)
             {
                 break;
             }
@@ -85,7 +85,7 @@ public class GrindScript : MonoBehaviour
         //End of Grind
         canGrind = false;
         GameManager.instance.playerScript.playerCanMove = true;
-        GameManager.instance.playerScript.swinging = false;
+        GameManager.instance.playerScript.isGrinding = false;
     }
 
     Vector3 ReturnPoint(float timerSpot)

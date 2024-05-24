@@ -18,9 +18,11 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Shooting")]
     [SerializeField] Transform playerShootPos;
     [SerializeField] GameObject playerBullet;
+    [SerializeField] GameObject grindBullet;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
+    [SerializeField] float grindShootRate;
     [SerializeField] GameObject playerObj;
     bool isShooting;
 
@@ -29,7 +31,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] int jumpMax;
     [SerializeField] int playerSpeed;
     [SerializeField] int sprintMod;
-    public bool swinging = false;
+    public bool isGrinding = false;
     public Vector3 moveDir;
     int playerSpeedStorage;
     Vector3 playerVel;
@@ -134,7 +136,12 @@ public class wallRun : MonoBehaviour, IDamage
 
         if(Input.GetButton("Fire1") && !isShooting)
         {
-            StartCoroutine(shoot());
+            StartCoroutine(shoot(playerBullet, shootRate));
+        }
+
+        if (Input.GetButtonDown("Grind Throw") && !isShooting)
+        {
+            StartCoroutine(shoot(grindBullet, grindShootRate));
         }
 
         if (Input.GetButtonDown("Fire2"))
@@ -159,7 +166,7 @@ public class wallRun : MonoBehaviour, IDamage
             onAir = true;
         }
 
-        if (!isWallRunning && !swinging)
+        if (!isWallRunning && !isGrinding)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
@@ -178,19 +185,19 @@ public class wallRun : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator shoot()
+    IEnumerator shoot(GameObject bulletType, float shootRateType)
     {
         isShooting = true;
-        Instantiate(playerBullet, playerShootPos.position, Camera.main.transform.rotation);
+        Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
 
-        IDamage dmg = playerBullet.gameObject.GetComponent<IDamage>();
+        IDamage dmg = bulletType.gameObject.GetComponent<IDamage>();
 
-        if (playerBullet.transform != transform.CompareTag("Player")&& dmg != null)
+        if (bulletType.transform != transform.CompareTag("Player")&& dmg != null)
         {
             dmg.TakeDamage(shootDamage);
         }
 
-        yield return new WaitForSeconds(shootRate);
+        yield return new WaitForSeconds(shootRateType);
         isShooting = false;
     }
 

@@ -48,8 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gPoint: {fileID: 4192488693041137611}
-  destructionTimer: 100
   inRangePlayer: 0
+  destructionTimerMax: 5
+  destructionSpeed: 1
 --- !u!54 &1755532986681074904
 Rigidbody:
   m_ObjectHideFlags: 0
