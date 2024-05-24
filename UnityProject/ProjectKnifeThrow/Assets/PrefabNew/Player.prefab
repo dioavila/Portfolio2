@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6814262382439670696}
   - component: {fileID: 7686514533400247314}
   - component: {fileID: 1335816759456937305}
+  - component: {fileID: 5981596156060337168}
   - component: {fileID: 6741587812171078570}
   - component: {fileID: 5974077571524363167}
   - component: {fileID: 2126190329339569351}
@@ -31,7 +32,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4119261435964797523}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.0000043362375, z: -0, w: -1}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
   m_LocalPosition: {x: 75.6, y: 1.6000004, z: -86.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -70,20 +71,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b1754d70fcbad4459c6e890408af53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBullet: {fileID: 4348980476123300056, guid: 2db8e1c7fc002be4f97343fe55b16141, type: 3}
-  playerShootPos: {fileID: 8497007687942447472}
   controller: {fileID: 6741587812171078570}
-  playerSpeed: 8
-  jumpMax: 2
-  jumpSpeed: 8
   gravity: 25
-  sprintMod: 2
   startingHP: 10
   HP: 0
+  playerShootPos: {fileID: 8497007687942447472}
+  playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
+  grindBullet: {fileID: 1434887993633493559, guid: 5b2b389265d705446bb1e33a6a098f3c, type: 3}
   shootDamage: 50
   shootDist: 52
   shootRate: 0.8
+  grindShootRate: 0.1
   playerObj: {fileID: 4119261435964797523}
+  jumpSpeed: 8
+  jumpMax: 2
+  playerSpeed: 8
+  sprintMod: 2
+  isGrinding: 0
   moveDir: {x: 0, y: 0, z: 0}
   wallDist: 10
   charPitch: 0
@@ -92,12 +96,30 @@ MonoBehaviour:
   timeDilationRate: 0.2
   bTimeTotal: 5
   bTimeCurrent: 0
+  bulletTimeActive: 0
   barFillRate: 3
   barEmptyRate: 5
+  playerCanMove: 1
   item:
   - {fileID: 0}
   - {fileID: 0}
   messagePanel: {fileID: 0}
+--- !u!114 &5981596156060337168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4119261435964797523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9168ecd139863354da84dee5da13c09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grindPoints: []
+  startPosLerpRate: 0.75
+  grindLerpRate: 0.5
+  speedMod: 0.75
 --- !u!143 &6741587812171078570
 CharacterController:
   m_ObjectHideFlags: 0
@@ -264,6 +286,7 @@ MonoBehaviour:
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
+  sensitivityComp: 5
 --- !u!20 &2120563902239707426
 Camera:
   m_ObjectHideFlags: 0
