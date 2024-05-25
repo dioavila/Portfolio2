@@ -74,8 +74,11 @@ public class GrindScript : MonoBehaviour
         {
             timerVar += Time.deltaTime * speedMod;
             Vector3 newPoint = ReturnPoint(timerVar);
-            transform.position = Vector3.Lerp(transform.position, newPoint, grindLerpRate);
-            if (GameManager.instance.playerScript.controller.isGrounded || grindPoints.Count == 0)
+            //transform.position = Vector3.Lerp(transform.position, newPoint, grindLerpRate);
+            Vector3 mov = newPoint - transform.position;
+            GameManager.instance.playerScript.controller.Move(mov * Time.deltaTime * 100);
+
+            if (GameManager.instance.playerScript.controller.isGrounded || GameManager.instance.playerScript.controller.collisionFlags == CollisionFlags.Sides)
             {
                 break;
             }
