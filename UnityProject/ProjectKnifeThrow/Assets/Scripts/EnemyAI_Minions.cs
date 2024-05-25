@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,7 +13,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos2;
     [SerializeField] Transform shootPos3;
     [SerializeField] Transform shootPos4;
-    [SerializeField] Transform eyePos;
+    [SerializeField] Transform headPos;
 
     [SerializeField] int HP;
     [SerializeField] int viewAngle;
@@ -25,11 +26,11 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
 
     public NavMeshAgent agent;
-    //public Transform player;
 
     bool isShooting;
     bool playerInRange;
     bool destChosen;
+    bool isReadyToOrbit = false;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -40,7 +41,7 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        //GameManager.instance.updateGameGoal(1);
+        GameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
     }
@@ -51,14 +52,21 @@ public class enemyAI : MonoBehaviour, IDamage
         //float animSpeed = agent.velocity.normalized.magnitude;
         //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
 
-        if(playerInRange && !canSeePlayer())
+        if (playerInRange && !canSeePlayer())
         {
             StartCoroutine(roam());
         }
         else if (!playerInRange)
         {
+            if (isReadyToOrbit)
+                isReadyToOrbit= false;
             StartCoroutine(roam());
-        } 
+        }
+
+        if (isReadyToOrbit)
+        {
+            orbiting();
+        }
     }
 
     IEnumerator roam()
@@ -81,27 +89,27 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool canSeePlayer()
     {
-        playerDir = GameManager.instance.player.transform.position - eyePos.position;
+        playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
         Debug.Log(angleToPlayer);
-        Debug.DrawRay(eyePos.position, playerDir);
+        Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit;
-        if(Physics.Raycast(eyePos.position, playerDir, out hit))
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
-            if( hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
-            {
+            if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
+            { 
                 agent.stoppingDistance = stoppingDistOrig;
-                agent.SetDestination(GameManager.instance.player.transform.position);
 
                 if (!isShooting)
                 {
                     StartCoroutine(shoot());
                 }
-                
-                if(agent.remainingDistance <= agent.stoppingDistance)
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
                 {
                     faceTarget();
+                    isReadyToOrbit = true;
                 }
 
                 return true;
@@ -116,6 +124,12 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+    }
+
+    void orbiting()
+    {
+        Vector3 orbit = Vector3.Cross(transform.forward, Vector3.up);
+        transform.position = Vector3.Lerp(transform.position, orbit, Time.deltaTime * 5);
     }
 
     void OnTriggerEnter(Collider other)
@@ -136,23 +150,22 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator shoot()
     {
-        //transform.LookAt(player);
         isShooting = true;
         //anim.SetTrigger("Shoot");
-        if (shootPos1  != null)
+        if (shootPos1 != null)
         {
             createBullet(shootPos1);
         }
-        if (shootPos2 != null) 
+        if (shootPos2 != null)
         {
             createBullet(shootPos2);
         }
-        if(shootPos3 != null)
+        if (shootPos3 != null)
         {
             createBullet(shootPos3);
         }
-        if(shootPos4 != null)
-        { 
+        if (shootPos4 != null)
+        {
             createBullet(shootPos4);
         }
 
@@ -174,6 +187,8 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             GameManager.instance.updateGameGoal(-1);
+            //agent.height = 0;
+            //agent.GetComponent<Rigidbody>().isKinematic = false;
             Destroy(gameObject);
             GameManager.instance.doorIsDestroyable = true;
         }
