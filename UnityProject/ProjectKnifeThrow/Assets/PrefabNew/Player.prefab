@@ -37,8 +37,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8497007687942447472}
   - {fileID: 8990341063387757657}
+  - {fileID: 8497007687942447472}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 360, z: 0}
 --- !u!114 &7686514533400247314
@@ -76,8 +76,17 @@ MonoBehaviour:
   startingHP: 10
   HP: 0
   playerShootPos: {fileID: 8497007687942447472}
+<<<<<<< Updated upstream
   playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
   grindBullet: {fileID: 1434887993633493559, guid: 5b2b389265d705446bb1e33a6a098f3c, type: 3}
+=======
+<<<<<<< HEAD
+  playerBullet: {fileID: 4348980476123300056, guid: 2db8e1c7fc002be4f97343fe55b16141, type: 3}
+=======
+  playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
+  grindBullet: {fileID: 1434887993633493559, guid: 5b2b389265d705446bb1e33a6a098f3c, type: 3}
+>>>>>>> 472b095fd2ca08a061dae7a8363ac8cc97b5559c
+>>>>>>> Stashed changes
   shootDamage: 50
   shootDist: 52
   shootRate: 0.8
@@ -87,7 +96,15 @@ MonoBehaviour:
   jumpMax: 2
   playerSpeed: 8
   sprintMod: 2
+<<<<<<< Updated upstream
   isGrinding: 0
+=======
+<<<<<<< HEAD
+  swinging: 0
+=======
+  isGrinding: 0
+>>>>>>> 472b095fd2ca08a061dae7a8363ac8cc97b5559c
+>>>>>>> Stashed changes
   moveDir: {x: 0, y: 0, z: 0}
   wallDist: 10
   charPitch: 0
@@ -253,7 +270,7 @@ GameObject:
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8990341063387757657
 Transform:
@@ -286,7 +303,15 @@ MonoBehaviour:
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
+<<<<<<< Updated upstream
   sensitivityComp: 5
+=======
+<<<<<<< HEAD
+  sensitivityComp: 0
+=======
+  sensitivityComp: 5
+>>>>>>> 472b095fd2ca08a061dae7a8363ac8cc97b5559c
+>>>>>>> Stashed changes
 --- !u!20 &2120563902239707426
 Camera:
   m_ObjectHideFlags: 0
