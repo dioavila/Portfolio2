@@ -21,6 +21,10 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] GameObject playerBullet;
     [SerializeField] GameObject grindBullet;
+    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    public int gThrowCount;
+    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
+    bool resetOn = false;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
@@ -95,6 +99,8 @@ public class wallRun : MonoBehaviour, IDamage
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
+        GKnifeDisplayReset();
+
         //Bullet Time Check
         BulletTimeCheck();
 
@@ -120,6 +126,18 @@ public class wallRun : MonoBehaviour, IDamage
         }
     }
 
+    void GKnifeDisplayReset()
+    {
+        if(gThrowCount == 0 && resetOn)
+        {
+            for(int knifeModIter = 0; knifeModIter < gKnifeModels.Count; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+            resetOn = false;
+        }
+    }
+
     void PlayerActions()
     {
         if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
@@ -127,8 +145,17 @@ public class wallRun : MonoBehaviour, IDamage
             StartCoroutine(shoot(playerBullet, shootRate));
         }
 
-        if (Input.GetButtonDown("Grind Throw") && !isShooting)
+        if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
+            if(gThrowCount >= 0 && gThrowCount <= 4)
+            {
+                ++gThrowCount;
+                gKnifeModels[gThrowCount-1].SetActive(false);
+                if(gThrowCount >= 4)
+                {
+                    resetOn = true;
+                }
+            }
             StartCoroutine(shoot(grindBullet, grindShootRate));
         }
 
@@ -223,22 +250,6 @@ public class wallRun : MonoBehaviour, IDamage
             playerSpeed = playerSpeedStorage;
         }
     }
-
-    //IEnumerator shoot(GameObject bulletType, float shootRateType)
-    //{
-    //    isShooting = true;
-    //    Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
-
-    //    IDamage dmg = bulletType.gameObject.GetComponent<IDamage>();
-
-    //    if (bulletType.transform != transform.CompareTag("Player")&& dmg != null)
-    //    {
-    //        dmg.TakeDamage(shootDamage);
-    //    }
-
-    //    yield return new WaitForSeconds(shootRateType);
-    //    isShooting = false;
-    //}
 
     IEnumerator shoot(GameObject bulletType, float shootRateType)
     {

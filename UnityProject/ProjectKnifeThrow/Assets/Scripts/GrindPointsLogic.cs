@@ -38,6 +38,7 @@ public class GrindPointsLogic : MonoBehaviour
         }
         else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
         {
+            GameManager.instance.playerScript.gThrowCount--;
             Destroy(gameObject);
         }
     }
