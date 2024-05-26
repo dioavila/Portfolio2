@@ -24,7 +24,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
     public int gThrowCount;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
-    bool resetOn = false;
+    public bool resetOn = false;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
@@ -128,9 +128,17 @@ public class wallRun : MonoBehaviour, IDamage
 
     void GKnifeDisplayReset()
     {
-        if(gThrowCount == 0 && resetOn)
+        if (gThrowCount == 0)
         {
-            for(int knifeModIter = 0; knifeModIter < gKnifeModels.Count; ++knifeModIter)
+            for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+                resetOn = false;
+        }
+        else if (resetOn && gThrowCount > 0)
+        {
+            for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
             {
                 gKnifeModels[knifeModIter].SetActive(true);
             }
@@ -151,10 +159,10 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount-1].SetActive(false);
-                if(gThrowCount >= 4)
-                {
-                    resetOn = true;
-                }
+                //if(gThrowCount == 4)
+                //{
+                //    resetOn = true;
+                //}
             }
             StartCoroutine(shoot(grindBullet, grindShootRate));
         }
@@ -257,13 +265,6 @@ public class wallRun : MonoBehaviour, IDamage
         {
             isShooting = true;
             Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
-
-            IDamage dmg = bulletType.gameObject.GetComponent<IDamage>();
-
-            if (bulletType.transform != transform.CompareTag("Player") && dmg != null)
-            {
-                dmg.TakeDamage(shootDamage);
-            }
 
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;

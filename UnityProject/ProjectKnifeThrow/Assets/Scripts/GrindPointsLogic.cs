@@ -60,6 +60,7 @@ public class GrindPointsLogic : MonoBehaviour
     }
      void OnDestroy()
     {
-        GameManager.instance.grindScript.grindPoints.Remove(gPoint);
+        //GameManager.instance.grindScript.grindPoints.Remove(gPoint);
+        GameManager.instance.grindScript.destroyedCount++;
     }
 }

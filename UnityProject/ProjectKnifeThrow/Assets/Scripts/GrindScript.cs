@@ -10,22 +10,34 @@ public class GrindScript : MonoBehaviour
     [Header("Grind Detection")]
     bool canGrind = false;
     public List<Transform> grindPoints;
+    public int destroyedCount = 0;
 
     [Header("Grind Settings")]
     [SerializeField] [Range(0, 1)] float startPosLerpRate = 0.75f;
-    [SerializeField] [Range(0, 1)] float grindLerpRate = 0.5f;
+    //[SerializeField] [Range(0, 1)] float grindLerpRate = 0.5f;
     [SerializeField] float speedMod;
-
-    Vector3 p0, p1, p2, p3;
 
     // Update is called once per frame
     void Update()
     {
+        ClearList();
         GrindCheck();
+        
 
         if(Input.GetKeyDown(KeyCode.E) && canGrind)
         {
+
             StartGrind();
+
+        }
+    }
+
+    void ClearList()
+    {
+        if (destroyedCount >= 4)
+        {
+            grindPoints.Clear();
+            destroyedCount = 0;
         }
     }
 
@@ -49,20 +61,11 @@ public class GrindScript : MonoBehaviour
 
     void StartGrind()
     {
-        createCirclePath();
+        //createCirclePath();
         GameManager.instance.playerScript.isGrinding = true;
         GameManager.instance.playerScript.playerCanMove = false;
-        transform.position = Vector3.Lerp(transform.position, p0, startPosLerpRate);
+        transform.position = Vector3.Lerp(transform.position, grindPoints[0].position, startPosLerpRate);
         StartCoroutine(grindAction());
-    }
-
-    void createCirclePath()
-    {
-        //Set up start and endpoints
-        p0 = grindPoints[0].position;
-        p1 = grindPoints[1].position;
-        p2 = grindPoints[2].position;
-        p3 = grindPoints[3].position;
     }
 
     IEnumerator grindAction()
@@ -94,10 +97,10 @@ public class GrindScript : MonoBehaviour
     Vector3 ReturnPoint(float timerSpot)
     {
         //Bezier Curve Equation
-        float3 pointC = Mathf.Pow(1 - timerSpot, 3) * p0 + 
-            3 * Mathf.Pow(1 - timerSpot, 2) * timerSpot * p1 +
-            3 * (1 - timerSpot) * Mathf.Pow(timerSpot, 2) * p2 +
-            Mathf.Pow(timerSpot, 3) * p3;
+        float3 pointC = Mathf.Pow(1 - timerSpot, 3) * grindPoints[0].position + 
+            3 * Mathf.Pow(1 - timerSpot, 2) * timerSpot * grindPoints[1].position +
+            3 * (1 - timerSpot) * Mathf.Pow(timerSpot, 2) * grindPoints[2].position +
+            Mathf.Pow(timerSpot, 3) * grindPoints[3].position;
         return pointC;
     }
 }
