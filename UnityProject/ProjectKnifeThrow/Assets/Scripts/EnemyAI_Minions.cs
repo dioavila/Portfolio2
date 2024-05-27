@@ -5,8 +5,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour//, IDamage
 {
+
     [SerializeField] Animator anim;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
@@ -25,6 +26,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
+    [SerializeField] GameObject critPoint;
+
     public NavMeshAgent agent;
 
     bool isShooting;
@@ -39,7 +42,9 @@ public class enemyAI : MonoBehaviour, IDamage
     float stoppingDistOrig;
 
     Renderer materialOrig;
-
+    //trial 
+    bool lookPlayer = false;
+    public int turnRate;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,15 +60,27 @@ public class enemyAI : MonoBehaviour, IDamage
         //float animSpeed = agent.velocity.normalized.magnitude;
         //anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), animSpeed, Time.deltaTime * animSpeedTrans));
 
+        if (lookPlayer)
+        {
+            faceTarget();
+        }
+
         if (playerInRange && !canSeePlayer())
         {
+            Debug.Log("Roam Forgot");
             StartCoroutine(roam());
         }
         else if (!playerInRange)
         {
+            Debug.Log("Roam General");
+            StartCoroutine(roam());
             //if (isReadyToOrbit)
             //    isReadyToOrbit= false;
-            StartCoroutine(roam());
+        }
+
+        if (critPoint == null)
+        {
+            Destroy(gameObject);
         }
 
         //if (isReadyToOrbit)
@@ -74,7 +91,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator roam()
     {
-        if (!destChosen && agent.remainingDistance < 0.1f)
+        if (!destChosen && agent.remainingDistance < 1f)
         {
             destChosen = true;
             agent.stoppingDistance = 0;
@@ -102,18 +119,19 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
             { 
-                agent.stoppingDistance = stoppingDistOrig;
+                //agent.stoppingDistance = stoppingDistOrig;
 
                 if (!isShooting)
                 {
                     StartCoroutine(shoot());
                 }
 
-                if (agent.remainingDistance <= agent.stoppingDistance)
-                {
-                    faceTarget();
-                    //isReadyToOrbit = true;
-                }
+                lookPlayer = true;
+                //if (agent.remainingDistance <= agent.stoppingDistance)
+                //{
+                //    faceTarget();
+                //    //isReadyToOrbit = true;
+                //}
 
                 return true;
             }
@@ -125,8 +143,11 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void faceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        //Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        //transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        Vector3 direction = GameManager.instance.player.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, turnRate * Time.deltaTime);
     }
 
     //void orbiting()
@@ -148,6 +169,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            agent.stoppingDistance = 0;
         }
     }
 
@@ -181,26 +203,26 @@ public class enemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
-    public void TakeDamage(int amount)
-    {
-        HP -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        StartCoroutine(flashred());
+    //public void TakeDamage(int amount)
+    //{
+    //    HP -= amount;
+    //    agent.SetDestination(GameManager.instance.player.transform.position);
+    //    StartCoroutine(flashred());
 
-        if (HP <= 0)
-        {
-            GameManager.instance.updateGameGoal(-1);
-            Destroy(gameObject);
-            GameManager.instance.doorIsDestroyable = true;
-        }
-    }
+    //    if (HP <= 0)
+    //    {
+    //        GameManager.instance.updateGameGoal(-1);
+    //        Destroy(gameObject);
+    //        GameManager.instance.doorIsDestroyable = true;
+    //    }
+    //}
 
-    IEnumerator flashred()
-    {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
-    }
+    //IEnumerator flashred()
+    //{
+    //    model.material.color = Color.red;
+    //    yield return new WaitForSeconds(0.1f);
+    //    model.material.color = Color.white;
+    //}
 
     IEnumerator flashmagenta()
     {
