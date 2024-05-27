@@ -11,7 +11,7 @@ public class HealthPickup : MonoBehaviour, IPickup
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<wallRun>();  
+        
     }
 
     // Update is called once per frame

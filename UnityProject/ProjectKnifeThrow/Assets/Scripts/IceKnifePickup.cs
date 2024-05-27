@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class IceKnifePickup : MonoBehaviour, IPickup
 {
+
+
     wallRun player;
 
     public bool isInRange;
@@ -14,20 +16,20 @@ public class IceKnifePickup : MonoBehaviour, IPickup
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PickUpItem()
     {
         if (player != null)
         {
-            knife.currentKinfeCount = maxkinfeCount;
+            //knife.currentKinfeCount = MaxKinfeCount;
             Destroy(gameObject);
         }
     }
