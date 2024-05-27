@@ -38,12 +38,15 @@ public class enemyAI : MonoBehaviour, IDamage
     float angleToPlayer;
     float stoppingDistOrig;
 
+    Renderer materialOrig;
+
     // Start is called before the first frame update
     void Start()
     {
         GameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        materialOrig = gameObject.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -58,20 +61,20 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         else if (!playerInRange)
         {
-            if (isReadyToOrbit)
-                isReadyToOrbit= false;
+            //if (isReadyToOrbit)
+            //    isReadyToOrbit= false;
             StartCoroutine(roam());
         }
 
-        if (isReadyToOrbit)
-        {
-            orbiting();
-        }
+        //if (isReadyToOrbit)
+        //{
+        //    orbiting();
+        //}
     }
 
     IEnumerator roam()
     {
-        if (!destChosen && agent.remainingDistance < 0.05f)
+        if (!destChosen && agent.remainingDistance < 0.1f)
         {
             destChosen = true;
             agent.stoppingDistance = 0;
@@ -109,7 +112,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
                     faceTarget();
-                    isReadyToOrbit = true;
+                    //isReadyToOrbit = true;
                 }
 
                 return true;
@@ -126,11 +129,11 @@ public class enemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    void orbiting()
-    {
-        Vector3 orbit = Vector3.Cross(transform.forward, Vector3.up);
-        transform.position = Vector3.Lerp(transform.position, orbit, Time.deltaTime * 5);
-    }
+    //void orbiting()
+    //{
+    //    Vector3 orbit = Vector3.Cross(transform.forward, Vector3.up);
+    //    transform.position = Vector3.Lerp(transform.position, orbit, Time.deltaTime * 5);
+    //}
 
     void OnTriggerEnter(Collider other)
     {
@@ -187,8 +190,6 @@ public class enemyAI : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             GameManager.instance.updateGameGoal(-1);
-            //agent.height = 0;
-            //agent.GetComponent<Rigidbody>().isKinematic = false;
             Destroy(gameObject);
             GameManager.instance.doorIsDestroyable = true;
         }
@@ -199,5 +200,13 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = Color.white;
+    }
+
+    IEnumerator flashblue()
+    {
+        Color temp = materialOrig.material.color;
+        materialOrig.material.color = Color.blue;
+        yield return new WaitForSeconds(0.5f);
+        materialOrig.material.color = temp;
     }
 }
