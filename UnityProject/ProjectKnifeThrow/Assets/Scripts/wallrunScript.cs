@@ -34,7 +34,7 @@ public class wallRun : MonoBehaviour, IDamage
     //Kasey Add
     [SerializeField] int shootspeed;
     [SerializeField] List<KnifeStats> knifeList = new List<KnifeStats>();
-    public int selectedKnife = 0;
+    public int selectedKnife;
     [SerializeField] GameObject knifeModel;
     [SerializeField] int freezeTime;
 
@@ -101,6 +101,8 @@ public class wallRun : MonoBehaviour, IDamage
 
         GKnifeDisplayReset();
 
+        Selectknife();
+
         //Bullet Time Check
         BulletTimeCheck();
 
@@ -150,7 +152,7 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
         {
-            StartCoroutine(shoot(playerBullet, shootRate));
+            StartCoroutine(shoot(knifeList[selectedKnife].Knife, shootRate));
         }
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)

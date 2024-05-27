@@ -6,62 +6,71 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
-public class KwallRun : MonoBehaviour, IDamage
+public class kwallRun : MonoBehaviour, IDamage
 {
     [Header("General Settings")]
-   // [SerializeField] GameObject playerBullet;
-   // [SerializeField] GameObject playerIceBullet;
-    [SerializeField] int FreezeTime;
-    [SerializeField] Transform playerShootPos;
-    [SerializeField] CharacterController controller;
-    [SerializeField] GameObject KnifeModel;
-    [SerializeField] List<KnifeStats> Knifelist = new List<KnifeStats>();
-    [SerializeField] int playerSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int jumpSpeed;
+    [SerializeField] public CharacterController controller;
     [SerializeField] int gravity;
-    [SerializeField] int sprintMod;
     [SerializeField] int startingHP;
     [SerializeField] int HP;
+    int gravityStorage;
+
+    [Header("Shooting")]
+    [SerializeField] Transform playerShootPos;
+    [SerializeField] Transform knifeModelLoc;
+    [SerializeField] Transform grindKnifeModelLoc;
+    [SerializeField] GameObject playerBullet;
+    [SerializeField] GameObject grindBullet;
+    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    public int gThrowCount;
+    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
+    public bool resetOn = false;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-    [SerializeField] int shootspeed;
+    [SerializeField] float grindShootRate;
     [SerializeField] GameObject playerObj;
-    int gravityStorage;
-    int playerSpeedStorage;
+    bool isShooting;
+    //Kasey Add
+    [SerializeField] int shootspeed;
+    [SerializeField] List<KnifeStats> knifeList = new List<KnifeStats>();
+    public int selectedKnife;
+    [SerializeField] GameObject knifeModel;
+    [SerializeField] int freezeTime;
 
+    [Header("Movement")]
+    [SerializeField] int jumpSpeed;
+    [SerializeField] int jumpMax;
+    [SerializeField] int playerSpeed;
+    [SerializeField] int sprintMod;
+    public bool isGrinding = false;
     public Vector3 moveDir;
+    int playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
-    bool isShooting;
-    //bool playerBulletIsEquipped;
-    //bool playerIceBulletIsEquipped;
-    //int selectknife;
-    int selectedknife;
-    
+
     //Wallrun Variables
     [Header("Wall Detection")]
     [SerializeField] int wallDist;
     [SerializeField] float charPitch;
-    [SerializeField] bool onAir = false;
+    [SerializeField] public bool onAir = false;
     [SerializeField] bool canWallRun = true;
     Vector3 wallDirection;
     bool onWallLeft = false, onWallRight = false;
 
     //Bullet Time
     [Header("Bullet Time")]
-    [SerializeField] float timeDilationRate;
+    [SerializeField] public float timeDilationRate;
     [SerializeField] float bTimeTotal;
     public float bTimeCurrent;
-    bool bulletTimeActive = false;
+    public bool bulletTimeActive = false;
     [SerializeField] float barFillRate;
     [SerializeField] float barEmptyRate;
 
     //Publics
     [Header("Char States")]
     bool canSprint = true;
-    bool playerCanMove = true;
+    public bool playerCanMove = true;
     bool isWallRunning = false;
 
     [Header("Item Pickup")]
@@ -70,16 +79,19 @@ public class KwallRun : MonoBehaviour, IDamage
     public GameObject messagePanel;
     string itemTag;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
+        knifeModel = knifeList[0].Knife;
+        Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
         gravityStorage = gravity;
         HP = startingHP;
         updatePlayerUI();
         updateBPUI();
-       // playerBulletIsEquipped = true;
     }
 
     // Update is called once per frame
@@ -87,9 +99,12 @@ public class KwallRun : MonoBehaviour, IDamage
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
-        Selectknife();
+        GKnifeDisplayReset();
+
         //Bullet Time Check
         BulletTimeCheck();
+
+        PlayerActions();
 
         //Movement and WallRun Check
         MovementCheck();
@@ -97,7 +112,7 @@ public class KwallRun : MonoBehaviour, IDamage
         //Pick Up Logic
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
-            for(int i = 0; i < item.Length; i++) 
+            for (int i = 0; i < item.Length; i++)
             {
                 if (item[i] != null && item[i].tag == itemTag)
                 {
@@ -107,6 +122,62 @@ public class KwallRun : MonoBehaviour, IDamage
                     CloseMessagePanel("");
                     break;
                 }
+            }
+        }
+    }
+
+    void GKnifeDisplayReset()
+    {
+        if (gThrowCount == 0)
+        {
+            for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+            resetOn = false;
+        }
+        else if (resetOn && gThrowCount > 0)
+        {
+            for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+            resetOn = false;
+        }
+    }
+
+    void PlayerActions()
+    {
+        if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
+        {
+            StartCoroutine(shoot(playerBullet, shootRate));
+        }
+
+        if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
+        {
+            if (gThrowCount >= 0 && gThrowCount <= 4)
+            {
+                ++gThrowCount;
+                gKnifeModels[gThrowCount - 1].SetActive(false);
+                //if(gThrowCount == 4)
+                //{
+                //    resetOn = true;
+                //}
+            }
+            StartCoroutine(shoot(grindBullet, grindShootRate));
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = timeDilationRate;
+                bulletTimeActive = true;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                bulletTimeActive = false;
             }
         }
     }
@@ -132,41 +203,35 @@ public class KwallRun : MonoBehaviour, IDamage
             }
         }
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        if (playerCanMove) {
+        if (playerCanMove)
+        {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
-       sprint();
+        sprint();
 
-        //weapon swap logic
-        //if(Input.GetButtonDown("Primary Weapon")) 
+        //if(Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
         //{
-        //    playerBulletIsEquipped = true;
-        //    playerIceBulletIsEquipped = false;
-        //}
-        //if(Input.GetButtonDown("Second Weapon"))
-        //{
-        //    playerBulletIsEquipped = false;
-        //    playerIceBulletIsEquipped = true;
+        //    StartCoroutine(shoot(playerBullet, shootRate));
         //}
 
-        if(Input.GetButton("Fire1") && !isShooting && Knifelist[selectedknife])
-        {
-            StartCoroutine(shoot());
-        }
+        //if (Input.GetButtonDown("Grind Throw") && !isShooting)
+        //{
+        //    StartCoroutine(shoot(grindBullet, grindShootRate));
+        //}
 
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if (Time.timeScale == 1f)
-            {
-                Time.timeScale = timeDilationRate;
-                bulletTimeActive = true;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-                bulletTimeActive = false;
-            }
-        }
+        //if (Input.GetButtonDown("Fire2"))
+        //{
+        //    if (Time.timeScale == 1f)
+        //    {
+        //        Time.timeScale = timeDilationRate;
+        //        bulletTimeActive = true;
+        //    }
+        //    else
+        //    {
+        //        Time.timeScale = 1f;
+        //        bulletTimeActive = false;
+        //    }
+        //}
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -176,7 +241,7 @@ public class KwallRun : MonoBehaviour, IDamage
             onAir = true;
         }
 
-        if (!isWallRunning)
+        if (!isWallRunning && !isGrinding)
         {
             playerVel.y -= gravity * Time.deltaTime;
             controller.Move(playerVel * Time.deltaTime);
@@ -189,69 +254,67 @@ public class KwallRun : MonoBehaviour, IDamage
         {
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint") && canSprint)
+        else if (Input.GetButtonUp("Sprint") && canSprint)
         {
             playerSpeed = playerSpeedStorage;
         }
     }
 
-    IEnumerator shoot()
+    IEnumerator shoot(GameObject bulletType, float shootRateType)
     {
-        isShooting = true;
-        
-        Instantiate(Knifelist[selectedknife].Knife, playerShootPos.position, Camera.main.transform.rotation);
-
-        IDamage dmg = Knifelist[selectedknife].Knife.gameObject.GetComponent<IDamage>();
-
-        if (Knifelist[selectedknife].Knife != transform.CompareTag("Player")&& dmg != null)
+        if (bulletType.name == "Ammo - playerBulletG")
         {
-            dmg.TakeDamage(shootDamage);
+            isShooting = true;
+            Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
+
+            yield return new WaitForSeconds(shootRateType);
+            isShooting = false;
         }
+        else
+        {
+            isShooting = true;
 
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
+            Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
+
+            IDamage dmg = knifeList[selectedKnife].Knife.gameObject.GetComponent<IDamage>();
+
+            if (knifeList[selectedKnife].Knife != transform.CompareTag("Player") && dmg != null)
+            {
+                dmg.TakeDamage(shootDamage);
+            }
+
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+        }
     }
-
-    //shoot ice bullet
-    //IEnumerator ShootIceBullet()
-    //{
-    //    isShooting = true;
-    //    Instantiate(playerIceBullet, playerShootPos.position, Camera.main.transform.rotation);
-
-    //    IFreeze dmg = playerIceBullet.gameObject.GetComponent<IFreeze>();
-
-    //    if (playerIceBullet.transform != transform.CompareTag("Player") && dmg != null)
-    //    {
-    //        dmg.FreezeTime(FreezeTime);
-    //    }
-    //    yield return new WaitForSeconds(shootRate);
-    //    isShooting = false;
-    //}
 
     void Selectknife()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedknife < Knifelist.Count - 1)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedKnife < knifeList.Count - 1)
         {
-            selectedknife++;
+            selectedKnife++;
             Changegun();
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedknife > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedKnife > 0)
         {
-            selectedknife--;
+            selectedKnife--;
             Changegun();
         }
     }
 
     void Changegun()
     {
-        shootDamage = Knifelist[selectedknife].Damage;
-        shootspeed = Knifelist[selectedknife].speed;
-        FreezeTime = Knifelist[selectedknife].freeze;
+        shootDamage = knifeList[selectedKnife].Damage;
+        shootspeed = knifeList[selectedKnife].speed;
+        freezeTime = knifeList[selectedKnife].freeze;
 
-        KnifeModel.GetComponent<MeshFilter>().sharedMesh = Knifelist[selectedknife].Knife.GetComponent<MeshFilter>().sharedMesh;
-        KnifeModel.GetComponent<MeshRenderer>().sharedMaterial = Knifelist[selectedknife].Knife.GetComponent<MeshRenderer>().sharedMaterial;
+        knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
+        knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
     }
 
+    /// <summary>
+    /// Wall Run Logic
+    /// </summary>
     void MovementCheck()
     {
         if (onWallRight || onWallLeft)
@@ -294,7 +357,7 @@ public class KwallRun : MonoBehaviour, IDamage
     {
         Vector3 wallTouchChecker;
 
-        if(jumpCount == 2)
+        if (jumpCount == 2)
         {
             jumpCount = 1;
         }
@@ -309,11 +372,11 @@ public class KwallRun : MonoBehaviour, IDamage
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
-        
-        controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+
+        controller.Move(wallDirection * (playerSpeed * sprintMod) * Time.deltaTime);
         isWallRunning = true;
 
-        if(playerCanMove)
+        if (playerCanMove)
         {
             canSprint = false;
             playerCanMove = false;
@@ -332,7 +395,7 @@ public class KwallRun : MonoBehaviour, IDamage
             canWallRun = true;
             playerCanMove = true;
             isWallRunning = false;
-        }       
+        }
     }
 
     /// <summary>
@@ -352,7 +415,7 @@ public class KwallRun : MonoBehaviour, IDamage
     //triggers the ability to pickup
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Health Pickup1") || other.gameObject.CompareTag("Health Pickup2"))
+        if (other.gameObject.CompareTag("Health Pickup1") || other.gameObject.CompareTag("Health Pickup2"))
         {
             itemTag = other.gameObject.tag;
             isInRange = true;
@@ -425,7 +488,7 @@ public class KwallRun : MonoBehaviour, IDamage
 
     void BulletTimeActive()
     {
-        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        bTimeCurrent -= Time.deltaTime * barEmptyRate;
         updateBPUI();
     }
     void BulletTimeRefill()
@@ -439,5 +502,4 @@ public class KwallRun : MonoBehaviour, IDamage
         GameManager.instance.playerBTBar.fillAmount = bTimeCurrent / bTimeTotal;
     }
 
-    
 }

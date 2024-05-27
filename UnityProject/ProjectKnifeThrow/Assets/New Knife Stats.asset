@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1fdadee3af37e479bd9cfcd0aa1149, type: 3}
   m_Name: New Knife Stats
   m_EditorClassIdentifier: 
-  Knife: {fileID: 7487187445853999764, guid: cd7c2a6ec3dd62a408220bb31187c64b, type: 3}
+  Knife: {fileID: 2483800640986106243, guid: 723974cd18bdd694b8ca213440febcae, type: 3}
   Damage: 0
-  freeze: 0
+  freeze: 5
   speed: 50
   MaxKinfeCount: 0
   CurrentKinfeCount: 0
