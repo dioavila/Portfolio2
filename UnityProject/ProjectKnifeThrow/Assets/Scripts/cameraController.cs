@@ -7,12 +7,15 @@ public class cameraController : MonoBehaviour
     [SerializeField] int sensitivity;
     [SerializeField] int lockVertMin, lockVertMax;
     [SerializeField] bool invertY;
+    [SerializeField] int sensitivityComp;
+    int sensitivityOrig;
 
     float rotX;
 
     // Start is called before the first frame update
     void Start()
     {
+        sensitivityOrig = sensitivity;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -21,9 +24,19 @@ public class cameraController : MonoBehaviour
     void Update()
     {
         //Get Input
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
-
+        //Adjusting dpi for bullettime
+        float mouseY, mouseX;
+        if (GameManager.instance.playerScript.bulletTimeActive)
+        {
+            mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity * sensitivityComp;
+            mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity * sensitivityComp;
+        }
+        else
+        {
+            mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
+            mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
+        }
+        
         if (invertY)
         {
             rotX += mouseY;

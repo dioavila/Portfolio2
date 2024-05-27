@@ -10,6 +10,8 @@ TagManager:
   - Health Pickup1
   - Health Pickup2
   - Door
+  - Swingable
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - whatIsGround
   - Water
   - UI
-  - 
+  - Swingable
   - 
   - 
   - 
