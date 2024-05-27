@@ -202,10 +202,10 @@ public class enemyAI : MonoBehaviour, IDamage
         model.material.color = Color.white;
     }
 
-    IEnumerator flashblue()
+    IEnumerator flashmagenta()
     {
         Color temp = materialOrig.material.color;
-        materialOrig.material.color = Color.blue;
+        materialOrig.material.color = Color.magenta;
         yield return new WaitForSeconds(0.5f);
         materialOrig.material.color = temp;
     }
