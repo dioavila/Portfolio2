@@ -16,12 +16,12 @@ public class wallRun : MonoBehaviour, IDamage
     int gravityStorage;
     
     [Header("Shooting")]
-    [SerializeField] Transform playerShootPos;
-    [SerializeField] Transform knifeModelLoc;
+    [SerializeField] public Transform playerShootPos;
+    [SerializeField] GameObject knifeModelLoc;
     [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] GameObject playerBullet;
     [SerializeField] GameObject grindBullet;
-    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    [SerializeField] public List<GameObject> gKnifeModels = new List<GameObject>();
     public int gThrowCount;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
     public bool resetOn = false;
@@ -33,7 +33,7 @@ public class wallRun : MonoBehaviour, IDamage
     bool isShooting;
     //Kasey Add
     [SerializeField] int shootspeed;
-    [SerializeField] List<KnifeStats> knifeList = new List<KnifeStats>();
+    [SerializeField] public List<KnifeStats> knifeList = new List<KnifeStats>();
     public int selectedKnife;
     [SerializeField] GameObject knifeModel;
     [SerializeField] int freezeTime;
@@ -78,7 +78,11 @@ public class wallRun : MonoBehaviour, IDamage
     private bool isInRange;
     public GameObject messagePanel;
     string itemTag;
-    
+
+    [Header("Animation")]
+    [SerializeField] Animator animR;
+    [SerializeField] Animator animL;
+    [SerializeField] float timerDelay;
 
 
     // Start is called before the first frame update
@@ -157,14 +161,11 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
-            if(gThrowCount >= 0 && gThrowCount <= 4)
+            if (gThrowCount >= 0 && gThrowCount <= 4)
             {
+
                 ++gThrowCount;
-                gKnifeModels[gThrowCount-1].SetActive(false);
-                //if(gThrowCount == 4)
-                //{
-                //    resetOn = true;
-                //}
+                gKnifeModels[gThrowCount - 1].SetActive(false);
             }
             StartCoroutine(shoot(grindBullet, grindShootRate));
         }
@@ -253,11 +254,15 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint") && canSprint)
         {
+            animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
         else if(Input.GetButtonUp("Sprint") && canSprint)
         {
             playerSpeed = playerSpeedStorage;
+            animR.SetFloat("Speed", 0);
+            animL.SetFloat("Speed", 0);
         }
     }
 
@@ -266,7 +271,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (bulletType.name == "Ammo - playerBulletG")
         {
             isShooting = true;
-            Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
+            animL.SetTrigger("ShootG");
+            Instantiate(grindBullet, playerShootPos.position, Camera.main.transform.rotation);
 
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
@@ -274,8 +280,7 @@ public class wallRun : MonoBehaviour, IDamage
         else
         {
             isShooting = true;
-
-            Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
+            animR.SetTrigger("Shoot");
 
             IDamage dmg = knifeList[selectedKnife].Knife.gameObject.GetComponent<IDamage>();
 
@@ -286,7 +291,18 @@ public class wallRun : MonoBehaviour, IDamage
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
+            knifeModelLoc.SetActive(true);
         }
+    }
+
+    public void CreateBulletG()
+    {
+        Instantiate(grindBullet, playerShootPos.position, Camera.main.transform.rotation);
+    }
+
+    public void CreateBullet()
+    {
+        Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
     }
 
     void Selectknife()
