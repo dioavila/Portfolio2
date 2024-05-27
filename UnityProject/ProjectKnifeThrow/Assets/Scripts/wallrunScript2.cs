@@ -11,8 +11,8 @@ public class wallRun2 : MonoBehaviour, IDamage
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
     [SerializeField] int gravity;
-    [SerializeField] int startingHP;
-    [SerializeField] int HP;
+    [SerializeField] public int startingHP;
+    [SerializeField] public int HP;
     int gravityStorage;
     
     [Header("Shooting")]
@@ -74,10 +74,8 @@ public class wallRun2 : MonoBehaviour, IDamage
     bool isWallRunning = false;
 
     [Header("Item Pickup")]
-    public Item[] item = new Item[3];
+    private IPickup currentPickup;
     private bool isInRange;
-    public GameObject messagePanel;
-    string itemTag;
     
 
 
@@ -112,17 +110,9 @@ public class wallRun2 : MonoBehaviour, IDamage
         //Pick Up Logic
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
-            for(int i = 0; i < item.Length; i++) 
-            {
-                if (item[i] != null && item[i].tag == itemTag)
-                {
-                    item[i].PickUpItem();
-                    HP = startingHP;
-                    updatePlayerUI();
-                    CloseMessagePanel("");
-                    break;
-                }
-            }
+            currentPickup.PickUpItem();
+            GameManager.instance.CloseMessagePanel("");
+            updatePlayerUI();
         }
     }
 
@@ -401,35 +391,23 @@ public class wallRun2 : MonoBehaviour, IDamage
     /// Pick Up Logic
     /// </summary>
     /// 
-    public void OpenMessagePanel(string text)
-    {
-        messagePanel.SetActive(true);
-    }
-
-    public void CloseMessagePanel(string text)
-    {
-        messagePanel.SetActive(false);
-    }
+    
 
     //triggers the ability to pickup
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Health Pickup1") || other.gameObject.CompareTag("Health Pickup2"))
+        IPickup pickup = other.GetComponent<IPickup>();
+        if (pickup != null)
         {
-            itemTag = other.gameObject.tag;
             isInRange = true;
-            Item item = other.GetComponent<Item>();
-            if (item != null)
-            {
-                OpenMessagePanel("");
-            }
         }
     }
+
 
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
-        CloseMessagePanel("");
+        GameManager.instance.CloseMessagePanel("");
     }
 
     /// <summary>

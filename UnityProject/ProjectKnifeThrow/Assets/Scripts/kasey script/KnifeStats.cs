@@ -9,6 +9,6 @@ public class KnifeStats : ScriptableObject
     public int Damage;
     public int freeze;
     public int speed;
-    public int MaxKinfeCount;
+    public int MaxKinfeCount = 5;
     public int CurrentKinfeCount;
 }

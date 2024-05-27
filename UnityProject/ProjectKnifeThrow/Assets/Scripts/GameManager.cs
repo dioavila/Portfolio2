@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public wallRun playerScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
+    public GameObject messagePanel;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -109,5 +111,15 @@ public class GameManager : MonoBehaviour
     public void spawnEnemy()
     {
 
+    }
+
+    public void OpenMessagePanel(string text)
+    {
+        messagePanel.SetActive(true);
+    }
+
+    public void CloseMessagePanel(string text)
+    {
+        messagePanel.SetActive(false);
     }
 }
