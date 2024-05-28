@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class KeyPickup : MonoBehaviour, IPickup
 {
-    public wallRun playerInv;
+    wallRun playerInv;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInv = GameManager.instance.playerScript;
     }
 
     // Update is called once per frame

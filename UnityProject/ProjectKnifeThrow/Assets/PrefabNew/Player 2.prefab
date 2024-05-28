@@ -481,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 2822055831154386807}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.000000059604645, y: 0.8000002, z: 0.8999979}
+  m_LocalPosition: {x: 0.4, y: 0.8000002, z: 0.93}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1493,6 +1493,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6319623410764831275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9118501073219582619}
+  m_Layer: 3
+  m_Name: playerShootPosG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9118501073219582619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6319623410764831275}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.36, y: 0.8000002, z: 1.327}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2316169643571436659}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6433025447600190889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1564,6 +1595,7 @@ Transform:
   m_Children:
   - {fileID: 6914088245661091839}
   - {fileID: 6972851433693626651}
+  - {fileID: 9118501073219582619}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &2038465021808746256
@@ -1601,6 +1633,7 @@ MonoBehaviour:
   startingHP: 10
   HP: 0
   playerShootPos: {fileID: 6972851433693626651}
+  playerShootPosG: {fileID: 9118501073219582619}
   knifeModelLoc: {fileID: 9123211617877342306}
   grindKnifeModelLoc: {fileID: 7624659698700422871}
   playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
