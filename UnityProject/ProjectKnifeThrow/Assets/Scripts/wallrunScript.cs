@@ -76,6 +76,7 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Item Pickup")]
     private IPickup currentPickup;
     private bool isInRange;
+    [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
     [Header("Animation")]
     [SerializeField] Animator animR;

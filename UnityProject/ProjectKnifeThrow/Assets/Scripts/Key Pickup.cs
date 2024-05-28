@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPickup : MonoBehaviour, IPickup
+public class KeyPickup : MonoBehaviour, IPickup
 {
-
-    public wallRun player;
-
+    public wallRun playerInv;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +18,13 @@ public class HealthPickup : MonoBehaviour, IPickup
         
     }
 
-
     public void PickUpItem()
     {
-        if (player != null)
+        if (playerInv != null)
         {
-            player.HP = player.startingHP;
+            playerInv.keys.Add(gameObject);
             gameObject.SetActive(false);
-            player.updatePlayerUI();
         }
     }
+
 }

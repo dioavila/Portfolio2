@@ -12,6 +12,7 @@ TagManager:
   - Door
   - Swingable
   - Enemy
+  - KeyDoor
   layers:
   - Default
   - TransparentFX

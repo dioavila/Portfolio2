@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
     public GameObject messagePanel;
+    public GameObject keyRejection;
+    public GameObject keyAcceptance;
+    public KeyTurnIn keys;
 
 
     // Start is called before the first frame update
@@ -57,6 +60,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        
+
     }
 
     public void FindPlayer()
@@ -70,6 +75,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        CloseAcceptPanel("");
+        CloseMessagePanel("");
+        CloseRejectPanel("");
     }
 
     public void stateUnPause()
@@ -121,5 +129,25 @@ public class GameManager : MonoBehaviour
     public void CloseMessagePanel(string text)
     {
         messagePanel.SetActive(false);
+    }
+
+    public void OpenRejectPanel(string text)
+    {
+        keyRejection.SetActive(true);
+    }
+
+    public void CloseRejectPanel(string text)
+    {
+        keyRejection.SetActive(false);
+    }
+
+    public void OpenAcceptPanel(string text)
+    {
+        keyAcceptance.SetActive(true);
+    }
+
+    public void CloseAcceptPanel(string text)
+    {
+        keyAcceptance.SetActive(false);
     }
 }
