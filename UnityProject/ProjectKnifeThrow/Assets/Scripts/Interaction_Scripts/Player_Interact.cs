@@ -13,6 +13,11 @@ public class Player_Interact_Button : MonoBehaviour
         {
             PerformAction();
         }
+
+        if (openSesame)
+        {
+            Destroy(GameObject.FindWithTag("Tutorial Door"));
+        }
     }
 
     void PerformAction()
