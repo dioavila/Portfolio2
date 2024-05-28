@@ -38,7 +38,7 @@ public class GrindBullet : MonoBehaviour
 
             Vector3 opposite = -hit.normal;
             Quaternion rotation = Quaternion.FromToRotation(knifeModel.transform.forward, opposite);
-            Instantiate(knifeModel, collisionPoint.point, rotation);
+            Instantiate(knifeModel, transform.position, rotation);
         }
     }
 

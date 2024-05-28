@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7487187445853999764}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 75.660545, y: 2.73, z: -82.38}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
@@ -77,6 +77,9 @@ MonoBehaviour:
   Damage: 1
   Speed: 50
   DestroyTime: 5
+  hitConfirm: {fileID: 1001809201420523908, guid: 570a605fcc230dd43b71997a7867a9a8, type: 3}
+  hitBlock: {fileID: 5513334090030241347, guid: 1d5f26d5d0630a847ac5e62c89c19628, type: 3}
+  hitMiss: {fileID: 0}
 --- !u!1001 &391571627324007345
 PrefabInstance:
   m_ObjectHideFlags: 0

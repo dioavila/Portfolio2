@@ -6,12 +6,13 @@ public class KeyTurnIn : MonoBehaviour
 {
     public bool keyIsInserted = false;
     public bool has3Keys = false;
-    public wallRun playerInv;
+    wallRun playerInv;
     bool isPlayerInRange = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerInv = GameManager.instance.playerScript;
     }
 
     // Update is called once per frame
@@ -49,7 +50,7 @@ public class KeyTurnIn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player"))
         {
             isPlayerInRange = true;
         }
@@ -57,7 +58,7 @@ public class KeyTurnIn : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
             GameManager.instance.CloseAcceptPanel("");

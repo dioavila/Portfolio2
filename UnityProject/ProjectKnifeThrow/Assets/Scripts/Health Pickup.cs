@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class HealthPickup : MonoBehaviour, IPickup
 {
-
-    public wallRun player;
-
+    wallRun player;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = GameManager.instance.playerScript;
     }
 
     // Update is called once per frame
@@ -25,9 +23,9 @@ public class HealthPickup : MonoBehaviour, IPickup
     {
         if (player != null)
         {
-            //player.HP = player.startingHP;
-            //Destroy(gameObject);
-            //player.updatePlayerUI();
+            player.HP = player.startingHP;
+            gameObject.SetActive(false);
+            player.updatePlayerUI();
         }
     }
 }

@@ -11,12 +11,13 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
     [SerializeField] int gravity;
-    [SerializeField] int startingHP;
-    [SerializeField] int HP;
+    [SerializeField] public int startingHP;
+    [SerializeField] public int HP;
     int gravityStorage;
     
     [Header("Shooting")]
     [SerializeField] Transform playerShootPos;
+    [SerializeField] Transform playerShootPosG;
     [SerializeField] Transform knifeModelLoc;
     [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] GameObject playerBullet;
@@ -74,12 +75,14 @@ public class wallRun : MonoBehaviour, IDamage
     bool isWallRunning = false;
 
     [Header("Item Pickup")]
-    public Item[] item = new Item[3];
+    private IPickup currentPickup;
     private bool isInRange;
-    public GameObject messagePanel;
-    string itemTag;
-    
+    [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
+    [Header("Animation")]
+    [SerializeField] Animator animR;
+    [SerializeField] Animator animL;
+    [SerializeField] int smoothAnimMod;
 
     // Start is called before the first frame update
     void Start()
@@ -114,17 +117,8 @@ public class wallRun : MonoBehaviour, IDamage
         //Pick Up Logic
         if (isInRange && Input.GetKeyDown(KeyCode.F))
         {
-            for(int i = 0; i < item.Length; i++) 
-            {
-                if (item[i] != null && item[i].tag == itemTag)
-                {
-                    item[i].PickUpItem();
-                    HP = startingHP;
-                    updatePlayerUI();
-                    CloseMessagePanel("");
-                    break;
-                }
-            }
+            currentPickup.PickUpItem();
+            GameManager.instance.CloseMessagePanel("");
         }
     }
 
@@ -161,10 +155,6 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount-1].SetActive(false);
-                //if(gThrowCount == 4)
-                //{
-                //    resetOn = true;
-                //}
             }
             StartCoroutine(shoot(grindBullet, grindShootRate));
         }
@@ -210,30 +200,6 @@ public class wallRun : MonoBehaviour, IDamage
         }
        sprint();
 
-        //if(Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
-        //{
-        //    StartCoroutine(shoot(playerBullet, shootRate));
-        //}
-
-        //if (Input.GetButtonDown("Grind Throw") && !isShooting)
-        //{
-        //    StartCoroutine(shoot(grindBullet, grindShootRate));
-        //}
-
-        //if (Input.GetButtonDown("Fire2"))
-        //{
-        //    if (Time.timeScale == 1f)
-        //    {
-        //        Time.timeScale = timeDilationRate;
-        //        bulletTimeActive = true;
-        //    }
-        //    else
-        //    {
-        //        Time.timeScale = 1f;
-        //        bulletTimeActive = false;
-        //    }
-        //}
-
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             canSprint = false;
@@ -253,10 +219,12 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint") && canSprint)
         {
+            animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint") && canSprint)
+        else if(Input.GetButtonUp("Sprint"))
         {
+            animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
         }
     }
@@ -266,7 +234,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (bulletType.name == "Ammo - playerBulletG")
         {
             isShooting = true;
-            Instantiate(bulletType, playerShootPos.position, Camera.main.transform.rotation);
+            animL.SetTrigger("ShootG");
+            Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
 
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
@@ -274,16 +243,8 @@ public class wallRun : MonoBehaviour, IDamage
         else
         {
             isShooting = true;
-
+            animR.SetTrigger("Shoot");
             Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
-
-            IDamage dmg = knifeList[selectedKnife].Knife.GetComponent<IDamage>();
-
-            if (knifeList[selectedKnife].Knife != transform.CompareTag("Player") && dmg != null)
-            {
-                dmg.TakeDamage(shootDamage);
-            }
-
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
         }
@@ -416,35 +377,22 @@ public class wallRun : MonoBehaviour, IDamage
     /// Pick Up Logic
     /// </summary>
     /// 
-    public void OpenMessagePanel(string text)
-    {
-        messagePanel.SetActive(true);
-    }
-
-    public void CloseMessagePanel(string text)
-    {
-        messagePanel.SetActive(false);
-    }
-
-    //triggers the ability to pickup
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Health Pickup1") || other.gameObject.CompareTag("Health Pickup2"))
+        IPickup pickup = other.GetComponent<IPickup>();
+        if (pickup != null)
         {
-            itemTag = other.gameObject.tag;
             isInRange = true;
-            Item item = other.GetComponent<Item>();
-            if (item != null)
-            {
-                OpenMessagePanel("");
-            }
+            GameManager.instance.OpenMessagePanel("");
+            currentPickup = pickup;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
-        CloseMessagePanel("");
+        GameManager.instance.CloseMessagePanel("");
+        currentPickup = null;
     }
 
     /// <summary>
@@ -467,7 +415,7 @@ public class wallRun : MonoBehaviour, IDamage
         GameManager.instance.playerFlashDamage.SetActive(false);
     }
 
-    void updatePlayerUI()
+    public void updatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / startingHP;
     }

@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public kwallRun kplayerscript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
-    public GameObject messagePanel;
+    [SerializeField] GameObject messagePanel;
     public GameObject keyRejection;
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
@@ -62,9 +62,6 @@ public class GameManager : MonoBehaviour
                 stateUnPause();
             }
         }
-
-        
-
     }
 
     public void FindPlayer()
@@ -78,9 +75,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        CloseAcceptPanel("");
+        //CloseAcceptPanel("");
         CloseMessagePanel("");
-        CloseRejectPanel("");
+        //CloseRejectPanel("");
     }
 
     public void stateUnPause()
