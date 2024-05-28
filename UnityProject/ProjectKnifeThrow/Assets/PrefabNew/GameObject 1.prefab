@@ -85,6 +85,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7768925676040989054}
     m_Modifications:
+    - target: {fileID: 2177303563723247852, guid: 1504d7a2dabec1e40a9d3b808dce09a0, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2622399975815896785, guid: 1504d7a2dabec1e40a9d3b808dce09a0, type: 3}
       propertyPath: m_Name
       value: normal knife 1 (1)
