@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class KenemyAI : MonoBehaviour, IDamage, IFreeze, IFire
+public class KenemyAI : MonoBehaviour, IDamage, IFreeze
 {
     [SerializeField] GameObject bullet;
     [SerializeField] Renderer model;
@@ -22,7 +22,7 @@ public class KenemyAI : MonoBehaviour, IDamage, IFreeze, IFire
 
     bool isShooting;
     bool playerInRange;
-
+   
     bool canshoot;
 
 
@@ -114,16 +114,10 @@ public class KenemyAI : MonoBehaviour, IDamage, IFreeze, IFire
 
     public void FreezeTime(int time)
     {
+        
         StartCoroutine(FlashBlue(time));
+      
     }
-
-    public void FireDamage(int amount, int time)
-    {
-        agent.SetDestination(GameManager.instance.player.transform.position);
-        StartCoroutine(FireTime(amount, time));
-
-    }
-
 
     IEnumerator flashred()
     {
@@ -134,26 +128,8 @@ public class KenemyAI : MonoBehaviour, IDamage, IFreeze, IFire
     //frozen enemy feedback
     IEnumerator FlashBlue(int time)
     {
-        model.material.color = Color.blue;
+        model.material.color = Color.blue;      
         yield return new WaitForSeconds(time);
         model.material.color = Color.white;
-    }
-
-    IEnumerator FireTime(int amount, int time)
-    {
-        for (int i = 0; i <= time; i++)
-        {
-            HP -= amount;
-            model.material.color = Color.red;
-            yield return new WaitForSeconds(0.1f);
-            model.material.color = Color.white;
-            yield return new WaitForSeconds(0.5f);
-            if (HP <= 0)
-            {
-                GameManager.instance.updateGameGoal(-1);
-                Destroy(gameObject);
-                GameManager.instance.doorIsDestroyable = true;
-            }
-        }
     }
 }

@@ -10,6 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e1fdadee3af37e479bd9cfcd0aa1149, type: 3}
-  m_Name: Fire Knife
+  m_Name: New Knife Stats
   m_EditorClassIdentifier: 
-  Knife: {fileID: 4837800626556773895, guid: 7e93656c411ecf74ba453184d09b7cff, type: 3}
+  Knife: {fileID: 2483800640986106243, guid: 723974cd18bdd694b8ca213440febcae, type: 3}
+  Damage: 0
+  freeze: 5
+  speed: 50
+  MaxKinfeCount: 0
+  CurrentKinfeCount: 0

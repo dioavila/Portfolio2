@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: Standard Knife
   m_EditorClassIdentifier: 
   Knife: {fileID: 7487187445853999764, guid: cd7c2a6ec3dd62a408220bb31187c64b, type: 3}
+  Damage: 1
+  freeze: 0
+  speed: 50
+  MaxKinfeCount: 0
+  CurrentKinfeCount: 0
