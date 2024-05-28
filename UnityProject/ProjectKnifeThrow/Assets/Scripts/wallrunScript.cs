@@ -220,11 +220,13 @@ public class wallRun : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint") && canSprint)
         {
             animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
         else if(Input.GetButtonUp("Sprint"))
         {
             animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
+            animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
         }
     }
