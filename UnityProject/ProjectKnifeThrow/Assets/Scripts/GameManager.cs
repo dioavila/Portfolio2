@@ -72,9 +72,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        //CloseAcceptPanel("");
+        CloseAcceptPanel("");
         CloseMessagePanel("");
-        //CloseRejectPanel("");
+        CloseRejectPanel("");
     }
 
     public void stateUnPause()
