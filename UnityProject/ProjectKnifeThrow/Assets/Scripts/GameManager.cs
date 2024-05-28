@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
+    public kwallRun kplayerscript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
     public GameObject messagePanel;
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
 
+
+    public static object Instance { get; internal set; }
 
     // Start is called before the first frame update
     void Awake()

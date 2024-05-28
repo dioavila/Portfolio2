@@ -12,9 +12,9 @@ public class CreateBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shootPos = GameManager.instance.playerScript.playerShootPos;
-        shootPosGrind = GameManager.instance.playerScript.playerShootPos;
-        selectKnife = GameManager.instance.playerScript.selectedKnife;
+       // shootPos = GameManager.instance.playerScript.playerShootPos;
+      //  shootPosGrind = GameManager.instance.playerScript.playerShootPos;
+        //selectKnife = GameManager.instance.playerScript.selectedKnife;
     }
 
     // Update is called once per frame
@@ -34,6 +34,6 @@ public class CreateBullet : MonoBehaviour
     public void CreateB()
     {
         regKnifeModel.SetActive(false);
-        Instantiate(GameManager.instance.playerScript.knifeList[selectKnife].Knife, shootPos.position, Camera.main.transform.rotation);
+       // Instantiate(GameManager.instance.playerScript.knifeList[selectKnife].Knife, shootPos.position, Camera.main.transform.rotation);
     }
 }

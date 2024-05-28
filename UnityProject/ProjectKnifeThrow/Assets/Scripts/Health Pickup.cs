@@ -25,9 +25,9 @@ public class HealthPickup : MonoBehaviour, IPickup
     {
         if (player != null)
         {
-            player.HP = player.startingHP;
-            gameObject.SetActive(false);
-            player.updatePlayerUI();
+            //player.HP = player.startingHP;
+            //Destroy(gameObject);
+            //player.updatePlayerUI();
         }
     }
 }
