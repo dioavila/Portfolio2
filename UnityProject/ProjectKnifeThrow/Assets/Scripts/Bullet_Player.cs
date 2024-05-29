@@ -21,17 +21,20 @@ public class KBullet : MonoBehaviour
     }
    
     private void OnCollisionEnter(Collision other)
-    {   
-        IDamage dmg = other.gameObject.GetComponent<IDamage>();
-        if (dmg != null)
+    {
+        if (!other.gameObject.CompareTag("Player"))
         {
-            Instantiate(hitConfirm, transform.position, Quaternion.identity);
-            dmg.TakeDamage(Damage);
+            IDamage dmg = other.gameObject.GetComponent<IDamage>();
+            if (dmg != null)// && !other.gameObject.CompareTag("Player"))
+            {
+                Instantiate(hitConfirm, transform.position, Quaternion.identity);
+                dmg.TakeDamage(Damage);
+            }
+            else if (dmg == null && other.gameObject.CompareTag("Enemy"))
+            {
+                Instantiate(hitBlock, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
         }
-        else if (dmg == null && other.gameObject.CompareTag("Enemy"))
-        {
-            Instantiate(hitBlock, transform.position, Quaternion.identity);
-        }
-        Destroy(gameObject);
     }
 }

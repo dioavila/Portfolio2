@@ -17,20 +17,22 @@ public class wallRun : MonoBehaviour, IDamage
     
     [Header("Shooting")]
     [SerializeField] Transform playerShootPos;
-    [SerializeField] Transform playerShootPosG;
     [SerializeField] Transform knifeModelLoc;
-    [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] GameObject playerBullet;
-    [SerializeField] GameObject grindBullet;
-    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
-    public int gThrowCount;
-    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
-    public bool resetOn = false;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-    [SerializeField] float grindShootRate;
     [SerializeField] GameObject playerObj;
+    
+    [SerializeField] Transform playerShootPosG;
+    [SerializeField] GameObject grindBullet;
+    [SerializeField] Transform grindKnifeModelLoc;
+    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    public int gThrowCount;
+    public bool resetOn = false;
+    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
+    [SerializeField] float grindShootRate;
+    
     bool isShooting;
     //Kasey Add
     [SerializeField] int shootspeed;
@@ -49,7 +51,19 @@ public class wallRun : MonoBehaviour, IDamage
     int playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
-    
+
+    //sliding 
+    [Header("Sliding")]
+    [SerializeField] float slideSpeed = 10f;
+    [SerializeField] float slideDuration = 1f;
+    [SerializeField] float slideCameraOffset = 0.5f;
+    [SerializeField] Transform playerModel;
+    [SerializeField] Vector3 slideTilt = new Vector3(20f, 0f, 0f);
+    PlayerFovController fovController;
+
+    public bool isSliding = false;
+    Vector3 slideDirection;
+
     //Wallrun Variables
     [Header("Wall Detection")]
     [SerializeField] int wallDist;
@@ -73,6 +87,7 @@ public class wallRun : MonoBehaviour, IDamage
     bool canSprint = true;
     public bool playerCanMove = true;
     bool isWallRunning = false;
+    public bool isClimbing = false;
 
     [Header("Item Pickup")]
     private IPickup currentPickup;
@@ -93,32 +108,52 @@ public class wallRun : MonoBehaviour, IDamage
         playerSpeedStorage = playerSpeed;
         gravityStorage = gravity;
         HP = startingHP;
-        updatePlayerUI();
+        spawnPlayer();
         updateBPUI();
+
+        fovController = GetComponent<PlayerFovController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-
-        GKnifeDisplayReset();
-
-        Selectknife();
-
-        //Bullet Time Check
-        BulletTimeCheck();
-
-        PlayerActions();
-
-        //Movement and WallRun Check
-        MovementCheck();
-
-        //Pick Up Logic
-        if (isInRange && Input.GetKeyDown(KeyCode.F))
+        if (!GameManager.instance.isPaused)
         {
-            currentPickup.PickUpItem();
-            GameManager.instance.CloseMessagePanel("");
+
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+
+            GKnifeDisplayReset();
+
+            Selectknife();
+
+            //Bullet Time Check
+            BulletTimeCheck();
+
+            PlayerActions();
+
+            //Movement and WallRun Check
+            MovementCheck();
+
+            //Pick Up Logic
+            if (isInRange && Input.GetKeyDown(KeyCode.F))
+            {
+                currentPickup.PickUpItem();
+                GameManager.instance.CloseMessagePanel("");
+            }
+        }
+        if (!isClimbing)
+        {
+            MovementCheck();
+        }
+
+        if (!isSliding)
+        {
+            moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) && !isSliding && controller.isGrounded)
+        {
+            StartCoroutine(Slide());
         }
     }
 
@@ -155,8 +190,8 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount-1].SetActive(false);
+                StartCoroutine(shoot(grindBullet, grindShootRate)); // shoot needs to be withing the 0 to 4 constraint
             }
-            StartCoroutine(shoot(grindBullet, grindShootRate));
         }
 
         if (Input.GetButtonDown("Fire2"))
@@ -194,6 +229,13 @@ public class wallRun : MonoBehaviour, IDamage
                 playerSpeed = playerSpeedStorage;
             }
         }
+
+        if (isSliding)
+        {
+            //skip other movement if sliding
+            return;
+        }
+
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
         if (playerCanMove) {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
@@ -249,6 +291,7 @@ public class wallRun : MonoBehaviour, IDamage
             Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
+            knifeModelLoc.gameObject.SetActive(true);
         }
     }
 
@@ -466,4 +509,46 @@ public class wallRun : MonoBehaviour, IDamage
         GameManager.instance.playerBTBar.fillAmount = bTimeCurrent / bTimeTotal;
     }
 
+    public void spawnPlayer()
+    {
+        HP = startingHP;
+        updatePlayerUI();
+
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+    }
+
+    IEnumerator Slide()
+    {
+        isSliding = true;
+        slideDirection = moveDir.normalized; // Slide in the current movement direction
+        //float originalHeight = controller.height;
+        //Vector3 originalCenter = controller.center;
+
+        // Adjust the character controller's height for the slide
+        // controller.height = originalHeight / 2;
+        // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+        // Call IncreaseFOVForSlide() when the player starts sliding
+        fovController.IncreaseFovForSlide();
+
+        float elapsedTime = 0f;
+        while (elapsedTime < slideDuration)
+        {
+            // Move the player in the slide direction
+            controller.Move(slideDirection * slideSpeed * Time.deltaTime);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset the character controller's height after the slide
+        //controller.height = originalHeight;
+        // controller.center = originalCenter;
+        isSliding = false;
+
+        // Call ResetFOV() when the player stops sliding
+        fovController.ResetFov();
+    }
 }

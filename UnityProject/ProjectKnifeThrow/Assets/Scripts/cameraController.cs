@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] int sensitivity;
-    [SerializeField] int lockVertMin, lockVertMax;
-    [SerializeField] bool invertY;
-    [SerializeField] int sensitivityComp;
+    [SerializeField] int sensitivity = 100; 
+    [SerializeField] int lockVertMin = -45, lockVertMax = 45;
+    [SerializeField] bool invertY = false;
+    [SerializeField] int sensitivityComp = 2;
     int sensitivityOrig;
 
     float rotX;
 
-    // Start is called before the first frame update
     void Start()
     {
         sensitivityOrig = sensitivity;
@@ -20,11 +19,14 @@ public class cameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Get Input
-        //Adjusting dpi for bullettime
+        HandleCameraRotation();
+    }
+
+    public void HandleCameraRotation()
+    {
+        // Get Input
         float mouseY, mouseX;
         if (GameManager.instance.playerScript.bulletTimeActive)
         {
@@ -36,7 +38,8 @@ public class cameraController : MonoBehaviour
             mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
             mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
         }
-        
+
+        // Apply inversion if needed
         if (invertY)
         {
             rotX += mouseY;
@@ -46,14 +49,14 @@ public class cameraController : MonoBehaviour
             rotX -= mouseY;
         }
 
-        //Clamp the rotX on the X-axis
+        // Clamp the rotation on the X-axis
         rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-        //Rotate the cam on the x-axis
+        // Rotate the camera on the X-axis
         transform.localRotation = Quaternion.Euler(rotX, 0, 0);
 
-        //Rotate the player on the Y-axis
-
+        // Rotate the player on the Y-axis
         transform.parent.Rotate(Vector3.up * mouseX);
-   }
+    }
 }
+

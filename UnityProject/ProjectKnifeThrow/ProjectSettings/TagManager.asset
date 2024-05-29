@@ -14,6 +14,7 @@ TagManager:
   - Enemy
   - KeyDoor
   - Tutorial Door
+  - Player Spawn Pos
   layers:
   - Default
   - TransparentFX
