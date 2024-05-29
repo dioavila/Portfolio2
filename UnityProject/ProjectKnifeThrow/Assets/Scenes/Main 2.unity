@@ -7969,6 +7969,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2727159867410697244, guid: 51a582a2748bbd947b512603f32d268d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2727159867410697244, guid: 51a582a2748bbd947b512603f32d268d, type: 3}
+      propertyPath: vaultLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 4323214530027037733, guid: 51a582a2748bbd947b512603f32d268d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -82.4
