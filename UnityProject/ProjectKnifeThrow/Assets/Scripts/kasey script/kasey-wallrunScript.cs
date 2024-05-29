@@ -19,7 +19,7 @@ public class kwallRun : MonoBehaviour, IDamage
     [SerializeField] Transform playerShootPos;
     [SerializeField] Transform knifeModelLoc;
     [SerializeField] Transform grindKnifeModelLoc;
-    [SerializeField] GameObject playerBullet;
+   // [SerializeField] GameObject playerBullet;
     [SerializeField] GameObject grindBullet;
     [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
     public int gThrowCount;
@@ -32,11 +32,10 @@ public class kwallRun : MonoBehaviour, IDamage
     [SerializeField] GameObject playerObj;
     bool isShooting;
     //Kasey Add
-    [SerializeField] int shootspeed;
+    
     [SerializeField] List<KnifeStats> knifeList = new List<KnifeStats>();
     public int selectedKnife;
-    [SerializeField] GameObject knifeModel;
-    [SerializeField] int freezeTime;
+   
 
     [Header("Movement")]
     [SerializeField] int jumpSpeed;
@@ -84,7 +83,6 @@ public class kwallRun : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -104,10 +102,14 @@ public class kwallRun : MonoBehaviour, IDamage
         //Bullet Time Check
         BulletTimeCheck();
 
+        Selectknife();
+
         PlayerActions();
 
         //Movement and WallRun Check
         MovementCheck();
+
+       // movement();
 
         //Pick Up Logic
         if (isInRange && Input.GetKeyDown(KeyCode.F))
@@ -132,7 +134,7 @@ public class kwallRun : MonoBehaviour, IDamage
         {
             for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
             {
-                gKnifeModels[knifeModIter].SetActive(true);
+               // gKnifeModels[knifeModIter].SetActive(true);
             }
             resetOn = false;
         }
@@ -150,7 +152,7 @@ public class kwallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
         {
-            StartCoroutine(shoot(playerBullet, shootRate));
+            StartCoroutine(shoot(knifeList[selectedKnife].Knife, shootRate));
         }
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
@@ -208,30 +210,6 @@ public class kwallRun : MonoBehaviour, IDamage
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
         sprint();
-
-        //if(Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
-        //{
-        //    StartCoroutine(shoot(playerBullet, shootRate));
-        //}
-
-        //if (Input.GetButtonDown("Grind Throw") && !isShooting)
-        //{
-        //    StartCoroutine(shoot(grindBullet, grindShootRate));
-        //}
-
-        //if (Input.GetButtonDown("Fire2"))
-        //{
-        //    if (Time.timeScale == 1f)
-        //    {
-        //        Time.timeScale = timeDilationRate;
-        //        bulletTimeActive = true;
-        //    }
-        //    else
-        //    {
-        //        Time.timeScale = 1f;
-        //        bulletTimeActive = false;
-        //    }
-        //}
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -304,9 +282,9 @@ public class kwallRun : MonoBehaviour, IDamage
 
     void Changegun()
     {
-        shootDamage = knifeList[selectedKnife].Damage;
-        shootspeed = knifeList[selectedKnife].speed;
-        freezeTime = knifeList[selectedKnife].freeze;
+        //shootDamage = knifeList[selectedKnife].Damage;
+        //shootspeed = knifeList[selectedKnife].speed;
+        //freezeTime = knifeList[selectedKnife].freeze;
 
         knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
         knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
@@ -317,15 +295,16 @@ public class kwallRun : MonoBehaviour, IDamage
     /// </summary>
     void MovementCheck()
     {
+        movement();
         if (onWallRight || onWallLeft)
         {
             if (onWallLeft) { WallRun(0); }
             else if (onWallRight) { WallRun(1); }
         }
-        if (!isWallRunning)
-        {
-            movement();
-        }
+        //if (!isWallRunning)
+        //{
+        //    movement();
+        //}
     }
 
     void OnControllerColliderHit(ControllerColliderHit colHit)

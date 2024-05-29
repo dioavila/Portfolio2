@@ -3,25 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - PlayerReferential
-  - enableWallRun
-  - critPoint
-  - Health Pickup1
-  - Health Pickup2
-  - Door
-  - Swingable
-  - Enemy
-  - KeyDoor
-  - Tutorial Door
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - whatIsGround
+  - 
   - Water
   - UI
-  - Swingable
+  - 
   - 
   - 
   - 
