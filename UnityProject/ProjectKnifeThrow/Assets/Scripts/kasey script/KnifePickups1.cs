@@ -13,10 +13,10 @@ public class GunPickup : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            GameManager.instance.kplayerscript.GetKnifeStats(Knife);
-            Destroy(gameObject);
-        }
+        //if (other.CompareTag("Player"))
+        //{
+        //    GameManager.instance.kpl;
+        //    Destroy(gameObject);
+        //}
     }
 }

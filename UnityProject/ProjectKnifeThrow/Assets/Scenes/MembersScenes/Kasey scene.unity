@@ -4023,6 +4023,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: kaseyplayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5046131619946325003, guid: 318ee0c27f485584fb711fa230e9f41c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177465929428435417, guid: 318ee0c27f485584fb711fa230e9f41c, type: 3}
+      propertyPath: UpWardForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596353918947018905, guid: 318ee0c27f485584fb711fa230e9f41c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.282
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596353918947018905, guid: 318ee0c27f485584fb711fa230e9f41c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.691
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596353918947018905, guid: 318ee0c27f485584fb711fa230e9f41c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.748
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -30,6 +30,7 @@ public class kwallRun : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] float grindShootRate;
     [SerializeField] GameObject playerObj;
+    [SerializeField] int UpWardForce;
     bool isShooting;
     //Kasey Add
     
@@ -252,14 +253,29 @@ public class kwallRun : MonoBehaviour, IDamage
         {
             isShooting = true;
 
-            Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
+            GameObject Projectile = Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
 
-            IDamage dmg = knifeList[selectedKnife].Knife.gameObject.GetComponent<IDamage>();
+            Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
 
-            if (knifeList[selectedKnife].Knife != transform.CompareTag("Player") && dmg != null)
+            Vector3 ForceDir = Camera.main.transform.forward;
+
+            RaycastHit hit;
+
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
             {
-                dmg.TakeDamage(shootDamage);
+                ForceDir = (hit.point - playerShootPos.position).normalized;
             }
+
+            Vector3 forcetoadd = ForceDir * knifeList[selectedKnife].speed + knifeList[selectedKnife].Knife.transform.up * UpWardForce;
+
+            ProjectileRB.AddForce(forcetoadd, ForceMode.Impulse);
+
+            //IDamage dmg = knifeList[selectedKnife].Knife.gameObject.GetComponent<IDamage>();
+
+            //if (knifeList[selectedKnife].Knife != transform.CompareTag("Player") && dmg != null)
+            //{
+            //    dmg.TakeDamage(shootDamage);
+            //}
 
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
