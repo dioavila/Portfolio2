@@ -10,6 +10,12 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnPause();
     }
 
+    public void respawn()
+    {
+        GameManager.instance.playerScript.spawnPlayer();
+        GameManager.instance.stateUnPause();
+    }
+
     public void restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
