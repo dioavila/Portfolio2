@@ -61,11 +61,13 @@ public class GrindScript : MonoBehaviour
 
     void StartGrind()
     {
-        //createCirclePath();
         GameManager.instance.playerScript.isGrinding = true;
         GameManager.instance.playerScript.playerCanMove = false;
         transform.position = Vector3.Lerp(transform.position, grindPoints[0].position, startPosLerpRate);
-        StartCoroutine(grindAction());
+        if (grindPoints.Count != 0)
+        {
+            StartCoroutine(grindAction());
+        }
     }
 
     IEnumerator grindAction()
