@@ -261,7 +261,7 @@ public class kwallRun : MonoBehaviour, IDamage
 
             RaycastHit hit;
 
-            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
+            if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 1f))
             {
                 ForceDir = (hit.point - playerShootPos.position).normalized;
             }

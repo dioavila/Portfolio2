@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public wallRun playerScript;
     public kwallRun kplayerCS;
+    public enemyAI AIScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
     [SerializeField] GameObject messagePanel;
