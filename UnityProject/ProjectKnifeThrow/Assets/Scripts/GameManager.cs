@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
 
+    public GameObject playerSpawnPos;
+    public GameObject checkpointPopup;
+
 
     // Start is called before the first frame update
     void Awake()
