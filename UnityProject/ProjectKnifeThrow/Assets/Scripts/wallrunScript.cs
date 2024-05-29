@@ -93,33 +93,39 @@ public class wallRun : MonoBehaviour, IDamage
         playerSpeedStorage = playerSpeed;
         gravityStorage = gravity;
         HP = startingHP;
-        updatePlayerUI();
+        spawnPlayer();
         updateBPUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-
-        GKnifeDisplayReset();
-
-        Selectknife();
-
-        //Bullet Time Check
-        BulletTimeCheck();
-
-        PlayerActions();
-
-        //Movement and WallRun Check
-        MovementCheck();
-
-        //Pick Up Logic
-        if (isInRange && Input.GetKeyDown(KeyCode.F))
+        if (!GameManager.instance.isPaused)
         {
-            currentPickup.PickUpItem();
-            GameManager.instance.CloseMessagePanel("");
+
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+
+            GKnifeDisplayReset();
+
+            Selectknife();
+
+            //Bullet Time Check
+            BulletTimeCheck();
+
+            PlayerActions();
+
+            //Movement and WallRun Check
+            MovementCheck();
+
+            //Pick Up Logic
+            if (isInRange && Input.GetKeyDown(KeyCode.F))
+            {
+                currentPickup.PickUpItem();
+                GameManager.instance.CloseMessagePanel("");
+            }
         }
+
+        
     }
 
     void GKnifeDisplayReset()
@@ -466,4 +472,13 @@ public class wallRun : MonoBehaviour, IDamage
         GameManager.instance.playerBTBar.fillAmount = bTimeCurrent / bTimeTotal;
     }
 
+    public void spawnPlayer()
+    {
+        HP = startingHP;
+        updatePlayerUI();
+
+        controller.enabled = false;
+        transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
+    }
 }
