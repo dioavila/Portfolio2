@@ -15,7 +15,7 @@ public class GunPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.kplayerscript.GetKnifeStats(Knife);
+            GameManager.instance.playerScript.GetKnifeStats(Knife);
             Destroy(gameObject);
         }
     }

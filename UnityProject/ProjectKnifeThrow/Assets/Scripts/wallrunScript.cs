@@ -17,20 +17,22 @@ public class wallRun : MonoBehaviour, IDamage
     
     [Header("Shooting")]
     [SerializeField] Transform playerShootPos;
-    [SerializeField] Transform playerShootPosG;
     [SerializeField] Transform knifeModelLoc;
-    [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] GameObject playerBullet;
-    [SerializeField] GameObject grindBullet;
-    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
-    public int gThrowCount;
-    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
-    public bool resetOn = false;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
-    [SerializeField] float grindShootRate;
     [SerializeField] GameObject playerObj;
+    
+    [SerializeField] Transform playerShootPosG;
+    [SerializeField] GameObject grindBullet;
+    [SerializeField] Transform grindKnifeModelLoc;
+    [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    public int gThrowCount;
+    public bool resetOn = false;
+    public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
+    [SerializeField] float grindShootRate;
+    
     bool isShooting;
     //Kasey Add
     [SerializeField] int shootspeed;
@@ -161,8 +163,8 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount-1].SetActive(false);
+                StartCoroutine(shoot(grindBullet, grindShootRate)); // shoot needs to be withing the 0 to 4 constraint
             }
-            StartCoroutine(shoot(grindBullet, grindShootRate));
         }
 
         if (Input.GetButtonDown("Fire2"))
@@ -255,6 +257,7 @@ public class wallRun : MonoBehaviour, IDamage
             Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
+            knifeModelLoc.gameObject.SetActive(true);
         }
     }
 
