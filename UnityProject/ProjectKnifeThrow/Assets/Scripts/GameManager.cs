@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
     }
 
