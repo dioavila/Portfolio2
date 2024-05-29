@@ -131,8 +131,10 @@ public class wallRun : MonoBehaviour, IDamage
 
             PlayerActions();
 
-            //Movement and WallRun Check
-            MovementCheck();
+            if (!isClimbing)
+            {
+                MovementCheck();
+            }
 
             //Pick Up Logic
             if (isInRange && Input.GetKeyDown(KeyCode.F))
@@ -140,10 +142,6 @@ public class wallRun : MonoBehaviour, IDamage
                 currentPickup.PickUpItem();
                 GameManager.instance.CloseMessagePanel("");
             }
-        }
-        if (!isClimbing)
-        {
-            MovementCheck();
         }
 
         if (!isSliding)

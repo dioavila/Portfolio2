@@ -28,18 +28,19 @@ public class cameraController : MonoBehaviour
     {
         // Get Input
         float mouseY, mouseX;
-        if (GameManager.instance.playerScript.bulletTimeActive)
-        {
-            mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity * sensitivityComp;
-            mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity * sensitivityComp;
-        }
-        else
-        {
-            mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
-            mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
-        }
-
-        // Apply inversion if needed
+        mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
+        mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
+        //if (GameManager.instance.playerScript.bulletTimeActive)
+        //{
+        //    mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity * sensitivityComp;
+        //    mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity * sensitivityComp;
+        //}
+        //else
+        //{
+        //    mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
+        //    mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
+        //}
+        
         if (invertY)
         {
             rotX += mouseY;
