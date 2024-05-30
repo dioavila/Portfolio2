@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class KBullet : MonoBehaviour
@@ -25,16 +26,22 @@ public class KBullet : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
         {
             IDamage dmg = other.gameObject.GetComponent<IDamage>();
-            if (dmg != null)// && !other.gameObject.CompareTag("Player"))
+            if (dmg != null && other.gameObject.CompareTag("critPoint"))
             {
-                Instantiate(hitConfirm, transform.position, Quaternion.identity);
                 dmg.TakeDamage(Damage);
+                Instantiate(hitConfirm, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+                return;
+                
             }
-            else if (dmg == null && other.gameObject.CompareTag("Enemy"))
+            else
             {
-                Instantiate(hitBlock, transform.position, Quaternion.identity);
+                if (dmg == null)// && other.gameObject.CompareTag("Enemy"))
+                {
+                    Instantiate(hitBlock, transform.position, Quaternion.identity);
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

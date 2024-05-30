@@ -43,7 +43,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 256887638187867142}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 0.4
+  m_Radius: 2
   m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
@@ -143,7 +143,6 @@ MonoBehaviour:
   roamTimer: 3
   bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.5
-  spawnPath: {fileID: 8783714202189451881}
   agent: {fileID: 6366187294914771676}
   turnRate: 5
 --- !u!136 &8247134948930594530
@@ -188,7 +187,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 40
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1353356762011853928
 Rigidbody:
@@ -1005,6 +1004,7 @@ GameObject:
   - component: {fileID: 4409431103976444570}
   - component: {fileID: 3713932468985655485}
   - component: {fileID: 845539353981788607}
+  - component: {fileID: 2219889199185751106}
   m_Layer: 0
   m_Name: Robot_Eye
   m_TagString: critPoint
@@ -1039,7 +1039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 5
+  jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 5
 --- !u!33 &4409431103976444570
@@ -1115,6 +1115,33 @@ CapsuleCollider:
   m_Height: 0.86414355
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2219889199185751106
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385999837892551881}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2852495093147028577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1137,7 +1164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15
+      value: 31.4
       objectReference: {fileID: 0}
     - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1167,7 +1194,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1217380419472132906, guid: c97634f288eec75419622d5109a10883, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

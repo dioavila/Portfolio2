@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JointDamage : MonoBehaviour, IDamage, IFreeze, IFire
+public class JointDamage : MonoBehaviour, IDamage, IFire
 {
     [SerializeField] int jointHP;
-    [SerializeField] Transform player;
+    [SerializeField] GameObject player;
     [SerializeField] float limbTurnRate;
     Quaternion currRot;
     int origHP;
@@ -18,6 +18,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFreeze, IFire
         //enemyScript = gameObject.GetComponentInParent<enemyAITest>();
         origHP = jointHP;
         jointModel = gameObject.GetComponent<Renderer>();
+        player = GameManager.instance.player;
     }
 
     // Update is called once per frame
@@ -30,7 +31,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFreeze, IFire
     private void jointMovement()
     {
 
-        Vector3 direction = player.position - transform.position;
+        Vector3 direction = player.transform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation,  limbTurnRate *Time.deltaTime);
     }
@@ -53,21 +54,11 @@ public class JointDamage : MonoBehaviour, IDamage, IFreeze, IFire
         yield return new WaitForSeconds(0.1f);
         jointModel.material.color = temp;
     }
-    public void FreezeTime(int time)
-    {
-        StartCoroutine(FlashBlue(time));
-    }
 
     public void FireDamage(int amount, int time)
     {
         GameManager.instance.AIScript.agent.SetDestination(GameManager.instance.player.transform.position);
         StartCoroutine(FireTime(amount, time));
-    }
-    IEnumerator FlashBlue(int time)
-    {
-        jointModel.material.color = Color.blue;
-        yield return new WaitForSeconds(time);
-        jointModel.material.color = Color.white;
     }
     IEnumerator FireTime(int amount, int time)
     {
@@ -80,9 +71,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFreeze, IFire
             yield return new WaitForSeconds(0.5f);
             if (jointHP <= 0)
             {
-                GameManager.instance.updateGameGoal(-1);
                 Destroy(gameObject);
-                GameManager.instance.doorIsDestroyable = true;
             }
         }
     }

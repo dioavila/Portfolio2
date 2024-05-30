@@ -8,13 +8,18 @@ public class SpawnTrig : MonoBehaviour
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
     [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
+    [SerializeField] bool goal = false;
      bool isSpawning = false, spawnStart = false;
     int numberSpawned = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.updateGameGoal(numberToSpawn);
+        if (goal)
+        {
+            GameManager.instance.updateGameGoal(numberToSpawn);
+
+        }
     }
 
     // Update is called once per frame

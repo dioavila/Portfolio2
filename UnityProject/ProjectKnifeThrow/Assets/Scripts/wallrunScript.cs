@@ -148,12 +148,7 @@ public class wallRun : MonoBehaviour, IDamage
             }
         }
 
-        if (!isSliding)
-        {
-            moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding && controller.isGrounded)
+        if (Input.GetKeyDown(KeyCode.C) && !isSliding)
         {
             StartCoroutine(Slide());
         }
@@ -553,21 +548,28 @@ public class wallRun : MonoBehaviour, IDamage
     {
         isSliding = true;
         slideDirection = moveDir.normalized; // Slide in the current movement direction
-        //float originalHeight = controller.height;
-        //Vector3 originalCenter = controller.center;
-
-        // Adjust the character controller's height for the slide
-        // controller.height = originalHeight / 2;
-        // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
 
         // Call IncreaseFOVForSlide() when the player starts sliding
         fovController.IncreaseFovForSlide();
 
         float elapsedTime = 0f;
+        float initialGravity = gravity; // Store the initial gravity value
         while (elapsedTime < slideDuration)
         {
             // Move the player in the slide direction
-            controller.Move(slideDirection * slideSpeed * Time.deltaTime);
+            Vector3 slideVelocity = slideDirection * slideSpeed;
+
+            //float originalHeight = controller.height;
+            //Vector3 originalCenter = controller.center;
+            // Adjust the character controller's height for the slide
+            // controller.height = originalHeight / 2;
+            // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+            // Gradually reduce gravity to lower the player
+            float slideGravity = Mathf.Lerp(initialGravity, 0, elapsedTime / slideDuration);
+            slideVelocity.y -= slideGravity * Time.deltaTime;
+
+            controller.Move(slideVelocity * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -576,6 +578,7 @@ public class wallRun : MonoBehaviour, IDamage
         // Reset the character controller's height after the slide
         //controller.height = originalHeight;
         // controller.center = originalCenter;
+
         isSliding = false;
 
         // Call ResetFOV() when the player stops sliding

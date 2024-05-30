@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI_BigGrunt : MonoBehaviour
+public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 {
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
@@ -30,8 +30,8 @@ public class EnemyAI_BigGrunt : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    [SerializeField] public Transform spawnPath;
-    private Transform startingSpawn;
+    //[SerializeField] public Transform spawnPath;
+    //private Transform startingSpawn;
 
     public NavMeshAgent agent;
 
@@ -49,12 +49,12 @@ public class EnemyAI_BigGrunt : MonoBehaviour
 
     bool lookPlayer = false;
     public int turnRate;
+    bool canshoot;
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
-        startingSpawn = spawnPath;
+        //startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
 
     }
@@ -63,9 +63,18 @@ public class EnemyAI_BigGrunt : MonoBehaviour
     void Update()
     {
 
-        if (finishedStartup)
+        if (model.material.color == Color.blue)
         {
-            if (lookPlayer)
+            agent.isStopped = true;
+            canshoot = false;
+        }
+        else
+        {
+            agent.isStopped = false;
+            canshoot = true;
+        }
+
+        if (lookPlayer)
             {
                 faceTarget();
             }
@@ -79,8 +88,6 @@ public class EnemyAI_BigGrunt : MonoBehaviour
             }
             else if (!playerInRange)
             {
-                if (lookPlayer)
-                    lookPlayer = false;
                 Debug.Log("Roam General");
                 StartCoroutine(roam());
             }
@@ -90,14 +97,6 @@ public class EnemyAI_BigGrunt : MonoBehaviour
                 Destroy(agent.gameObject);
                 Instantiate(dropOnDeath, transform.position, Quaternion.identity);
             }
-        }
-        else
-        {
-            agent.stoppingDistance = 1;
-            agent.destination = startingSpawn.position;
-            if (agent.remainingDistance <= stoppingDistOrig)
-                finishedStartup = true;
-        }
     }
 
     IEnumerator roam()
@@ -223,5 +222,17 @@ public class EnemyAI_BigGrunt : MonoBehaviour
         muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(.1f);
         muzzleFlash.SetActive(false);
+    }
+
+    public void FreezeTime(int time)
+    {
+        StartCoroutine(FlashBlue(time));
+    }
+
+    IEnumerator FlashBlue(int time)
+    {
+        model.material.color = Color.blue;
+        yield return new WaitForSeconds(time);
+        model.material.color = Color.white;
     }
 }

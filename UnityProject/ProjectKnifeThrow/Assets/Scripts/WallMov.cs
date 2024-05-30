@@ -16,7 +16,7 @@ public class WallMov : MonoBehaviour
     [SerializeField] Transform startingPositionL;
     [SerializeField] Transform finalPositionL;
 
-
+    [SerializeField] Transform exitDoorPoint;
     public bool enemyIn = false;
 
     // Start is called before the first frame update
@@ -48,7 +48,9 @@ public class WallMov : MonoBehaviour
             {
                 return;
             }
+            //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
             enemyIn = true;
+
         }
     }
     void OnTriggerExit(Collider other)
