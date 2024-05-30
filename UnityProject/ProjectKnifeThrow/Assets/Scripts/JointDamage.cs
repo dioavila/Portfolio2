@@ -10,6 +10,10 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     Quaternion currRot;
     int origHP;
     Renderer jointModel;
+    [SerializeField] GameObject body;
+    float angleToPlayer;
+    [SerializeField] float viewAngle;
+
     //enemyAITest enemyScript;
 
     // Start is called before the first frame update
@@ -30,10 +34,15 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
 
     private void jointMovement()
     {
-
         Vector3 direction = player.transform.position - transform.position;
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,  limbTurnRate *Time.deltaTime);
+        angleToPlayer = Vector3.Angle(direction, body.transform.forward);
+
+        if (angleToPlayer < viewAngle)
+        {
+            Quaternion rotation = Quaternion.LookRotation(direction);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,  limbTurnRate *Time.deltaTime);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -76,3 +85,4 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         }
     }
 }
+

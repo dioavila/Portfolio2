@@ -1042,6 +1042,8 @@ MonoBehaviour:
   jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 5
+  body: {fileID: 256887638187867142}
+  viewAngle: 180
 --- !u!33 &4409431103976444570
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -33,6 +33,8 @@ public class enemyAI : MonoBehaviour, IFreeze
     //[SerializeField] public Transform spawnPath;
     private Transform startingSpawn;
 
+    [SerializeField] GameObject dropOnDeath;
+
     public NavMeshAgent agent;
    // private Transform spawnArea;
 
@@ -97,7 +99,9 @@ public class enemyAI : MonoBehaviour, IFreeze
             if (critPoint == null)
             {
                 Destroy(agent.gameObject);
-            }
+                if(dropOnDeath != null)
+                    Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+        }
         //}
         //else
         //{

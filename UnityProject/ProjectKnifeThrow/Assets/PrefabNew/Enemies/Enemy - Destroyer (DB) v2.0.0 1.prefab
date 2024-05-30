@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468363643544682167}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.0000005364418, z: -0, w: -1}
+  m_LocalRotation: {x: 0, y: 0, z: -0, w: -1}
   m_LocalPosition: {x: 58.58, y: -10.72, z: -144.75}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
@@ -15409,6 +15409,8 @@ MonoBehaviour:
   jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 2
+  viewAngle: 90
+  body: {fileID: 468363643544682167}
 --- !u!136 &721277644060222772
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -15533,6 +15535,8 @@ MonoBehaviour:
   jointHP: 5
   player: {fileID: 0}
   limbTurnRate: 5
+  viewAngle: 90
+  body: {fileID: 468363643544682167}
 --- !u!33 &8541696145634882925
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16535,6 +16539,8 @@ MonoBehaviour:
   jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 2
+  viewAngle: 90
+  body: {fileID: 468363643544682167}
 --- !u!136 &2314171943562027895
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -16765,6 +16771,8 @@ MonoBehaviour:
   jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 2
+  viewAngle: 90
+  body: {fileID: 468363643544682167}
 --- !u!136 &5197091134341769737
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -16889,6 +16897,8 @@ MonoBehaviour:
   jointHP: 2
   player: {fileID: 0}
   limbTurnRate: 2
+  viewAngle: 90
+  body: {fileID: 468363643544682167}
 --- !u!136 &3678876099339321212
 CapsuleCollider:
   m_ObjectHideFlags: 0
