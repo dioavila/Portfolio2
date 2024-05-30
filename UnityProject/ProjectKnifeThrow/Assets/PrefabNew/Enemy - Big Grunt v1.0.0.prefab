@@ -395,9 +395,9 @@ NavMeshAgent:
   m_Radius: 2.5
   m_Speed: 6
   m_Acceleration: 8
-  avoidancePriority: 51
+  avoidancePriority: 49
   m_AngularSpeed: 600
-  m_StoppingDistance: 10
+  m_StoppingDistance: 15
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -810,6 +810,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6509808815317103399}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -180}
+--- !u!1001 &1182409213848024147
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6505936508818152369}
+    m_Modifications:
+    - target: {fileID: 3230709308111334869, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_Name
+      value: Spawn Path
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c97634f288eec75419622d5109a10883, type: 3}
+--- !u!4 &5627492107336018523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6804970561221729800, guid: c97634f288eec75419622d5109a10883, type: 3}
+  m_PrefabInstance: {fileID: 1182409213848024147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6509972434993320705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -975,6 +1037,9 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4973885091301552, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
       insertIndex: 0
+      addedObject: {fileID: 5627492107336018523}
+    - targetCorrespondingSourceObject: {fileID: 4973885091301552, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
+      insertIndex: 1
       addedObject: {fileID: 709726534881418885}
     - targetCorrespondingSourceObject: {fileID: 4342867958046758, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
       insertIndex: -1
@@ -985,7 +1050,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1321759661024940, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3306065115214668651}
+      addedObject: {fileID: 5296721825976847211}
     - targetCorrespondingSourceObject: {fileID: 1321759661024940, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7510273391695725765}
@@ -1002,9 +1067,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 263005770415253806}
   m_SourcePrefab: {fileID: 100100000, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
---- !u!23 &6488092423811348249 stripped
+--- !u!23 &6488021630654342985 stripped
 MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 23156673370727448, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
+  m_CorrespondingSourceObject: {fileID: 23085605905724488, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
   m_PrefabInstance: {fileID: 6509972434993320705}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6505936508818152369 stripped
@@ -1022,7 +1087,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1321759661024940, guid: 1310908f07bd0d24aa8aaddbb080dbb4, type: 3}
   m_PrefabInstance: {fileID: 6509972434993320705}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3306065115214668651
+--- !u!114 &5296721825976847211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1031,10 +1096,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6511258734160672173}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afa8a781f9eaf5045bc91a204eadade9, type: 3}
+  m_Script: {fileID: 11500000, guid: 18bcc4a15dc012046972eb469a789a7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 6488092423811348249}
+  model: {fileID: 6488021630654342985}
   shootPos1: {fileID: 5513494644690484005}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
@@ -1044,14 +1109,16 @@ MonoBehaviour:
   muzzleFlash2: {fileID: 0}
   muzzleFlash3: {fileID: 0}
   muzzleFlash4: {fileID: 0}
-  HP: 5
+  critPoint: {fileID: 6511556264483757749}
+  dropOnDeath: {fileID: 0}
+  HP: 10
   viewAngle: 90
   faceTargetSpeed: 10
   roamDistance: 20
-  roamTimer: 1
+  roamTimer: 3
   bullet: {fileID: 4120459902882074936, guid: 040cbdadd8b360a4699864e181d78ee7, type: 3}
   shootRate: 1
-  critPoint: {fileID: 6511556264483757749}
+  spawnPath: {fileID: 5627492107336018523}
   agent: {fileID: 2744700056141883684}
   turnRate: 5
 --- !u!136 &7510273391695725765

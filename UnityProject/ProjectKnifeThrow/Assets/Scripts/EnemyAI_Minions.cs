@@ -30,7 +30,8 @@ public class enemyAI : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    //[SerializeField] public Transform spawnPath;
+    [SerializeField] public Transform spawnPath;
+    private Transform startingSpawn;
 
     public NavMeshAgent agent;
     private Transform spawnArea;
@@ -54,6 +55,7 @@ public class enemyAI : MonoBehaviour
     {
         GameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
+        startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
 
     }
@@ -91,20 +93,10 @@ public class enemyAI : MonoBehaviour
         }
         else
         {
-            //--Spawn Point (this actually works)--
-            //agent.stoppingDistance = 1;
-            //agent.destination = spawnPath.position;
-            //if (agent.remainingDistance <= stoppingDistOrig)
-            //    finishedStartup = true;
-
-
-            //transform.position = transform.forward * Time.deltaTime * 3.0f;
-            //Vector3 tempSpot = transform.forward * 5.0f;
-            //spawnArea.position.Set(transform.position.x, transform.position.y, transform.position.z + 10);
-            //transform.position = Vector3.Lerp(transform.position, spawnArea.position, 3.0f);
-            //gameObject.transform.position = Vector3.MoveTowards(transform.position, spawnArea.position, 3.0f);
-            //agent.Move(spawnArea.position);
-            //finishedStartup = true;
+            agent.stoppingDistance = 1;
+            agent.destination = startingSpawn.position;
+            if (agent.remainingDistance <= stoppingDistOrig)
+                finishedStartup = true;
         }
     }
 

@@ -30,7 +30,8 @@ public class EnemyAI_BigGrunt : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    //[SerializeField] public Transform spawnPath;
+    [SerializeField] public Transform spawnPath;
+    private Transform startingSpawn;
 
     public NavMeshAgent agent;
 
@@ -53,6 +54,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour
     {
         GameManager.instance.updateGameGoal(1);
         startingPos = transform.position;
+        startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
 
     }
@@ -91,13 +93,10 @@ public class EnemyAI_BigGrunt : MonoBehaviour
         }
         else
         {
-            //agent.stoppingDistance = 1;
-            //agent.destination = spawnPath.position;
-            //if (agent.remainingDistance <= stoppingDistOrig)
-            //    finishedStartup = true;
-            //transform.position = transform.forward * Time.deltaTime * 3.0f;
-            transform.position += transform.forward * Time.deltaTime * 3.0f;
-            finishedStartup = true;
+            agent.stoppingDistance = 1;
+            agent.destination = startingSpawn.position;
+            if (agent.remainingDistance <= stoppingDistOrig)
+                finishedStartup = true;
         }
     }
 
