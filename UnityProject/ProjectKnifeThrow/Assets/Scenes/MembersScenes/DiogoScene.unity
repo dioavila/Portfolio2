@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 121195659}
   - component: {fileID: 121195658}
-  - component: {fileID: 121195660}
   - component: {fileID: 121195657}
   - component: {fileID: 121195656}
   m_Layer: 0
@@ -158,11 +157,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.75
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &121195657
 MeshRenderer:
@@ -229,6 +228,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &121195660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e812d221c155a84489224615490aa37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!4 &130950912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3912117124864305534, guid: bc5f037630346a4408784d376ca23e1f, type: 3}
@@ -260,7 +262,7 @@ GameObject:
   - component: {fileID: 147620364}
   m_Layer: 0
   m_Name: TrapDoor
-  m_TagString: KeyDoor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -392,7 +394,6 @@ GameObject:
   m_Component:
   - component: {fileID: 299701916}
   - component: {fileID: 299701915}
-  - component: {fileID: 299701917}
   - component: {fileID: 299701914}
   - component: {fileID: 299701913}
   m_Layer: 0
@@ -417,11 +418,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.47
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &299701914
 MeshRenderer:
@@ -482,12 +483,13 @@ Transform:
   m_GameObject: {fileID: 299701912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 38.03, y: 17.42, z: 15.53}
+  m_LocalPosition: {x: 36.399998, y: 17.16, z: 15.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &299701917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e812d221c155a84489224615490aa37f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1 &385721393
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,18 +575,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5244627985432153487, guid: ea838af989a618b4c81423b5fe1d5cac, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5244627985432153487, guid: ea838af989a618b4c81423b5fe1d5cac, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5244627985432153487, guid: ea838af989a618b4c81423b5fe1d5cac, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5244627985432153487, guid: ea838af989a618b4c81423b5fe1d5cac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.463326
       objectReference: {fileID: 0}
@@ -640,6 +632,74 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3912117124864305534, guid: bc5f037630346a4408784d376ca23e1f, type: 3}
   m_PrefabInstance: {fileID: 1396017243}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+=======
+--- !u!1001 &629456807
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1358162373247664791, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: healthPickup
+      value: 
+      objectReference: {fileID: 7673053207657736634, guid: ea838af989a618b4c81423b5fe1d5cac, type: 3}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2316169643571436659, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332348661160832290, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3b2241a74c82d2141beb79858e9000fe, type: 2}
+    - target: {fileID: 6621813397060972698, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+      propertyPath: m_Name
+      value: Player 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1 &670227983
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,10 +745,8 @@ GameObject:
   m_Component:
   - component: {fileID: 670862013}
   - component: {fileID: 670862012}
-  - component: {fileID: 670862015}
   - component: {fileID: 670862011}
   - component: {fileID: 670862010}
-  - component: {fileID: 670862014}
   m_Layer: 0
   m_Name: Control Point
   m_TagString: Untagged
@@ -782,6 +840,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!135 &670862014
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -817,6 +876,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyIsInserted: 0
   has3Keys: 0
+=======
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1601,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3036681197009646924, guid: ea6c5d6a3027dbf438a13c3b352af38b, type: 3}
   m_PrefabInstance: {fileID: 1468440371}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
+=======
+--- !u!114 &1296385143 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1358162373247664791, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+  m_PrefabInstance: {fileID: 629456807}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1754d70fcbad4459c6e890408af53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1001 &1396017243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1934,6 +2009,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9da1a4f51c351cf4f960fb727bbef6cb, type: 3}
+<<<<<<< HEAD
 --- !u!1 &1537149029 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3562046252257017003, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
@@ -1944,6 +2020,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2406468671269528623, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
   m_PrefabInstance: {fileID: 1670626024}
   m_PrefabAsset: {fileID: 0}
+=======
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1 &1584148744
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2354,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 2120674939300631727, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -2291,6 +2370,11 @@ PrefabInstance:
     - target: {fileID: 2177827657262153459, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
       propertyPath: m_Color.a
       value: 0.42745098
+=======
+    - target: {fileID: 1348175736386396058, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
       objectReference: {fileID: 0}
     - target: {fileID: 3717217733089513261, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
       propertyPath: m_Pivot.x
@@ -2373,17 +2457,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9009452753961725641, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
-      propertyPath: keyRejection
-      value: 
-      objectReference: {fileID: 1537149029}
-    - target: {fileID: 9009452753961725641, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
       propertyPath: messagePanel
       value: 
       objectReference: {fileID: 1661790347}
-    - target: {fileID: 9009452753961725641, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
-      propertyPath: keyAcceptance
-      value: 
-      objectReference: {fileID: 1543146992}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2404,7 +2480,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1771163389}
   - component: {fileID: 1771163388}
-  - component: {fileID: 1771163390}
   - component: {fileID: 1771163387}
   - component: {fileID: 1771163386}
   m_Layer: 0
@@ -2429,11 +2504,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.28
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1771163387
 MeshRenderer:
@@ -2500,6 +2575,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &1771163390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2581,6 +2657,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35ead0ebf44af9949be2d38d3336e528, type: 3}
+=======
+>>>>>>> parent of 44e47cd (Merge branch 'main' of https://github.com/dioavila/Portfolio2)
 --- !u!1 &1885496193
 GameObject:
   m_ObjectHideFlags: 0

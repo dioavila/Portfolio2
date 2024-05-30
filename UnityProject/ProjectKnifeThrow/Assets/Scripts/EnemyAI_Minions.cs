@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour//, IDamage
+public class enemyAI : MonoBehaviour
 {
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
