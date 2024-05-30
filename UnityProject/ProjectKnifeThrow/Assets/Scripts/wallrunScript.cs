@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
 using System.Threading;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
@@ -14,7 +15,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     int gravityStorage;
-    
+
     [Header("Shooting")]
     [SerializeField] Transform playerShootPos;
     [SerializeField] Transform knifeModelLoc;
@@ -23,7 +24,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
-    
+
     [SerializeField] Transform playerShootPosG;
     [SerializeField] GameObject grindBullet;
     [SerializeField] Transform grindKnifeModelLoc;
@@ -32,7 +33,7 @@ public class wallRun : MonoBehaviour, IDamage
     public bool resetOn = false;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
     [SerializeField] float grindShootRate;
-    
+
     bool isShooting;
     //Kasey Add
     [SerializeField] int shootspeed;
@@ -102,7 +103,7 @@ public class wallRun : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-       // knifeModel = knifeList[0].Knife;
+        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -144,12 +145,7 @@ public class wallRun : MonoBehaviour, IDamage
             }
         }
 
-        if (!isSliding)
-        {
-            moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding && controller.isGrounded)
+        if (Input.GetKeyDown(KeyCode.C) && !isSliding)
         {
             StartCoroutine(Slide());
         }
@@ -163,7 +159,7 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 gKnifeModels[knifeModIter].SetActive(true);
             }
-                resetOn = false;
+            resetOn = false;
         }
         else if (resetOn && gThrowCount > 0)
         {
@@ -184,10 +180,10 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
-            if(gThrowCount >= 0 && gThrowCount <= 4)
+            if (gThrowCount >= 0 && gThrowCount <= 4)
             {
                 ++gThrowCount;
-                gKnifeModels[gThrowCount-1].SetActive(false);
+                gKnifeModels[gThrowCount - 1].SetActive(false);
                 StartCoroutine(shoot(grindBullet, grindShootRate)); // shoot needs to be withing the 0 to 4 constraint
             }
         }
@@ -235,10 +231,11 @@ public class wallRun : MonoBehaviour, IDamage
         }
 
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        if (playerCanMove) {
+        if (playerCanMove)
+        {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
-       sprint();
+        sprint();
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -263,7 +260,7 @@ public class wallRun : MonoBehaviour, IDamage
             animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint"))
         {
             animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
@@ -375,7 +372,7 @@ public class wallRun : MonoBehaviour, IDamage
     {
         Vector3 wallTouchChecker;
 
-        if(jumpCount == 2)
+        if (jumpCount == 2)
         {
             jumpCount = 1;
         }
@@ -390,11 +387,11 @@ public class wallRun : MonoBehaviour, IDamage
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
-        
-        controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+
+        controller.Move(wallDirection * (playerSpeed * sprintMod) * Time.deltaTime);
         isWallRunning = true;
 
-        if(playerCanMove)
+        if (playerCanMove)
         {
             canSprint = false;
             playerCanMove = false;
@@ -413,7 +410,7 @@ public class wallRun : MonoBehaviour, IDamage
             canWallRun = true;
             playerCanMove = true;
             isWallRunning = false;
-        }       
+        }
     }
 
     /// <summary>
@@ -493,7 +490,7 @@ public class wallRun : MonoBehaviour, IDamage
 
     void BulletTimeActive()
     {
-        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        bTimeCurrent -= Time.deltaTime * barEmptyRate;
         updateBPUI();
     }
     void BulletTimeRefill()
@@ -521,21 +518,28 @@ public class wallRun : MonoBehaviour, IDamage
     {
         isSliding = true;
         slideDirection = moveDir.normalized; // Slide in the current movement direction
-        //float originalHeight = controller.height;
-        //Vector3 originalCenter = controller.center;
-
-        // Adjust the character controller's height for the slide
-        // controller.height = originalHeight / 2;
-        // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
 
         // Call IncreaseFOVForSlide() when the player starts sliding
         fovController.IncreaseFovForSlide();
 
         float elapsedTime = 0f;
+        float initialGravity = gravity; // Store the initial gravity value
         while (elapsedTime < slideDuration)
         {
             // Move the player in the slide direction
-            controller.Move(slideDirection * slideSpeed * Time.deltaTime);
+            Vector3 slideVelocity = slideDirection * slideSpeed;
+
+            //float originalHeight = controller.height;
+            //Vector3 originalCenter = controller.center;
+            // Adjust the character controller's height for the slide
+            // controller.height = originalHeight / 2;
+            // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+            // Gradually reduce gravity to lower the player
+            float slideGravity = Mathf.Lerp(initialGravity, 0, elapsedTime / slideDuration);
+            slideVelocity.y -= slideGravity * Time.deltaTime;
+
+            controller.Move(slideVelocity * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -544,6 +548,7 @@ public class wallRun : MonoBehaviour, IDamage
         // Reset the character controller's height after the slide
         //controller.height = originalHeight;
         // controller.center = originalCenter;
+
         isSliding = false;
 
         // Call ResetFOV() when the player stops sliding
