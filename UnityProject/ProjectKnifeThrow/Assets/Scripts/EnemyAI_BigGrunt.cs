@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour
+public class EnemyAI_BigGrunt : MonoBehaviour
 {
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
@@ -20,6 +19,7 @@ public class enemyAI : MonoBehaviour
     [SerializeField] GameObject muzzleFlash3;
     [SerializeField] GameObject muzzleFlash4;
     [SerializeField] GameObject critPoint;
+    [SerializeField] GameObject dropOnDeath;
 
     [SerializeField] int HP;
     [SerializeField] int viewAngle;
@@ -33,7 +33,6 @@ public class enemyAI : MonoBehaviour
     //[SerializeField] public Transform spawnPath;
 
     public NavMeshAgent agent;
-    private Transform spawnArea;
 
     bool isShooting;
     bool playerInRange;
@@ -87,24 +86,18 @@ public class enemyAI : MonoBehaviour
             if (critPoint == null)
             {
                 Destroy(agent.gameObject);
+                Instantiate(dropOnDeath, transform.position, Quaternion.identity);
             }
         }
         else
         {
-            //--Spawn Point (this actually works)--
             //agent.stoppingDistance = 1;
             //agent.destination = spawnPath.position;
             //if (agent.remainingDistance <= stoppingDistOrig)
             //    finishedStartup = true;
-
-
             //transform.position = transform.forward * Time.deltaTime * 3.0f;
-            //Vector3 tempSpot = transform.forward * 5.0f;
-            //spawnArea.position.Set(transform.position.x, transform.position.y, transform.position.z + 10);
-            //transform.position = Vector3.Lerp(transform.position, spawnArea.position, 3.0f);
-            //gameObject.transform.position = Vector3.MoveTowards(transform.position, spawnArea.position, 3.0f);
-            //agent.Move(spawnArea.position);
-            //finishedStartup = true;
+            transform.position += transform.forward * Time.deltaTime * 3.0f;
+            finishedStartup = true;
         }
     }
 
@@ -140,7 +133,7 @@ public class enemyAI : MonoBehaviour
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
-            { 
+            {
                 agent.stoppingDistance = stoppingDistOrig;
 
                 if (!isShooting)
