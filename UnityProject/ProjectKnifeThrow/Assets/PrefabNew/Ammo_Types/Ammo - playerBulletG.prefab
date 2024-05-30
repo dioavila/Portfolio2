@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5479240935376343145}
-  Speed: 35
+  Speed: 50
   DestroyTime: 2
   knifeModel: {fileID: 558128222696408114, guid: cbe172c4c63e15140a5a7483ab93becd, type: 3}
 --- !u!96 &387816907192373000
