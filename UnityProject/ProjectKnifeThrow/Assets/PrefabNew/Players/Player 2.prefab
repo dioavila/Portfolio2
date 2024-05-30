@@ -1634,7 +1634,7 @@ MonoBehaviour:
   HP: 0
   playerShootPos: {fileID: 6972851433693626651}
   playerShootPosG: {fileID: 9118501073219582619}
-  knifeModelLoc: {fileID: 9123211617877342306}
+  knifeModelLoc: {fileID: 1001803943137085665}
   grindKnifeModelLoc: {fileID: 7624659698700422871}
   playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
   grindBullet: {fileID: 1434887993633493559, guid: 5b2b389265d705446bb1e33a6a098f3c, type: 3}
@@ -1674,13 +1674,10 @@ MonoBehaviour:
   barFillRate: 3
   barEmptyRate: 5
   playerCanMove: 1
-  item:
-  - {fileID: 0}
-  - {fileID: 0}
-  messagePanel: {fileID: 0}
+  keys: []
   animR: {fileID: 4904054144205990633}
   animL: {fileID: 6332348661160832290}
-  timerDelay: 0.5
+  smoothAnimMod: 0
 --- !u!114 &4653763429016988339
 MonoBehaviour:
   m_ObjectHideFlags: 0

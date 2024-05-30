@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
+    public kwallRun kplayerCS;
+    public enemyAI AIScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
     [SerializeField] GameObject messagePanel;
@@ -76,9 +79,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        CloseAcceptPanel("");
-        CloseMessagePanel("");
-        CloseRejectPanel("");
     }
 
     public void stateUnPause()
@@ -131,7 +131,6 @@ public class GameManager : MonoBehaviour
     {
         messagePanel.SetActive(false);
     }
-
     public void OpenRejectPanel(string text)
     {
         keyRejection.SetActive(true);

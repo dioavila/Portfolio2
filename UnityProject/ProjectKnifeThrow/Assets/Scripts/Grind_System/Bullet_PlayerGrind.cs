@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrindBullet : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
-    [SerializeField] int Speed;
+    [SerializeField] public int Speed;
     [SerializeField] int DestroyTime;
     [SerializeField] GameObject knifeModel;
     bool destroyedOnCollision = false;
