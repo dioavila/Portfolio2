@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 6189318836152876518}
   - component: {fileID: 191707635206051967}
   m_Layer: 0
-  m_Name: Enemy - Dual Gunner (DB) fixed
+  m_Name: Enemy - Dual Gunner (DB) v1.0.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ Transform:
   m_GameObject: {fileID: 1640770508689667708}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 1.62, z: 0}
+  m_LocalPosition: {x: 63, y: 1.62, z: -22.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1334,7 +1334,7 @@ GameObject:
   - component: {fileID: 9026768117588463646}
   m_Layer: 0
   m_Name: Robot_Eye
-  m_TagString: Untagged
+  m_TagString: critPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1538,10 +1538,10 @@ GameObject:
   - component: {fileID: 8236239463547064881}
   - component: {fileID: 2028627579500542104}
   - component: {fileID: 821571242326938294}
-  - component: {fileID: 936901310230337415}
+  - component: {fileID: 4458086123178010905}
   m_Layer: 0
   m_Name: MainBody
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1585,14 +1585,14 @@ MonoBehaviour:
   muzzleFlash2: {fileID: 3561829493939801169}
   muzzleFlash3: {fileID: 0}
   muzzleFlash4: {fileID: 0}
+  critPoint: {fileID: 6918379528238860539}
   HP: 5
   viewAngle: 90
   faceTargetSpeed: 10
   roamDistance: 20
-  roamTimer: 1
+  roamTimer: 3
   bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.5
-  critPoint: {fileID: 6918379528238860539}
   agent: {fileID: 6189318836152876518}
   turnRate: 5
 --- !u!136 &821571242326938294
@@ -1618,27 +1618,33 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!135 &936901310230337415
-SphereCollider:
+--- !u!54 &4458086123178010905
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7727150612500358022}
-  m_Material: {fileID: 0}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8408270778663378911
 GameObject:
   m_ObjectHideFlags: 0
