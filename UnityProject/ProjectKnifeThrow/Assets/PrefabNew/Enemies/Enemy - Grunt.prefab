@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: -6559395813284357468}
   m_Layer: 0
   m_Name: Enemy - Grunt
-  m_TagString: Enemy
+  m_TagString: critPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,16 +83,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8a781f9eaf5045bc91a204eadade9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 4348980476123300056, guid: 39a480c7b5fac72429dead6e5c2885d8, type: 3}
   model: {fileID: 5402389234754078720}
   shootPos1: {fileID: 996027351075578759}
   shootPos2: {fileID: 0}
   shootPos3: {fileID: 0}
   shootPos4: {fileID: 0}
+  headPos: {fileID: 0}
+  muzzleFlash1: {fileID: 0}
+  muzzleFlash2: {fileID: 0}
+  muzzleFlash3: {fileID: 0}
+  muzzleFlash4: {fileID: 0}
+  critPoint: {fileID: 0}
   HP: 1
+  viewAngle: 0
+  faceTargetSpeed: 0
+  roamDistance: 0
+  roamTimer: 0
+  bullet: {fileID: 4348980476123300056, guid: 39a480c7b5fac72429dead6e5c2885d8, type: 3}
   shootRate: 0.5
+  spawnPath: {fileID: 0}
   agent: {fileID: 8637040286783487177}
-  player: {fileID: 0}
+  turnRate: 0
 --- !u!195 &8637040286783487177
 NavMeshAgent:
   m_ObjectHideFlags: 0

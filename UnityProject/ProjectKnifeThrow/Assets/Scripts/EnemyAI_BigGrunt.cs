@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IFreeze
+public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 {
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
@@ -20,6 +19,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] GameObject muzzleFlash3;
     [SerializeField] GameObject muzzleFlash4;
     [SerializeField] GameObject critPoint;
+    [SerializeField] GameObject dropOnDeath;
 
     [SerializeField] int HP;
     [SerializeField] int viewAngle;
@@ -31,18 +31,14 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] float shootRate;
 
     //[SerializeField] public Transform spawnPath;
-    private Transform startingSpawn;
-
-    [SerializeField] GameObject dropOnDeath;
+    //private Transform startingSpawn;
 
     public NavMeshAgent agent;
-   // private Transform spawnArea;
 
     bool isShooting;
     bool playerInRange;
     bool destChosen;
     bool finishedStartup = false;
-    bool canshoot = true;
     //bool isReadyToOrbit = false;
 
     Vector3 playerDir;
@@ -53,18 +49,20 @@ public class enemyAI : MonoBehaviour, IFreeze
 
     bool lookPlayer = false;
     public int turnRate;
-    float timer = 3;
+    bool canshoot;
     // Start is called before the first frame update
     void Start()
     {
         startingPos = transform.position;
-        ///startingSpawn = spawnPath;
+        //startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (model.material.color == Color.blue)
         {
             agent.isStopped = true;
@@ -76,17 +74,15 @@ public class enemyAI : MonoBehaviour, IFreeze
             canshoot = true;
         }
 
-        //if (finishedStartup)
-        //{
-            if (lookPlayer)
+        if (lookPlayer)
             {
                 faceTarget();
             }
 
             if (playerInRange && !canSeePlayer())
             {
-                if (!lookPlayer)
-                    lookPlayer = true;
+                if (lookPlayer)
+                    lookPlayer = false;
                 Debug.Log("Roam Forgot");
                 StartCoroutine(roam());
             }
@@ -99,26 +95,8 @@ public class enemyAI : MonoBehaviour, IFreeze
             if (critPoint == null)
             {
                 Destroy(agent.gameObject);
-                if(dropOnDeath != null)
-                    Instantiate(dropOnDeath, transform.position, Quaternion.identity);
-        }
-        //}
-        //else
-        //{
-        //    //if(timer >= 0)
-        //    //{
-        //    //    timer -= Time.deltaTime;
-        //    //    agent.destination = startingSpawn.position;
-        //    //}
-        //    //else
-        //    //{
-        //    //    finishedStartup = true;
-        //    //}
-        //    agent.stoppingDistance = 1;
-        //    agent.destination = startingSpawn.position;
-        //    if (agent.remainingDistance <= stoppingDistOrig)
-        //        finishedStartup = true;
-        //}
+                Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+            }
     }
 
     IEnumerator roam()
@@ -153,10 +131,10 @@ public class enemyAI : MonoBehaviour, IFreeze
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
-            { 
+            {
                 agent.stoppingDistance = stoppingDistOrig;
 
-                if (!isShooting && canshoot)
+                if (!isShooting)
                 {
                     StartCoroutine(shoot());
                 }

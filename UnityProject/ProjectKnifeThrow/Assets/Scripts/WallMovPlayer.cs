@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallMov : MonoBehaviour
+public class WallMovPlayer : MonoBehaviour
 {
     [SerializeField] int doorOpenSpeed;
     
@@ -17,7 +17,7 @@ public class WallMov : MonoBehaviour
     [SerializeField] Transform finalPositionL;
 
     [SerializeField] Transform exitDoorPoint;
-    public bool enemyIn = false;
+    public bool playerIn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class WallMov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyIn)
+        if (playerIn)
         {
             rightDoor.transform.position = Vector3.Slerp(rightDoor.transform.position, finalPositionR.position, Time.deltaTime * doorOpenSpeed);
             leftDoor.transform.position = Vector3.Slerp(leftDoor.transform.position, finalPositionL.position, Time.deltaTime * doorOpenSpeed);
@@ -49,15 +49,15 @@ public class WallMov : MonoBehaviour
                 return;
             }
             //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
-            enemyIn = true;
+            playerIn = true;
 
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            enemyIn = false;
+            playerIn = false;
         }
     }
 }

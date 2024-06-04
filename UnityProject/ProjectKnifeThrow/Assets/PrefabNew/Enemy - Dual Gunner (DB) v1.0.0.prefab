@@ -1538,7 +1538,6 @@ GameObject:
   - component: {fileID: 8236239463547064881}
   - component: {fileID: 2028627579500542104}
   - component: {fileID: 821571242326938294}
-  - component: {fileID: 936901310230337415}
   - component: {fileID: 4458086123178010905}
   m_Layer: 0
   m_Name: MainBody
@@ -1586,14 +1585,14 @@ MonoBehaviour:
   muzzleFlash2: {fileID: 3561829493939801169}
   muzzleFlash3: {fileID: 0}
   muzzleFlash4: {fileID: 0}
+  critPoint: {fileID: 6918379528238860539}
   HP: 5
   viewAngle: 90
   faceTargetSpeed: 10
   roamDistance: 20
-  roamTimer: 1
+  roamTimer: 3
   bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.5
-  critPoint: {fileID: 6918379528238860539}
   agent: {fileID: 6189318836152876518}
   turnRate: 5
 --- !u!136 &821571242326938294
@@ -1619,27 +1618,6 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!135 &936901310230337415
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7727150612500358022}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4458086123178010905
 Rigidbody:
   m_ObjectHideFlags: 0
