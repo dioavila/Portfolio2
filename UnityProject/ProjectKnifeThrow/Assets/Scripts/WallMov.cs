@@ -17,7 +17,7 @@ public class WallMov : MonoBehaviour
     [SerializeField] Transform finalPositionL;
 
     [SerializeField] Transform exitDoorPoint;
-    public bool enemyIn = false;
+    public bool charIn = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class WallMov : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemyIn)
+        if (charIn)
         {
             rightDoor.transform.position = Vector3.Slerp(rightDoor.transform.position, finalPositionR.position, Time.deltaTime * doorOpenSpeed);
             leftDoor.transform.position = Vector3.Slerp(leftDoor.transform.position, finalPositionL.position, Time.deltaTime * doorOpenSpeed);
@@ -42,22 +42,22 @@ public class WallMov : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
   {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
             if (other.isTrigger)
             {
                 return;
             }
             //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
-            enemyIn = true;
+            charIn = true;
 
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.CompareTag("Enemy"))
         {
-            enemyIn = false;
+            charIn = false;
         }
     }
 }
