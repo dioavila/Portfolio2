@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
+    //public GameObject enemySpawnRoom;
 
 
     // Start is called before the first frame update
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
+        
     }
 
     // Update is called once per frame

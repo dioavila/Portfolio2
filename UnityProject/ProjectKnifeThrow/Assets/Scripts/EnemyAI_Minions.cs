@@ -30,7 +30,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
 
-    [SerializeField] public Transform spawnPath;
+    [SerializeField] Transform spawnPath;
     private Transform startingSpawn;
 
     [SerializeField] GameObject dropOnDeath;
@@ -54,10 +54,10 @@ public class enemyAI : MonoBehaviour, IFreeze
     bool lookPlayer = false;
     public int turnRate;
     float timer = 3;
+
     // Start is called before the first frame update
     void Start()
     {
-        //startingPos = transform.position;
         startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
     }

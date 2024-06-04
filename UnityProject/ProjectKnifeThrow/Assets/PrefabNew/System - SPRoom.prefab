@@ -596,7 +596,7 @@ Transform:
   m_GameObject: {fileID: 5778291389774571759}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071064, z: -0, w: 0.7071072}
-  m_LocalPosition: {x: -2.6299992, y: 2.569, z: -6.89}
+  m_LocalPosition: {x: 0, y: 0, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -769,7 +769,7 @@ Transform:
   m_GameObject: {fileID: 6533443556011471908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6900005, y: 0.28899997, z: -7.16}
+  m_LocalPosition: {x: 6.7, y: 0.28899997, z: -7.16}
   m_LocalScale: {x: 5.1066, y: 1, z: 14.086}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -815,7 +815,8 @@ MonoBehaviour:
   leftDoor: {fileID: 7228798092924707066}
   startingPositionL: {fileID: 2578977290102859576}
   finalPositionL: {fileID: 3081575210812002784}
-  enemyIn: 0
+  exitDoorPoint: {fileID: 0}
+  charIn: 0
 --- !u!1 &6821579237144145123
 GameObject:
   m_ObjectHideFlags: 0

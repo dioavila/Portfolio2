@@ -16,13 +16,16 @@ public class WallMov : MonoBehaviour
     [SerializeField] Transform startingPositionL;
     [SerializeField] Transform finalPositionL;
 
+    //[SerializeField] Transform spawnPath;
+    //public GameObject enemy;
+
     [SerializeField] Transform exitDoorPoint;
     public bool charIn = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -41,7 +44,12 @@ public class WallMov : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-  {
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            //other.GetComponent<enemyAI>().spawnPath = spawnPath;
+        }
+
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
             if (other.isTrigger)
