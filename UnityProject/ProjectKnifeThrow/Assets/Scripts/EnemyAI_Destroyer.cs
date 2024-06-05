@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAITest : MonoBehaviour//, IDamage
+public class enemyAITest : MonoBehaviour
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
@@ -37,6 +36,7 @@ public class enemyAITest : MonoBehaviour//, IDamage
 
         if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
         {
+            muzzleFlash.Clear ();
             GameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
@@ -86,27 +86,10 @@ public class enemyAITest : MonoBehaviour//, IDamage
         {
             muzzleFlash.SetActive(true);
             yield return new WaitForSeconds(.1f);
-            muzzleFlash.SetActive(false);
+            if (muzzleFlash != null)
+            {
+                muzzleFlash.SetActive(false);
+            }
         }
     }
-
-    /*public void TakeDamage(int amount)
-    {
-        HP -= amount;
-       // agent.SetDestination(GameManager.instance.player.transform.position);
-        StartCoroutine(flashred());
-
-        if (HP <= 0)
-        {
-            //GameManager.instance.updateGameGoal(-1);
-            Destroy(gameObject);
-        }
-    }
-
-    IEnumerator flashred()
-    {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        model.material.color = Color.white;
-    }*/
 }

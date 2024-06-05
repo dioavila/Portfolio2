@@ -184,7 +184,7 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
-            if (gThrowCount >= 0 && gThrowCount <= 4)
+            if(gThrowCount >= 0 && gThrowCount < 4)
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount - 1].SetActive(false);
