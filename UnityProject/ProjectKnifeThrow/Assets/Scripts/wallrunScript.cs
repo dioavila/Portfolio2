@@ -96,8 +96,9 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
     [Header("Animation")]
-    [SerializeField] Animator animR;
-    [SerializeField] Animator animL;
+    //[SerializeField] Animator animR;
+    //[SerializeField] Animator animL;
+    [SerializeField] Animator anim;
     [SerializeField] int smoothAnimMod;
 
     // Start is called before the first frame update
@@ -241,6 +242,7 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            anim.SetTrigger("JumpAnim");
             canSprint = false;
             ++jumpCount;
             playerVel.y = jumpSpeed;
@@ -258,14 +260,16 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint") && canSprint)
         {
-            animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
-            animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            //animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            //animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
         else if(Input.GetButtonUp("Sprint"))
         {
-            animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
-            animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
+            //animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
+            //animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
+            anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
         }
     }
@@ -275,7 +279,7 @@ public class wallRun : MonoBehaviour, IDamage
         if (bulletType.name == "Ammo - playerBulletG")
         {
             isShooting = true;
-            animL.SetTrigger("ShootG");
+            //animL.SetTrigger("ShootG");
            //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
@@ -297,7 +301,8 @@ public class wallRun : MonoBehaviour, IDamage
         else
         {
             isShooting = true;
-            animR.SetTrigger("Shoot");
+            anim.SetTrigger("Shoot");
+            //animR.SetTrigger("Shoot");//
             //GameObject Projectile = Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
             //Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             //Vector3 ForceDir = Camera.main.transform.forward;
