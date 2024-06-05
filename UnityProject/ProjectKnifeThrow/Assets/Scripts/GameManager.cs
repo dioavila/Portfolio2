@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public int enemyCount;
     public GameObject playerBPUI;
     public GameObject playerFlashDamage;
+    public Image redScreenImage;
+    private bool isTransitioning = false;
+    Color startColor;
 
     [Header("Object Access")]
     public GameObject player;
@@ -48,6 +51,13 @@ public class GameManager : MonoBehaviour
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
 
+    }
+
+    private void Start()
+    {
+        startColor = redScreenImage.color;
+        startColor.a = 0f;
+        redScreenImage.color = startColor;
     }
 
     // Update is called once per frame
@@ -117,9 +127,67 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(isPaused);
     }
 
+
     public void spawnEnemy()
     {
 
+    }
+
+    IEnumerator waitForDeath()
+    {
+        yield return new WaitForSeconds(2.0f);
+    }
+
+    public void TriggerRedToBlackScreen()
+    {
+        if (!isTransitioning)
+        {
+            StartCoroutine(RedToBlackTransition());
+        }
+    }
+
+    IEnumerator RedToBlackTransition()
+    {
+        isTransitioning = true;
+
+        float duration = 1f;
+        float timer = 0f;
+
+        //Fade to red over 1 second
+        Color startColor = new Color(1f, 0f, 0f, 0f); // Fully transparent red
+        Color midColor = new Color(1f, 0f, 0f, 1f); // Fully opaque red
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+            redScreenImage.color = Color.Lerp(startColor, midColor, t);
+            yield return null;
+        }
+
+        // Ensure the color is exactly midColor after the loop
+        redScreenImage.color = midColor;
+
+        // Reset the timer for the next transition
+        timer = 0f;
+
+        //Fade to black over 1 second
+        Color endColor = new Color(0f, 0f, 0f, 1f); // Fully opaque black
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+            redScreenImage.color = Color.Lerp(midColor, endColor, t);
+            yield return null;
+        }
+
+        // Ensure the color is exactly endColor after the loop
+        redScreenImage.color = endColor;
+
+        isTransitioning = false;
+
+        youLose();
     }
 
     public void OpenMessagePanel(string text)

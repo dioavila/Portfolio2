@@ -475,7 +475,7 @@ public class wallRun : MonoBehaviour, IDamage
         StartCoroutine(flashScreenRed());
         if (HP <= 0)
         {
-            GameManager.instance.youLose();
+            GameManager.instance.TriggerRedToBlackScreen();
         }
     }
     IEnumerator flashScreenRed()
@@ -515,6 +515,10 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 BulletTimeRefill();
             }
+        }
+        if(GameManager.instance.playerBTBar.fillAmount == 1)
+        {
+            //GameManager.instance.playerBTBar
         }
     }
 
