@@ -111,6 +111,8 @@ public class wallRun : MonoBehaviour, IDamage
         HP = startingHP;
         spawnPlayer();
         updateBPUI();
+        GameManager.instance.playerBTBarBack.enabled = false;
+        GameManager.instance.playerBTBar.enabled = false;
 
         fovController = GetComponent<PlayerFovController>();
     }
@@ -495,12 +497,6 @@ public class wallRun : MonoBehaviour, IDamage
     /// Bullet Time Logic
     /// </summary>
     /// 
-    IEnumerator waitForBT()
-    {
-        yield return new WaitForSeconds(2.0f);
-        
-
-    }
     void BulletTimeCheck()
     {
         if (bulletTimeActive)
@@ -528,7 +524,16 @@ public class wallRun : MonoBehaviour, IDamage
                 BulletTimeRefill();
             }
         }
-        if (bTimeCurrent >= bTimeTotal || GameManager.instance.isTransitioning)
+
+        if (bTimeCurrent >= bTimeTotal && !GameManager.instance.isTransitioning)
+        {
+            if (!IsInvoking("waitForBT"))
+            {
+                Invoke("waitForBT", 1);
+            }
+        }
+
+        if (GameManager.instance.isTransitioning)
         {
             bulletTimeActive = false;
             Time.timeScale = 1f;
@@ -542,6 +547,7 @@ public class wallRun : MonoBehaviour, IDamage
         bTimeCurrent -= Time.deltaTime * barEmptyRate;
         updateBPUI();
     }
+
     void BulletTimeRefill()
     {
         bTimeCurrent += Time.deltaTime * barFillRate;
@@ -551,6 +557,12 @@ public class wallRun : MonoBehaviour, IDamage
     void updateBPUI()
     {
         GameManager.instance.playerBTBar.fillAmount = bTimeCurrent / bTimeTotal;
+    }
+
+    void waitForBT()
+    {
+        GameManager.instance.playerBTBarBack.enabled = false;
+        GameManager.instance.playerBTBar.enabled = false;
     }
 
     public void spawnPlayer()
