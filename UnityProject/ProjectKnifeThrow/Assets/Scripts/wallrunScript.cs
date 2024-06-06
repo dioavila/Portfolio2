@@ -14,7 +14,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     int gravityStorage;
-    
+
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
     [SerializeField] Transform knifeModelLoc;
@@ -23,7 +23,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
     [SerializeField] GameObject playerObj;
-    
+
     [SerializeField] Transform playerShootPosG;
     [SerializeField] GameObject grindBullet;
     [SerializeField] Transform grindKnifeModelLoc;
@@ -32,7 +32,7 @@ public class wallRun : MonoBehaviour, IDamage
     public bool resetOn = false;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
     [SerializeField] float grindShootRate;
-    
+
     bool isShooting;
     //Kasey Add
     [SerializeField] int shootspeed;
@@ -103,7 +103,7 @@ public class wallRun : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-       // knifeModel = knifeList[0].Knife;
+        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -120,9 +120,9 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (!GameManager.instance.isPaused)
         {
-            
+
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-            if(gThrowCount <0)
+            if (gThrowCount < 0)
             {
                 gThrowCount = 0;
             }
@@ -162,7 +162,7 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 gKnifeModels[knifeModIter].SetActive(true);
             }
-                resetOn = false;
+            resetOn = false;
         }
         else if (resetOn && gThrowCount > 0)
         {
@@ -183,10 +183,10 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
-            if(gThrowCount >= 0 && gThrowCount < 4)
+            if (gThrowCount >= 0 && gThrowCount < 4)
             {
                 ++gThrowCount;
-                gKnifeModels[gThrowCount-1].SetActive(false);
+                gKnifeModels[gThrowCount - 1].SetActive(false);
                 StartCoroutine(shoot(grindBullet, grindShootRate)); // shoot needs to be withing the 0 to 4 constraint
             }
         }
@@ -234,10 +234,11 @@ public class wallRun : MonoBehaviour, IDamage
         }
 
         moveDir = (Input.GetAxis("Horizontal") * transform.right) + (Input.GetAxis("Vertical") * transform.forward);
-        if (playerCanMove) {
+        if (playerCanMove)
+        {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
-       sprint();
+        sprint();
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -262,7 +263,7 @@ public class wallRun : MonoBehaviour, IDamage
             animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if (Input.GetButtonUp("Sprint"))
         {
             animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
@@ -276,7 +277,7 @@ public class wallRun : MonoBehaviour, IDamage
         {
             isShooting = true;
             animL.SetTrigger("ShootG");
-           //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
+            //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             Vector3 ForceDir = Camera.main.transform.forward;
@@ -402,7 +403,7 @@ public class wallRun : MonoBehaviour, IDamage
     {
         Vector3 wallTouchChecker;
 
-        if(jumpCount == 2)
+        if (jumpCount == 2)
         {
             jumpCount = 1;
         }
@@ -417,11 +418,11 @@ public class wallRun : MonoBehaviour, IDamage
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
-        
-        controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+
+        controller.Move(wallDirection * (playerSpeed * sprintMod) * Time.deltaTime);
         isWallRunning = true;
 
-        if(playerCanMove)
+        if (playerCanMove)
         {
             canSprint = false;
             playerCanMove = false;
@@ -440,7 +441,7 @@ public class wallRun : MonoBehaviour, IDamage
             canWallRun = true;
             playerCanMove = true;
             isWallRunning = false;
-        }       
+        }
     }
 
     /// <summary>
@@ -493,6 +494,13 @@ public class wallRun : MonoBehaviour, IDamage
     /// <summary>
     /// Bullet Time Logic
     /// </summary>
+    /// 
+    IEnumerator waitForBT()
+    {
+        yield return new WaitForSeconds(2.0f);
+        
+
+    }
     void BulletTimeCheck()
     {
         if (bulletTimeActive)
@@ -500,6 +508,8 @@ public class wallRun : MonoBehaviour, IDamage
             if (bTimeCurrent > 0)
             {
                 GameManager.instance.playerBPUI.SetActive(true);
+                GameManager.instance.playerBTBarBack.enabled = true;
+                GameManager.instance.playerBTBar.enabled = true;
                 BulletTimeActive();
             }
             else
@@ -513,18 +523,23 @@ public class wallRun : MonoBehaviour, IDamage
             GameManager.instance.playerBPUI.SetActive(false);
             if (bTimeCurrent < bTimeTotal)
             {
+                GameManager.instance.playerBTBarBack.enabled = true;
+                GameManager.instance.playerBTBar.enabled = true;
                 BulletTimeRefill();
             }
         }
-        if(GameManager.instance.playerBTBar.fillAmount == 1)
+        if (bTimeCurrent >= bTimeTotal || GameManager.instance.isTransitioning)
         {
-            //GameManager.instance.playerBTBar
+            bulletTimeActive = false;
+            Time.timeScale = 1f;
+            GameManager.instance.playerBTBarBack.enabled = false;
+            GameManager.instance.playerBTBar.enabled = false;
         }
     }
 
     void BulletTimeActive()
     {
-        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        bTimeCurrent -= Time.deltaTime * barEmptyRate;
         updateBPUI();
     }
     void BulletTimeRefill()
@@ -542,6 +557,9 @@ public class wallRun : MonoBehaviour, IDamage
     {
         HP = startingHP;
         updatePlayerUI();
+        GameManager.instance.redScreenImage.color = Color.clear;
+        GameManager.instance.enemyCountTextHead.enabled = true;
+        GameManager.instance.enemyCountText.enabled = true;
 
         controller.enabled = false;
         transform.position = GameManager.instance.playerSpawnPos.transform.position;

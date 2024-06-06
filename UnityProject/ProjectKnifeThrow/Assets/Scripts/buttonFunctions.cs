@@ -12,7 +12,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        GameManager.instance.redScreenImage.color = Color.clear;
+        
         GameManager.instance.playerScript.spawnPlayer();
         GameManager.instance.stateUnPause();
     }

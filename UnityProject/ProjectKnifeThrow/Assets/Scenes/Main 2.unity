@@ -2376,6 +2376,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7463770280630880908, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
   m_PrefabInstance: {fileID: 790339676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &446580104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6384383762205779169, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
+  m_PrefabInstance: {fileID: 790339676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &466540819 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3912117124864305534, guid: bc5f037630346a4408784d376ca23e1f, type: 3}
@@ -4671,6 +4682,14 @@ PrefabInstance:
       propertyPath: checkpointPopup
       value: 
       objectReference: {fileID: 232968622}
+    - target: {fileID: 9009452753961725641, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
+      propertyPath: playerBTBarBack
+      value: 
+      objectReference: {fileID: 1724539805}
+    - target: {fileID: 9009452753961725641, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
+      propertyPath: playerHPBarBack
+      value: 
+      objectReference: {fileID: 446580104}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -11581,6 +11600,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 189908814}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1724539805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8144987392114246349, guid: 5af6ef5a339d8eb4ab206af233d9b9ce, type: 3}
+  m_PrefabInstance: {fileID: 790339676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1734873066
 GameObject:
   m_ObjectHideFlags: 0

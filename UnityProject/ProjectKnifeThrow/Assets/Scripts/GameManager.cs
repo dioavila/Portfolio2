@@ -13,23 +13,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] public TMP_Text enemyCountTextHead;
+    [SerializeField] public TMP_Text enemyCountText;
 
     [Header("HUD Components")]
     public Image playerHPBar;
+    public Image playerHPBarBack;
     public Image playerBTBar;
+    public Image playerBTBarBack;
     public bool isPaused;
     public int enemyCount;
     public GameObject playerBPUI;
     public GameObject playerFlashDamage;
     public Image redScreenImage;
-    private bool isTransitioning = false;
+    public bool isTransitioning = false;
     Color startColor;
 
     [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
-    public kwallRun kplayerCS;
     public enemyAI AIScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
@@ -122,6 +124,9 @@ public class GameManager : MonoBehaviour
 
     public void youLose()
     {
+        enemyCountTextHead.enabled = false;
+        enemyCountText.enabled = false;
+        playerHPBarBack.enabled = false;
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
@@ -133,10 +138,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator waitForDeath()
-    {
-        yield return new WaitForSeconds(2.0f);
-    }
+    
 
     public void TriggerRedToBlackScreen()
     {
