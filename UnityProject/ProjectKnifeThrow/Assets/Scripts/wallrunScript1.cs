@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
-public class wallRun : MonoBehaviour, IDamage
+public class wallRun1 : MonoBehaviour, IDamage
 {
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
@@ -30,7 +30,6 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
     public int gThrowCount;
     public bool resetOn = false;
-    public bool recoverOn = false;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
     [SerializeField] float grindShootRate;
     
@@ -128,7 +127,7 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 gThrowCount = 0;
             }
-            //GKnifeDisplayReset();
+            GKnifeDisplayReset();
 
             Selectknife();
 
@@ -155,36 +154,30 @@ public class wallRun : MonoBehaviour, IDamage
             StartCoroutine(Slide());
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
+        if (Input.GetKeyDown(KeyCode.R))
         {
             anim.SetTrigger("ResetG");
         }
     }
 
-    public void GKnifeDisplayReset()
+    void GKnifeDisplayReset()
     {
-        //if (gThrowCount == 0)
-        //{
-        //    for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
-        //    {
-        //        gKnifeModels[knifeModIter].SetActive(true);
-        //    }
-        //        //resetOn = false;
-        //}
-        //else if (gThrowCount > 0)//resetOn && gThrowCount > 0)
-        //{
-        //    for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
-        //    {
-        //        gKnifeModels[knifeModIter].SetActive(true);
-        //    }
-        //    //resetOn = false;
-        //}
-
-        for (int knifeModIter =  0; knifeModIter < gThrowCountMax; knifeModIter++)
+        if (gThrowCount == 0)
         {
-            gKnifeModels[knifeModIter].SetActive(true);
+            for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+                resetOn = false;
         }
-        gThrowCount = 0;
+        else if (resetOn && gThrowCount > 0)
+        {
+            for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
+            {
+                gKnifeModels[knifeModIter].SetActive(true);
+            }
+            resetOn = false;
+        }
     }
 
     void PlayerActions()

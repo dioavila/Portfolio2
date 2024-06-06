@@ -45,7 +45,7 @@ public class GrindScript : MonoBehaviour
     {
         if (grindPoints.Count == 4)
         {
-            if (grindPoints[0].GetComponentInParent<GrindPointsLogic>().inRangePlayer && grindPoints[0] != null)
+            if (grindPoints[grindPoints.Count - 1].GetComponentInParent<GrindPointsLogic>().inRangePlayer && grindPoints[grindPoints.Count - 1] != null)
             {
                 canGrind = true;
             }
@@ -63,7 +63,7 @@ public class GrindScript : MonoBehaviour
     {
         GameManager.instance.playerScript.isGrinding = true;
         GameManager.instance.playerScript.playerCanMove = false;
-        transform.position = Vector3.Lerp(transform.position, grindPoints[0].position, startPosLerpRate);
+        transform.position = Vector3.Lerp(transform.position, grindPoints[grindPoints.Count - 1].position, startPosLerpRate);
         if (grindPoints.Count != 0)
         {
             StartCoroutine(grindAction());
@@ -99,10 +99,10 @@ public class GrindScript : MonoBehaviour
     Vector3 ReturnPoint(float timerSpot)
     {
         //Bezier Curve Equation
-        float3 pointC = Mathf.Pow(1 - timerSpot, 3) * grindPoints[0].position + 
-            3 * Mathf.Pow(1 - timerSpot, 2) * timerSpot * grindPoints[1].position +
-            3 * (1 - timerSpot) * Mathf.Pow(timerSpot, 2) * grindPoints[2].position +
-            Mathf.Pow(timerSpot, 3) * grindPoints[3].position;
+        float3 pointC = Mathf.Pow(1 - timerSpot, 3) * grindPoints[3].position + 
+            3 * Mathf.Pow(1 - timerSpot, 2) * timerSpot * grindPoints[2].position +
+            3 * (1 - timerSpot) * Mathf.Pow(timerSpot, 2) * grindPoints[1].position +
+            Mathf.Pow(timerSpot, 3) * grindPoints[0].position;
         return pointC;
     }
 }

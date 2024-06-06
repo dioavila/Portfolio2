@@ -8,7 +8,7 @@ public class GrindBullet : MonoBehaviour
     [SerializeField] public int Speed;
     [SerializeField] int DestroyTime;
     [SerializeField] GameObject knifeModel;
-    bool destroyedOnCollision = false;
+    //bool destroyedOnCollision = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +35,7 @@ public class GrindBullet : MonoBehaviour
 
                 Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit);
                 Debug.DrawRay(transform.position, hit.normal, Color.blue, 100);
-                destroyedOnCollision = true;
+                //destroyedOnCollision = true;
                 Destroy(gameObject);
 
                 Vector3 opposite = -hit.normal;
@@ -45,14 +45,14 @@ public class GrindBullet : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        if (!destroyedOnCollision)
-        {
-            GameManager.instance.playerScript.gThrowCount--;
-            GameManager.instance.playerScript.resetOn = true;
-        }
-    }
+    //private void OnDestroy()
+    //{
+    //    if (!destroyedOnCollision)
+    //    {
+    //        GameManager.instance.playerScript.gThrowCount++;
+    //        //GameManager.instance.playerScript.resetOn = true;
+    //    }
+    //}
 
 
 }

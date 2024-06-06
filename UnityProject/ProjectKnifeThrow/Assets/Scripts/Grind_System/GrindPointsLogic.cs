@@ -8,23 +8,27 @@ public class GrindPointsLogic : MonoBehaviour
     [SerializeField] Transform gPoint;
     public bool inRangePlayer = false;
 
-    [Header("Destruction Settings")]
-    [SerializeField] int destructionTimerMax;
-    [SerializeField] [Range(0,3)] int destructionSpeed;
-    float destructionTimerCurr;
+    //[Header("Destruction Settings")]
+    //[SerializeField] int destructionTimerMax;
+    //[SerializeField] [Range(0,3)] int destructionSpeed;
+    //float destructionTimerCurr;
 
     // Start is called before the first frame update
     void Start()
     {
         //Can use start to initiate VFX
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
-        destructionTimerCurr = destructionTimerMax;
+        //destructionTimerCurr = destructionTimerMax;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.instance.grindScript.grindPoints.Count >= 4)
+        //if(GameManager.instance.grindScript.grindPoints.Count >= 4)
+        //{
+        //    DestroyStart();
+        //}
+        if (GameManager.instance.playerScript.recoverOn)
         {
             DestroyStart();
         }
@@ -32,15 +36,15 @@ public class GrindPointsLogic : MonoBehaviour
 
     void DestroyStart()
     {
-        if (destructionTimerCurr > 0)
-        {
-            destructionTimerCurr -= Time.deltaTime * destructionSpeed;
-        }
-        else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
-        {
+        //if (destructionTimerCurr > 0)
+        //{
+        //    destructionTimerCurr -= Time.deltaTime * destructionSpeed;
+        //}
+        //else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
+        //{
             GameManager.instance.playerScript.gThrowCount--;
             Destroy(gameObject);
-        }
+        //}
     }
 
     void OnTriggerEnter(Collider other)
