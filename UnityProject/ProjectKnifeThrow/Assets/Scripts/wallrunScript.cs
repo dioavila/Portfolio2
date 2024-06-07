@@ -41,6 +41,8 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] GameObject knifeModel;
     [SerializeField] int freezeTime;
     [SerializeField] public int UpWardForce;
+    int MaxAmmo;
+    int CurrAmmo;
 
     [Header("Movement")]
     [SerializeField] int jumpSpeed;
@@ -111,7 +113,7 @@ public class wallRun : MonoBehaviour, IDamage
         HP = startingHP;
         spawnPlayer();
         updateBPUI();
-
+        
         fovController = GetComponent<PlayerFovController>();
     }
 
@@ -176,7 +178,7 @@ public class wallRun : MonoBehaviour, IDamage
 
     void PlayerActions()
     {
-        if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
+        if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife].CurrentKinfeCount > 0)
         {
             StartCoroutine(shoot(knifeList[selectedKnife].Knife, shootRate));
         }
@@ -294,26 +296,21 @@ public class wallRun : MonoBehaviour, IDamage
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
         }
+        else if(bulletType.name == "Standard Knife")
+        {
+            isShooting = true;
+            knifeList[0].CurrentKinfeCount--;
+            knifeList[0].CurrentKinfeCount++;
+            animR.SetTrigger("Shoot");
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+            knifeModelLoc.gameObject.SetActive(true);
+        }
         else
         {
             isShooting = true;
+            knifeList[selectedKnife].CurrentKinfeCount--;
             animR.SetTrigger("Shoot");
-            //GameObject Projectile = Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
-            //Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
-            //Vector3 ForceDir = Camera.main.transform.forward;
-
-            //RaycastHit hit;
-
-            //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
-            //{
-            //    ForceDir = (hit.point - playerShootPos.position).normalized;
-            //}
-
-            //Vector3 forcetoadd = ForceDir * knifeList[selectedKnife].speed + knifeList[selectedKnife].Knife.transform.up * UpWardForce;
-
-            //ProjectileRB.AddForce(forcetoadd, ForceMode.Impulse);
-
-
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
@@ -328,6 +325,8 @@ public class wallRun : MonoBehaviour, IDamage
         shootDamage = _Knife.Damage;
         shootspeed = _Knife.speed;
         freezeTime = _Knife.freeze;
+        MaxAmmo = _Knife.MaxKinfeCount;
+        CurrAmmo = _Knife.CurrentKinfeCount;
 
         knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
         knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
@@ -352,6 +351,8 @@ public class wallRun : MonoBehaviour, IDamage
         shootDamage = knifeList[selectedKnife].Damage;
         shootspeed = knifeList[selectedKnife].speed;
         freezeTime = knifeList[selectedKnife].freeze;
+        MaxAmmo = knifeList[selectedKnife].MaxKinfeCount;
+        CurrAmmo = knifeList[selectedKnife].CurrentKinfeCount;
 
         knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
         knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
