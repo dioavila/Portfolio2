@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &73759091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73759092}
+  m_Layer: 0
+  m_Name: Bomb Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &73759092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73759091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8995636559631142966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239047729 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4372125018122967863, guid: 12ccb4bce1f2a2d4c9da0e191f964b55, type: 3}
@@ -789,23 +820,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &691344833062943970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7213556742711935216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jointHP: 1
-  player: {fileID: 0}
-  limbTurnRate: 0
-  body: {fileID: 7722782481032911457}
-  viewAngle: 0
 --- !u!4 &1112715783385004523
 Transform:
   m_ObjectHideFlags: 0
@@ -868,10 +882,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelTop: {fileID: 4098471534674253069}
   modelBottom: {fileID: 5757000253197388730}
-  bombPos: {fileID: 0}
+  bombPos: {fileID: 73759092}
   critPoint: {fileID: 7213556742711935216}
   eyePos: {fileID: 399205788942460854}
-  bomb: {fileID: 0}
+  bomb: {fileID: 576528095436039264, guid: d8f95a3231849934ab16e76b3f9ca40a, type: 3}
   bombReload: 4
   agent: {fileID: 1714835151434347937}
 --- !u!195 &1714835151434347937
@@ -1033,7 +1047,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5734070417822411468}
   m_Father: {fileID: 8095945632622442106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4616923574751591384
@@ -1244,7 +1259,7 @@ Transform:
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.39999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8095945632622442106}
+  m_Father: {fileID: 4589628965063231281}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1}
 --- !u!23 &5757000253197388730
 MeshRenderer:
@@ -1360,7 +1375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4589628965063231281}
-  - component: {fileID: 691344833062943970}
+  - component: {fileID: 7730823256277703115}
   - component: {fileID: 7730823256277703114}
   m_Layer: 0
   m_Name: Weak Point
@@ -1421,6 +1436,20 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &7730823256277703115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213556742711935216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21211e4c65ab3eb4ab2259298570107a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 1
+  agent: {fileID: 1714835151434347937}
 --- !u!136 &7754378993586824455
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1487,7 +1516,7 @@ Transform:
   - {fileID: 4122042199777460155}
   - {fileID: 1210382937479569820}
   - {fileID: 4589628965063231281}
-  - {fileID: 5734070417822411468}
+  - {fileID: 8995636559631142966}
   - {fileID: 1112715783385004523}
   m_Father: {fileID: 8810324493971481837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1507,6 +1536,90 @@ Transform:
   - {fileID: 8095945632622442106}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: 0}
+--- !u!23 &8977019044276913130
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989389024177706144}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 4294967295
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 96b7e938c0c800245b67621dd2d48da8, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &8985538166741529174
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989389024177706144}
+  m_Mesh: {fileID: 4300004, guid: ad8d6a043ea202340b30ec4d6a6a507f, type: 3}
+--- !u!1 &8989389024177706144
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8995636559631142966}
+  - component: {fileID: 8985538166741529174}
+  - component: {fileID: 8977019044276913130}
+  m_Layer: 0
+  m_Name: Bomb Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8995636559631142966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8989389024177706144}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.007, z: -0.373}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.14285713}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 73759092}
+  m_Father: {fileID: 8095945632622442106}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &9003000400104334721
 MeshFilter:
   m_ObjectHideFlags: 0

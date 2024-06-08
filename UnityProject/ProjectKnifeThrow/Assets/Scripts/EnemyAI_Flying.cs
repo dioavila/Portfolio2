@@ -22,7 +22,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     // Start is called before the first frame update
     void Start()
     {
-        
+        hasBomb = true;
     }
 
     // Update is called once per frame
@@ -41,43 +41,28 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
             canShoot = true;
         }
 
+        agent.SetDestination(GameManager.instance.player.transform.position);
+
+        if (hasBomb && (agent.transform.position.x - GameManager.instance.player.transform.position.x) <= 2.0f && (agent.transform.position.z - GameManager.instance.player.transform.position.z) <= 2.0f)
+        {
+            StartCoroutine(bombDrop());
+        }
+
+        if (critPoint == null)
+        {
+            Destroy(agent);
+        }
+    }
+
+    IEnumerator bombDrop()
+    {
         if (hasBomb)
         {
-            agent.SetDestination(GameManager.instance.player.transform.position);
-
-            if (agent.remainingDistance <= 5.0f)
-            {
-                dropBomb();
-                //attacking = false;
-            }
+            createBomb(bombPos);
+            hasBomb = false;
         }
-        else if (!hasBomb)
-        {
-            agent.SetDestination(new Vector3(agent.transform.localPosition.x + agent.transform.forward.x, agent.transform.localPosition.y, agent.transform.localPosition.z + agent.transform.forward.z));
-            StartCoroutine(bombReloadTimer());
-        }
-
-        if(critPoint == null)
-        {
-            Destroy(agent.gameObject);
-        }
-    }
-
-    private void dropBomb()
-    {
-        //createBomb(bombPos);
-        hasBomb = false;
-    }
-
-    IEnumerator bombReloadTimer()
-    {
         yield return new WaitForSeconds(bombReload);
         hasBomb = true;
-    }
-
-    private void eyeTrack()
-    {
-        eyePos.transform.LookAt(GameManager.instance.player.transform.position);
     }
 
     public void createBomb(Transform bombPos)
@@ -85,11 +70,15 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
         Instantiate(bomb, bombPos.position, transform.rotation);
     }
 
+    private void eyeTrack()
+    {
+        eyePos.transform.LookAt(GameManager.instance.player.transform.position);
+    }
+
     public void FreezeTime(int time)
     {
         StartCoroutine(FlashBlue(time));
     }
-
 
     IEnumerator FlashBlue(int time)
     {
