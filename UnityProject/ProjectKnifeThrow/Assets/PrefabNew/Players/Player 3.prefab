@@ -473,7 +473,7 @@ MonoBehaviour:
   slideSpeed: 10
   slideDuration: 1
   slideCameraOffset: 0.5
-  playerModel: {fileID: 0}
+  playerModel: {fileID: 4323214530027037733}
   slideTilt: {x: 20, y: 0, z: 0}
   isSliding: 0
   wallDist: 10
@@ -1330,7 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5cd4a1c95267f488eaec4175141206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 1300
+  sensitivity: 400
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
