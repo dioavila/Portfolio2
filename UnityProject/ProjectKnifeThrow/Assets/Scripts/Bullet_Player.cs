@@ -14,6 +14,8 @@ public class KBullet : MonoBehaviour
     [SerializeField] ParticleSystem hitConfirm;
     [SerializeField] ParticleSystem hitBlock;
     [SerializeField] ParticleSystem hitMiss;
+    bool hitConfirmed = false;
+    bool hitBlocked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,19 +28,21 @@ public class KBullet : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
         {
             IDamage dmg = other.gameObject.GetComponent<IDamage>();
-            if (dmg != null && other.gameObject.CompareTag("critPoint"))
+            if (dmg != null && other.gameObject.CompareTag("critPoint") && !hitBlocked)
             {
                 dmg.TakeDamage(Damage);
                 Instantiate(hitConfirm, transform.position, Quaternion.identity);
+                hitConfirmed = true;
                 Destroy(gameObject);
                 return;
                 
             }
             else
             {
-                if (dmg == null)// && other.gameObject.CompareTag("Enemy"))
+                if (dmg == null && !hitConfirmed)// && other.gameObject.CompareTag("Enemy"))
                 {
                     Instantiate(hitBlock, transform.position, Quaternion.identity);
+                    bool hitBlocked = true;
                 }
                 Destroy(gameObject);
             }

@@ -8,6 +8,8 @@ public class GrindPointsLogic : MonoBehaviour
     [SerializeField] Transform gPoint;
     public bool inRangePlayer = false;
 
+    [SerializeField] ParticleSystem particles;
+    ParticleSystem currParticle;
     //[Header("Destruction Settings")]
     //[SerializeField] int destructionTimerMax;
     //[SerializeField] [Range(0,3)] int destructionSpeed;
@@ -18,6 +20,7 @@ public class GrindPointsLogic : MonoBehaviour
     {
         //Can use start to initiate VFX
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
+        currParticle = Instantiate(particles, gPoint.position, Quaternion.identity);
         //destructionTimerCurr = destructionTimerMax;
     }
 
@@ -42,8 +45,10 @@ public class GrindPointsLogic : MonoBehaviour
         //}
         //else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
         //{
-            GameManager.instance.playerScript.gThrowCount--;
-            Destroy(gameObject);
+        GameManager.instance.playerScript.gThrowCount--;
+        currParticle.Stop();
+        currParticle.Clear();
+        Destroy(gameObject);
         //}
     }
 

@@ -224,6 +224,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (controller.isGrounded)
         {
             jumpCount = 0;
+            anim.SetBool("Jump1Bool", false);
+            anim.SetBool("Jump2Bool", false);
             playerVel = Vector3.zero;
             if (onAir)
             {
@@ -236,7 +238,7 @@ public class wallRun : MonoBehaviour, IDamage
             if (!canSprint)
             {
                 canSprint = true;
-                playerSpeed = playerSpeedStorage;
+                //playerSpeed = playerSpeedStorage;
             }
         }
 
@@ -254,8 +256,17 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            anim.SetTrigger("JumpAnim");
+            //anim.SetTrigger("JumpAnim");
             canSprint = false;
+            if(jumpCount < 1)
+            {
+                anim.SetBool("Jump1Bool", true);
+            }
+            else 
+            {
+                //anim.SetBool("JumpBool1", false);
+                anim.SetBool("Jump2Bool", true);
+            }
             ++jumpCount;
             playerVel.y = jumpSpeed;
             onAir = true;
@@ -277,7 +288,7 @@ public class wallRun : MonoBehaviour, IDamage
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero)
         {
             //animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             //animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
@@ -293,11 +304,12 @@ public class wallRun : MonoBehaviour, IDamage
             isShooting = true;
             if (anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeShootG") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f)
             {
-                anim.SetTrigger("Shoot2G");
+                //anim.SetBool("Shoot2G",true);
+                //anim.SetBool("Shoot2G", false);
             }
             else
             {
-                anim.SetTrigger("ShootG");
+                anim.SetTrigger("ShootG2");
             }
             //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);

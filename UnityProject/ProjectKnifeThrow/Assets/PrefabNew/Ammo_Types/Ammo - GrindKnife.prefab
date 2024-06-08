@@ -49,8 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gPoint: {fileID: 4192488693041137611}
   inRangePlayer: 0
-  destructionTimerMax: 5
-  destructionSpeed: 1
+  particles: {fileID: 4157149643825629376, guid: 2bf7d92b63a45b248affb04aa8700427, type: 3}
 --- !u!54 &1755532986681074904
 Rigidbody:
   m_ObjectHideFlags: 0
