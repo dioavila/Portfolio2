@@ -97,8 +97,6 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
     [Header("Animation")]
-    //[SerializeField] Animator animR;
-    //[SerializeField] Animator animL;
     [SerializeField] Animator anim;
     [SerializeField] int smoothAnimMod;
 
@@ -128,7 +126,6 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 gThrowCount = 0;
             }
-            //GKnifeDisplayReset();
 
             Selectknife();
 
@@ -163,23 +160,6 @@ public class wallRun : MonoBehaviour, IDamage
 
     public void GKnifeDisplayReset()
     {
-        //if (gThrowCount == 0)
-        //{
-        //    for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
-        //    {
-        //        gKnifeModels[knifeModIter].SetActive(true);
-        //    }
-        //        //resetOn = false;
-        //}
-        //else if (gThrowCount > 0)//resetOn && gThrowCount > 0)
-        //{
-        //    for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
-        //    {
-        //        gKnifeModels[knifeModIter].SetActive(true);
-        //    }
-        //    //resetOn = false;
-        //}
-
         for (int knifeModIter =  0; knifeModIter < gThrowCountMax; knifeModIter++)
         {
             gKnifeModels[knifeModIter].SetActive(true);
@@ -283,15 +263,11 @@ public class wallRun : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero)
         {
-            //animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
-            //animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
         else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero)
         {
-            //animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
-            //animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
         }
@@ -311,7 +287,6 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 anim.SetTrigger("ShootG2");
             }
-            //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             Vector3 ForceDir = Camera.main.transform.forward;
@@ -333,23 +308,6 @@ public class wallRun : MonoBehaviour, IDamage
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
-            //animR.SetTrigger("Shoot");//
-            //GameObject Projectile = Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
-            //Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
-            //Vector3 ForceDir = Camera.main.transform.forward;
-
-            //RaycastHit hit;
-
-            //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
-            //{
-            //    ForceDir = (hit.point - playerShootPos.position).normalized;
-            //}
-
-            //Vector3 forcetoadd = ForceDir * knifeList[selectedKnife].speed + knifeList[selectedKnife].Knife.transform.up * UpWardForce;
-
-            //ProjectileRB.AddForce(forcetoadd, ForceMode.Impulse);
-
-
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
@@ -459,12 +417,15 @@ public class wallRun : MonoBehaviour, IDamage
 
         if(playerCanMove)
         {
+            anim.SetBool("Jump1Bool", false);
+            anim.SetBool("Jump2Bool", false);
             canSprint = false;
             playerCanMove = false;
         }
 
         if (controller.collisionFlags != CollisionFlags.Sides && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
         {
+            anim.SetBool("Jump1Bool", true);
             ValuesReset();
         }
 

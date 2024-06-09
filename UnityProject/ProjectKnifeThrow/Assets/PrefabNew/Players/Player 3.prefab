@@ -373,11 +373,13 @@ GameObject:
   - component: {fileID: 2727159867410697244}
   - component: {fileID: 337509334776594127}
   - component: {fileID: 4939516414905537315}
+  - component: {fileID: 5788853546190984325}
   - component: {fileID: 4927894904722158283}
   - component: {fileID: 2866064679719845812}
   - component: {fileID: 9111060029998675068}
   - component: {fileID: 3671116892026009513}
   - component: {fileID: 2290812522552305931}
+  - component: {fileID: 4842259726662692587}
   m_Layer: 3
   m_Name: Player 3
   m_TagString: Player
@@ -436,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 4927894904722158283}
   gravity: 25
-  startingHP: 10
+  startingHP: 20
   HP: 0
   playerShootPos: {fileID: 4577714903430340719}
   knifeModelLoc: {fileID: 8737929616835373083}
@@ -455,11 +457,13 @@ MonoBehaviour:
   - {fileID: 6833968596422788616}
   gThrowCount: 0
   resetOn: 0
+  recoverOn: 0
   gThrowCountMax: 4
   grindShootRate: 0.1
   shootspeed: 0
   knifeList:
   - {fileID: 11400000, guid: 60cad60f34c616b45a73a154675c1e2d, type: 2}
+  - {fileID: 11400000, guid: 3cf6e9da7787a534ea4f3b8166a81d2a, type: 2}
   selectedKnife: 0
   knifeModel: {fileID: 0}
   freezeTime: 0
@@ -470,8 +474,8 @@ MonoBehaviour:
   sprintMod: 2
   isGrinding: 0
   moveDir: {x: 0, y: 0, z: 0}
-  slideSpeed: 10
-  slideDuration: 1
+  slideSpeed: 60
+  slideDuration: 0.2
   slideCameraOffset: 0.5
   playerModel: {fileID: 0}
   slideTilt: {x: 20, y: 0, z: 0}
@@ -489,8 +493,7 @@ MonoBehaviour:
   playerCanMove: 1
   isClimbing: 0
   keys: []
-  animR: {fileID: 2724073963241224610}
-  animL: {fileID: 5652424818520357108}
+  anim: {fileID: 0}
   smoothAnimMod: 0
 --- !u!114 &4939516414905537315
 MonoBehaviour:
@@ -508,6 +511,21 @@ MonoBehaviour:
   destroyedCount: 0
   startPosLerpRate: 0.75
   speedMod: 0.75
+--- !u!114 &5788853546190984325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392476737083968977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06edda97cc4646b4ab3ee54b5a582cb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultFov: 60
+  slideFovIncrease: -15
+  fovChangeDuration: 0.1
 --- !u!143 &4927894904722158283
 CharacterController:
   m_ObjectHideFlags: 0
@@ -624,6 +642,33 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!54 &4842259726662692587
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392476737083968977}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1589010153473559759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5cd4a1c95267f488eaec4175141206, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 1300
+  sensitivity: 650
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
