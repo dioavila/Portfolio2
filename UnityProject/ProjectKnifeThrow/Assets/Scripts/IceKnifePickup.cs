@@ -27,7 +27,6 @@ public class IceKnifePickup : MonoBehaviour, IPickup
     {
         
     }
-
     public void PickUpItem()
     {
         if (isInRange)

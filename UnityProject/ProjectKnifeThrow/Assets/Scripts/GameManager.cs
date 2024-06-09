@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
     }
 
     // Update is called once per frame

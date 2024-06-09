@@ -28,8 +28,7 @@ public class KnifeSpawnners : MonoBehaviour
         if (startspawning && !isSpawnning && KnifeGrabbed)
         {
             StartCoroutine(spawn());
-        }
-        
+        }      
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,9 +45,6 @@ public class KnifeSpawnners : MonoBehaviour
             startspawning = false;
             KnifeGrabbed = true;
         }
-        
-        
-        
     }
 
     IEnumerator spawn()
