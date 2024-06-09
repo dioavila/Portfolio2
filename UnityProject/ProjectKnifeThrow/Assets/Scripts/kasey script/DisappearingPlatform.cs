@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class DisappearingPlatform : MonoBehaviour
 {
-    [SerializeField] public GameObject DisapperingFloor;
+    [SerializeField] GameObject DisapperingFloor;
     [SerializeField] Rigidbody rb;
+    [SerializeField] Transform platformPOS;
     [SerializeField] int time;
     Renderer model;
     GameObject Floor;
@@ -15,7 +16,7 @@ public class DisappearingPlatform : MonoBehaviour
     void Start()
     {
         model = DisapperingFloor.GetComponent<Renderer>();
-        Floor = model.gameObject;
+        Floor = DisapperingFloor;
         Active = true;
     }
 
@@ -33,26 +34,32 @@ public class DisappearingPlatform : MonoBehaviour
         if (other.CompareTag("Player") && Active)
         {
             StartCoroutine(Disappear());
+            return;
         }
     }
-    
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if()
+    //}
+
     IEnumerator Reappear()
     {
-        yield return new WaitForSeconds(time * 2);
-        Instantiate(DisapperingFloor);
         Active = true;
+        yield return new WaitForSeconds(time);
+        DisapperingFloor.SetActive(true);
     }
 
     IEnumerator Disappear()
     {
         for (int i = 0; i < time; i++)
         {
-            Active = false;
             model.material.color = Color.yellow;
             yield return new WaitForSeconds(0.5f);
             model.material.color = Color.white;
             yield return new WaitForSeconds(1f);
         }
         DisapperingFloor.SetActive(false);
+        Active = false;
     }
 }
