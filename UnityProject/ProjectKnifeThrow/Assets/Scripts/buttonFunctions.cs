@@ -10,6 +10,16 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnPause();
     }
 
+    public void settings()
+    {
+        GameManager.instance.SwitchToSettings();
+    }
+
+    public void Return()
+    {
+        GameManager.instance.SwitchToUI();
+    }
+
     public void respawn()
     {
         
@@ -30,5 +40,12 @@ public class buttonFunctions : MonoBehaviour
 #else
                 Application.Quit();
 #endif
+    }
+
+    public void invertMouse()
+    {
+        bool isCurrentlyActive = GameManager.instance.invertON.activeSelf;
+        GameManager.instance.invertON.SetActive(!isCurrentlyActive);
+        GameManager.instance.invertOFF.SetActive(isCurrentlyActive);
     }
 }
