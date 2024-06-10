@@ -449,11 +449,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2244335129588023563, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
   m_PrefabInstance: {fileID: 5384567199148187743}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &728547643 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 4149475635293291413, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
-  m_PrefabInstance: {fileID: 5384567199148187743}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &857487570
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,9 +480,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisapperingFloor: {fileID: 728547636}
-  rb: {fileID: 728547643}
+  rb: {fileID: 0}
   platformPOS: {fileID: 857487572}
-  time: 5
+  time: 1
 --- !u!4 &857487572
 Transform:
   m_ObjectHideFlags: 0
@@ -498,7 +493,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 69.01, y: 2.04, z: -51.69}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 728547642}
@@ -523,7 +518,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1256265919 stripped
 Transform:
@@ -775,6 +770,14 @@ PrefabInstance:
       value: Cube (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2244335129588023563, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244335129588023563, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2244335129588023563, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -814,7 +817,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5090395777908243555, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414180732604439385, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414180732604439385, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6562257008057700421, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4149475635293291413, guid: d1b783c7a54aa5b4a9a3e5e6f65096bc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -10,13 +10,11 @@ public class DisappearingPlatform : MonoBehaviour
     [SerializeField] Transform platformPOS;
     [SerializeField] int time;
     Renderer model;
-    GameObject Floor;
     bool Active;
     // Start is called before the first frame update
     void Start()
     {
         model = DisapperingFloor.GetComponent<Renderer>();
-        Floor = DisapperingFloor;
         Active = true;
     }
 
@@ -37,11 +35,6 @@ public class DisappearingPlatform : MonoBehaviour
             return;
         }
     }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if()
-    //}
 
     IEnumerator Reappear()
     {
