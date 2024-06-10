@@ -6,55 +6,41 @@ using UnityEngine;
 
 public class PlayerFovController : MonoBehaviour
 {
-    [SerializeField] float defaultFov = 60f;
-    [SerializeField] float slideFovIncrease = 20f;
     [SerializeField] float fovChangeDuration = 0.5f;
+    [SerializeField] float normalFov = 60f;
+    [SerializeField] float slideFov = 70f;
 
-    Coroutine fovChangeCoroutine;
+    private Camera playerCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        Camera.main.fieldOfView = defaultFov;
+        playerCamera = GetComponentInChildren<Camera>();
+        if (playerCamera == null )
+        {
+            // Debug.LogError("PlayerFovController: No component found on the GameObject");
+        }
     }
 
     public void IncreaseFovForSlide()
     {
-        // If there's already a FOV change in progress, stop it
-        if (fovChangeCoroutine != null)
-        {
-            StopCoroutine(fovChangeCoroutine);
-        }
-        // Start a new coroutine to gradually increase FOV
-        fovChangeCoroutine = StartCoroutine(ChangeFov(defaultFov + slideFovIncrease));
+        StartCoroutine(LerpFov(playerCamera.fieldOfView, slideFov, fovChangeDuration));
     }
 
     public void ResetFov()
     {
-        // If there's already a FOV change in progress, stop it
-        if (fovChangeCoroutine != null)
-        {
-            StopCoroutine(fovChangeCoroutine);
-        }
-        // Start a new coroutine to gradually reset FOV to default value
-        fovChangeCoroutine = StartCoroutine(ChangeFov(defaultFov));
+        StartCoroutine(LerpFov(playerCamera.fieldOfView, normalFov, fovChangeDuration));
     }
 
-    IEnumerator ChangeFov(float targetFov)
+    IEnumerator LerpFov(float startFov, float endFov, float duration)
     {
-        float initialFov = Camera.main.fieldOfView;
         float elapsedTime = 0f;
-
-        while (elapsedTime < fovChangeDuration)
+        while (elapsedTime < duration)
         {
-            // Gradually change FOV over time
-            Camera.main.fieldOfView = Mathf.Lerp(initialFov, targetFov, elapsedTime / fovChangeDuration);
+            playerCamera.fieldOfView = Mathf.Lerp(startFov, endFov, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        Camera.main.fieldOfView = targetFov;
-
-        fovChangeCoroutine = null;
+        playerCamera.fieldOfView = endFov;
     }
 }
