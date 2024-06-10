@@ -883,7 +883,7 @@ MonoBehaviour:
   modelTop: {fileID: 4098471534674253069}
   modelBottom: {fileID: 5757000253197388730}
   bombPos: {fileID: 73759092}
-  critPoint: {fileID: 7213556742711935216}
+  weakPoint: {fileID: 7213556742711935216}
   eyePos: {fileID: 399205788942460854}
   bomb: {fileID: 576528095436039264, guid: d8f95a3231849934ab16e76b3f9ca40a, type: 3}
   bombReload: 4
@@ -1449,7 +1449,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
-  agent: {fileID: 1714835151434347937}
 --- !u!136 &7754378993586824455
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     [SerializeField] Renderer modelTop;
     [SerializeField] Renderer modelBottom;
     [SerializeField] Transform bombPos;
-    [SerializeField] GameObject critPoint;
+    [SerializeField] GameObject weakPoint;
     [SerializeField] GameObject eyePos;
 
     [SerializeField] GameObject bomb;
@@ -48,7 +48,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
             StartCoroutine(bombDrop());
         }
 
-        if (critPoint == null)
+        if (weakPoint == null)
         {
             Destroy(agent);
         }

@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class EnemyAI_FlyingWeakPoint : MonoBehaviour, IDamage
 {
     [SerializeField] int HP;
-    public NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
