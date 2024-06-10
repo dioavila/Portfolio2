@@ -204,8 +204,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (controller.isGrounded)
         {
             jumpCount = 0;
-            anim.SetBool("Jump1Bool", false);
-            anim.SetBool("Jump2Bool", false);
+            //anim.SetBool("Jump1Bool", false);
+            //anim.SetBool("Jump2Bool", false);
             playerVel = Vector3.zero;
             if (onAir)
             {
@@ -240,12 +240,12 @@ public class wallRun : MonoBehaviour, IDamage
             canSprint = false;
             if(jumpCount < 1)
             {
-                anim.SetBool("Jump1Bool", true);
+                anim.SetTrigger("JumpAnim");
             }
             else 
             {
                 //anim.SetBool("JumpBool1", false);
-                anim.SetBool("Jump2Bool", true);
+                anim.SetTrigger("JumpAnim2");
             }
             ++jumpCount;
             playerVel.y = jumpSpeed;
@@ -282,10 +282,11 @@ public class wallRun : MonoBehaviour, IDamage
             {
                 //anim.SetBool("Shoot2G",true);
                 //anim.SetBool("Shoot2G", false);
+                anim.SetTrigger("ShootG2");
             }
             else
             {
-                anim.SetTrigger("ShootG2");
+                anim.SetTrigger("ShootG");
             }
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
@@ -410,22 +411,22 @@ public class wallRun : MonoBehaviour, IDamage
         }
 
         RaycastHit wallTouch;
-        bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
+        bool TouchCheck = Physics.Raycast(playerObj.transform.position, (wallTouchChecker + -playerObj.transform.forward), out wallTouch, 3);
         
         controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
         isWallRunning = true;
 
         if(playerCanMove)
         {
-            anim.SetBool("Jump1Bool", false);
-            anim.SetBool("Jump2Bool", false);
+            //anim.SetBool("Jump1Bool", false);
+            //anim.SetBool("Jump2Bool", false);
             canSprint = false;
             playerCanMove = false;
         }
 
-        if (controller.collisionFlags != CollisionFlags.Sides && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
+        if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides)
         {
-            anim.SetBool("Jump1Bool", true);
+            //anim.SetBool("Jump1Bool", true);
             ValuesReset();
         }
 
