@@ -141,6 +141,7 @@ MonoBehaviour:
   faceTargetSpeed: 10
   roamDistance: 20
   roamTimer: 1
+  deathTimer: 5
   bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.5
   spawnPath: {fileID: 4888645504238904023}

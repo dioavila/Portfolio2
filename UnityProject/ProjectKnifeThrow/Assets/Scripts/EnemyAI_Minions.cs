@@ -26,6 +26,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
+    [SerializeField] int deathTimer;
 
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
@@ -55,6 +56,8 @@ public class enemyAI : MonoBehaviour, IFreeze
     public int turnRate;
     float timer = 3;
 
+    bool isDead = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,53 +68,65 @@ public class enemyAI : MonoBehaviour, IFreeze
     // Update is called once per frame
     void Update()
     {
-        if (model.material.color == Color.blue)
+        if (!isDead)
         {
-            agent.isStopped = true;
-            canshoot = false;
-        }
-        else
-        {
-            agent.isStopped = false;
-            canshoot = true;
-        }
-
-        if (finishedStartup)
-        {
-            startingPos = transform.position;
-
-            if (lookPlayer)
+            if (model.material.color == Color.blue)
             {
-                faceTarget();
+                agent.isStopped = true;
+                canshoot = false;
+            }
+            else
+            {
+                agent.isStopped = false;
+                canshoot = true;
             }
 
-            if (playerInRange && !canSeePlayer())
+            if (finishedStartup)
             {
-                if (!lookPlayer)
-                    lookPlayer = true;
-                Debug.Log("Roam Forgot");
-                StartCoroutine(roam());
-            }
-            else if (!playerInRange)
-            {
-                Debug.Log("Roam General");
-                StartCoroutine(roam());
-            }
+                startingPos = transform.position;
 
-            if (critPoint == null)
+                if (lookPlayer)
+                {
+                    faceTarget();
+                }
+
+                if (playerInRange && !canSeePlayer())
+                {
+                    if (!lookPlayer)
+                        lookPlayer = true;
+                    Debug.Log("Roam Forgot");
+                    StartCoroutine(roam());
+                }
+                else if (!playerInRange)
+                {
+                    Debug.Log("Roam General");
+                    StartCoroutine(roam());
+                }
+
+                if (critPoint == null)
+                {
+                    gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    if (dropOnDeath != null)
+                        Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+                    isDead = true;
+                }
+            }
+            else
             {
-                Destroy(agent.gameObject);
-                if (dropOnDeath != null)
-                    Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+                agent.stoppingDistance = 1;
+                agent.destination = startingSpawn.position;
+                if (agent.remainingDistance <= stoppingDistOrig)
+                    finishedStartup = true;
             }
         }
-        else
-        {
-            agent.stoppingDistance = 1;
-            agent.destination = startingSpawn.position;
-            if (agent.remainingDistance <= stoppingDistOrig)
-                finishedStartup = true;
-        }
+        deathAnimation();
+    }
+
+    IEnumerator deathAnimation()
+    {
+        yield return new WaitForSeconds(deathTimer);
+        Destroy(agent.gameObject);
     }
 
     IEnumerator roam()
