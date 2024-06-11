@@ -66,7 +66,8 @@ public class GrindScript : MonoBehaviour
     {
         GameManager.instance.playerScript.isGrinding = true;
         GameManager.instance.playerScript.playerCanMove = false;
-        transform.position = Vector3.Lerp(transform.position, grindPoints[grindPoints.Count - 1].position, startPosLerpRate);
+        GameManager.instance.playerScript.anim.SetBool("grindOn", true);
+        transform.position = Vector3.Lerp(transform.position, grindPoints[grindPoints.Count - 1].position, startPosLerpRate * Time.deltaTime);
         if (grindPoints.Count != 0)
         {
             StartCoroutine(grindAction());
@@ -109,6 +110,7 @@ public class GrindScript : MonoBehaviour
         canGrind = false;
         GameManager.instance.playerScript.playerCanMove = true;
         GameManager.instance.playerScript.isGrinding = false;
+        GameManager.instance.playerScript.anim.SetBool("grindOn", false);
     }
 
     Vector3 ReturnPointCubic(float timerSpot)

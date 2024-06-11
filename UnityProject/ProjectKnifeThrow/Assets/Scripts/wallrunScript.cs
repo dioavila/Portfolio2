@@ -79,6 +79,8 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Bullet Time")]
     [SerializeField] public float timeDilationRate;
     [SerializeField] float bTimeTotal;
+    [SerializeField] public float attackDecreaseAmmt = 0.5f;
+    public float attackDecreaseCurr = 0;
     public float bTimeCurrent;
     public bool bulletTimeActive = false;
     [SerializeField] float barFillRate;
@@ -97,7 +99,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
     [Header("Animation")]
-    [SerializeField] Animator anim;
+    [SerializeField] public Animator anim;
     [SerializeField] int smoothAnimMod;
 
     // Start is called before the first frame update
@@ -518,7 +520,9 @@ public class wallRun : MonoBehaviour, IDamage
 
     void BulletTimeActive()
     {
-        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        bTimeCurrent -= (Time.deltaTime* barEmptyRate) + attackDecreaseCurr;
+        if (attackDecreaseCurr != 0)
+            attackDecreaseCurr = 0;
         updateBPUI();
     }
     void BulletTimeRefill()

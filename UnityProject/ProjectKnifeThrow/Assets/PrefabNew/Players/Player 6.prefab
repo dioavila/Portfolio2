@@ -630,7 +630,7 @@ Transform:
   m_GameObject: {fileID: 1523809164643544737}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6135324, y: 0.17575471, z: 0.7400941, w: -0.21201193}
-  m_LocalPosition: {x: 0.057, y: -0.046, z: -0.03}
+  m_LocalPosition: {x: 0.056422625, y: -0.042644914, z: -0.03624906}
   m_LocalScale: {x: 0.99999994, y: 1, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1812,7 +1812,9 @@ MonoBehaviour:
   onAir: 0
   canWallRun: 1
   timeDilationRate: 0.2
-  bTimeTotal: 5
+  bTimeTotal: 8
+  attackDecreaseAmmt: 0.5
+  attackDecreaseCurr: 0
   bTimeCurrent: 0
   bulletTimeActive: 0
   barFillRate: 3
@@ -2377,7 +2379,7 @@ GameObject:
   - component: {fileID: 2721226029131655646}
   - component: {fileID: 3178415389891459938}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: BodyCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
