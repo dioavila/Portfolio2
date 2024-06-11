@@ -156,7 +156,7 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
         {
-            anim.SetTrigger("ResetG");
+            anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
         }
     }
 
@@ -280,7 +280,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (bulletType.name == "Ammo - playerBulletG")
         {
             isShooting = true;
-            if (anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeShootG") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f)
+            if (anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeOpenG 1") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f ||
+                anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeCloseG") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f)
             {
                 //anim.SetBool("Shoot2G",true);
                 //anim.SetBool("Shoot2G", false);
