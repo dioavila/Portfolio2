@@ -97,6 +97,8 @@ public class wallRun : MonoBehaviour, IDamage
     private bool isInRange;
     [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
+    private ISwitch Switch;
+
     [Header("Animation")]
     [SerializeField] Animator animR;
     [SerializeField] Animator animL;
@@ -146,6 +148,12 @@ public class wallRun : MonoBehaviour, IDamage
             if (isInRange && Input.GetKeyDown(KeyCode.F))
             {
                 currentPickup.PickUpItem();
+                GameManager.instance.CloseMessagePanel("");
+            }
+
+            if(isInRange && Input.GetKeyDown(KeyCode.E))
+            {
+                Switch.FlipSwitch();
                 GameManager.instance.CloseMessagePanel("");
             }
         }
@@ -451,11 +459,18 @@ public class wallRun : MonoBehaviour, IDamage
     private void OnTriggerEnter(Collider other)
     {
         IPickup pickup = other.GetComponent<IPickup>();
+        ISwitch _Switch = other.GetComponent<ISwitch>();
         if (pickup != null)
         {
             isInRange = true;
             GameManager.instance.OpenMessagePanel("");
             currentPickup = pickup;
+        }
+        if(_Switch != null)
+        {
+            isInRange = true;
+            GameManager.instance.OpenMessagePanel("");
+            Switch = _Switch;
         }
     }
 
