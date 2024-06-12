@@ -203,7 +203,7 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
         {
-            if(gThrowCount >= 0 && gThrowCount < 4)
+            if (gThrowCount >= 0 && gThrowCount < 4)
             {
                 ++gThrowCount;
                 gKnifeModels[gThrowCount - 1].SetActive(false);
@@ -297,7 +297,7 @@ public class wallRun : MonoBehaviour, IDamage
         {
             isShooting = true;
             animL.SetTrigger("ShootG");
-           //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
+            //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             Vector3 ForceDir = Camera.main.transform.forward;
@@ -569,19 +569,38 @@ public class wallRun : MonoBehaviour, IDamage
     {
         isSliding = true;
 
-        // If moveDir is zero (player is standing still), slide in the forward direction
+        // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
             slideDirection = transform.forward;
         }
         else
         {
-            slideDirection = moveDir.normalized; // Slide in the current movement direction
+            slideDirection = moveDir.normalized;
         }
 
-        // Call IncreaseFOVForSlide() when the player starts sliding
-        fovController.IncreaseFovForSlide();
-        
+        // Apply appropriate camera effect based on the direction
+        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
+        {
+            // Forward dash
+            fovController.IncreaseFovForSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
+        {
+            // Backward dash
+            fovController.DecreaseFovForBackwardSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
+        {
+            // Left dash
+            fovController.TiltCameraLeft();
+        }
+        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
+        {
+            // Right dash
+            fovController.TiltCameraRight();
+        }
+
         float elapsedTime = 0f;
         while (elapsedTime < slideDuration)
         {
@@ -595,5 +614,6 @@ public class wallRun : MonoBehaviour, IDamage
 
         isSliding = false;
         fovController.ResetFov();
+        fovController.ResetTilt(0.2f); // Adding a small delay before resetting the tilt
     }
 }
