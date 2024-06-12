@@ -66,7 +66,6 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
 
     public void FireDamage(int amount, int time)
     {
-        GameManager.instance.AIScript.agent.SetDestination(GameManager.instance.player.transform.position);
         StartCoroutine(FireTime(amount, time));
     }
     IEnumerator FireTime(int amount, int time)

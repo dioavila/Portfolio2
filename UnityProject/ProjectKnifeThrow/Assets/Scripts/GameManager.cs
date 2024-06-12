@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public wallRun playerScript;
     public kwallRun kplayerCS;
+    public KnifeSpawnners spawnners;
     public enemyAI AIScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;
@@ -47,7 +48,6 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
     }
 
     // Update is called once per frame
