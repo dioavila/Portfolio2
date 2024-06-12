@@ -9,13 +9,18 @@ public class LaserObstacle : MonoBehaviour
     [SerializeField] GameObject laserEnd;
     [SerializeField] ParticleSystem laserEffect;
 
-    bool killPlayer = false;
+    bool killPlayer;
 
     // Update is called once per frame
     void Update()
     {
-        if (!killPlayer)
-            playerDetect();
+        if (GameManager.instance.playerScript.HP > 0)
+        {
+            if (killPlayer)
+                killPlayer = false;
+            if (!killPlayer)
+                playerDetect();
+        }
     }
 
     void playerDetect()
