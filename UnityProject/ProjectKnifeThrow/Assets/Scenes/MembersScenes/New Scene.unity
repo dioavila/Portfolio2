@@ -7375,8 +7375,8 @@ MonoBehaviour:
   turretTurnRate: 5
   turretMovRate: 1
   startPos: {fileID: 544954939}
-  shootPos: {fileID: 0}
-  bullet: {fileID: 0}
+  shootPos: {fileID: 552427001}
+  bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.2
   muzzleFlash: {fileID: 1865893762}
   playerInRange: 0
