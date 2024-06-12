@@ -7,6 +7,8 @@ public class FrostBullet : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] int speed;
     [SerializeField] int time;
+    [SerializeField] int MaxCount;
+    [SerializeField] int CurrCount;
     [SerializeField] int destroytime;
     // Start is called before the first frame update
     void Start()

@@ -54,7 +54,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5263477592062272388
 MonoBehaviour:
@@ -72,8 +72,8 @@ MonoBehaviour:
   Damage: 1
   Speed: 50
   DestroyTime: 5
-  hitConfirm: {fileID: 0}
-  hitBlock: {fileID: 0}
+  hitConfirm: {fileID: 1001809201420523908, guid: 570a605fcc230dd43b71997a7867a9a8, type: 3}
+  hitBlock: {fileID: 5513334090030241347, guid: 1d5f26d5d0630a847ac5e62c89c19628, type: 3}
   hitMiss: {fileID: 0}
 --- !u!96 &389767368032248528
 TrailRenderer:
@@ -214,4 +214,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3

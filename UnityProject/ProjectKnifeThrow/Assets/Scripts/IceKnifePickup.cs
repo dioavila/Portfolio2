@@ -10,26 +10,28 @@ public class IceKnifePickup : MonoBehaviour, IPickup
 
     public bool isInRange;
 
-    KnifeStats knife;
+    public KnifeStats knife;
+
+    public bool Pickedup;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
-
     public void PickUpItem()
     {
-        if (player != null)
+        if (isInRange)
         {
-            //knife.currentKinfeCount = MaxKinfeCount;
+            knife.CurrentKinfeCount = knife.MaxKinfeCount;
             Destroy(gameObject);
         }
     }

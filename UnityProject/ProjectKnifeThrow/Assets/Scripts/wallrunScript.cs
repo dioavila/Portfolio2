@@ -14,6 +14,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     int gravityStorage;
+    public bool isDead = false;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -30,6 +31,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
     public int gThrowCount;
     public bool resetOn = false;
+    public bool recoverOn = false;
     public int gThrowCountMax = 4; //Hardcoded because it cant be increased without changing code
     [SerializeField] float grindShootRate;
     
@@ -57,11 +59,12 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Sliding")]
     [SerializeField] float slideSpeed = 10f;
     [SerializeField] float slideDuration = 1f;
-    [SerializeField] float slideCameraOffset = 0.5f;
-    [SerializeField] Transform playerModel;
-    [SerializeField] Vector3 slideTilt = new Vector3(20f, 0f, 0f);
     PlayerFovController fovController;
 
+    [SerializeField] int slideCharges = 2;
+    [SerializeField] float slideCooldown = 3f;
+    private int currentSlideCharges;
+    private float slideCoolDownTimer;
     public bool isSliding = false;
     Vector3 slideDirection;
 
@@ -78,6 +81,8 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Bullet Time")]
     [SerializeField] public float timeDilationRate;
     [SerializeField] float bTimeTotal;
+    [SerializeField] public float attackDecreaseAmmt = 0.5f;
+    public float attackDecreaseCurr = 0;
     public float bTimeCurrent;
     public bool bulletTimeActive = false;
     [SerializeField] float barFillRate;
@@ -96,8 +101,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public List<GameObject> keys = new List<GameObject>();
 
     [Header("Animation")]
-    [SerializeField] Animator animR;
-    [SerializeField] Animator animL;
+    [SerializeField] public Animator anim;
     [SerializeField] int smoothAnimMod;
 
     // Start is called before the first frame update
@@ -118,60 +122,68 @@ public class wallRun : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.isPaused)
+        if (!isDead)
         {
+            if (!GameManager.instance.isPaused)
+            {
             
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-            if(gThrowCount <0)
-            {
-                gThrowCount = 0;
+               // Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+                if(gThrowCount <0)
+                {
+                    gThrowCount = 0;
+                }
+
+                Selectknife();
+
+                //Bullet Time Check
+                BulletTimeCheck();
+
+                PlayerActions();
+
+                if (!isClimbing)
+                {
+                    MovementCheck();
+                }
+
+                //Pick Up Logic
+                if (isInRange && Input.GetKeyDown(KeyCode.F))
+                {
+                    currentPickup.PickUpItem();
+                    GameManager.instance.CloseMessagePanel("");
+                }
             }
-            GKnifeDisplayReset();
 
-            Selectknife();
-
-            //Bullet Time Check
-            BulletTimeCheck();
-
-            PlayerActions();
-
-            if (!isClimbing)
+            // Slide cooldown logic
+            if (currentSlideCharges < slideCharges)
             {
-                MovementCheck();
+                slideCoolDownTimer += Time.deltaTime;
+                if (slideCoolDownTimer >= slideCooldown)
+                {
+                    currentSlideCharges++;
+                    slideCoolDownTimer = 0f;
+                }
             }
 
-            //Pick Up Logic
-            if (isInRange && Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.C) && !isSliding && currentSlideCharges > 0)
             {
-                currentPickup.PickUpItem();
-                GameManager.instance.CloseMessagePanel("");
+                StartCoroutine(Slide());
+                currentSlideCharges--;
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding)
-        {
-            StartCoroutine(Slide());
+            if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
+            {
+                anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
+            }
         }
     }
 
-    void GKnifeDisplayReset()
+    public void GKnifeDisplayReset()
     {
-        if (gThrowCount == 0)
+        for (int knifeModIter =  0; knifeModIter < gThrowCountMax; knifeModIter++)
         {
-            for (int knifeModIter = 0; knifeModIter < gThrowCountMax; ++knifeModIter)
-            {
-                gKnifeModels[knifeModIter].SetActive(true);
-            }
-                resetOn = false;
+            gKnifeModels[knifeModIter].SetActive(true);
         }
-        else if (resetOn && gThrowCount > 0)
-        {
-            for (int knifeModIter = gThrowCount; knifeModIter < gThrowCountMax; ++knifeModIter)
-            {
-                gKnifeModels[knifeModIter].SetActive(true);
-            }
-            resetOn = false;
-        }
+        gThrowCount = 0;
     }
 
     void PlayerActions()
@@ -211,6 +223,8 @@ public class wallRun : MonoBehaviour, IDamage
         if (controller.isGrounded)
         {
             jumpCount = 0;
+            //anim.SetBool("Jump1Bool", false);
+            //anim.SetBool("Jump2Bool", false);
             playerVel = Vector3.zero;
             if (onAir)
             {
@@ -223,7 +237,7 @@ public class wallRun : MonoBehaviour, IDamage
             if (!canSprint)
             {
                 canSprint = true;
-                playerSpeed = playerSpeedStorage;
+                //playerSpeed = playerSpeedStorage;
             }
         }
 
@@ -241,7 +255,17 @@ public class wallRun : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
+            //anim.SetTrigger("JumpAnim");
             canSprint = false;
+            if(jumpCount < 1)
+            {
+                anim.SetTrigger("JumpAnim");
+            }
+            else 
+            {
+                //anim.SetBool("JumpBool1", false);
+                anim.SetTrigger("JumpAnim2");
+            }
             ++jumpCount;
             playerVel.y = jumpSpeed;
             onAir = true;
@@ -256,16 +280,14 @@ public class wallRun : MonoBehaviour, IDamage
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint") && canSprint)
+        if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero)
         {
-            animR.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
-            animL.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
+            anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint"))
+        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero)
         {
-            animR.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
-            animL.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
+            anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
         }
     }
@@ -275,8 +297,17 @@ public class wallRun : MonoBehaviour, IDamage
         if (bulletType.name == "Ammo - playerBulletG")
         {
             isShooting = true;
-            animL.SetTrigger("ShootG");
-           //Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
+            if (anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeOpenG 1") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f ||
+                anim.GetCurrentAnimatorStateInfo(2).IsName("KnifeCloseG") && anim.GetCurrentAnimatorStateInfo(2).normalizedTime < 1.0f)
+            {
+                //anim.SetBool("Shoot2G",true);
+                //anim.SetBool("Shoot2G", false);
+                anim.SetTrigger("ShootG2");
+            }
+            else
+            {
+                anim.SetTrigger("ShootG");
+            }
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             Vector3 ForceDir = Camera.main.transform.forward;
@@ -297,23 +328,7 @@ public class wallRun : MonoBehaviour, IDamage
         else
         {
             isShooting = true;
-            animR.SetTrigger("Shoot");
-            //GameObject Projectile = Instantiate(knifeList[selectedKnife].Knife, playerShootPos.position, Camera.main.transform.rotation);
-            //Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
-            //Vector3 ForceDir = Camera.main.transform.forward;
-
-            //RaycastHit hit;
-
-            //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
-            //{
-            //    ForceDir = (hit.point - playerShootPos.position).normalized;
-            //}
-
-            //Vector3 forcetoadd = ForceDir * knifeList[selectedKnife].speed + knifeList[selectedKnife].Knife.transform.up * UpWardForce;
-
-            //ProjectileRB.AddForce(forcetoadd, ForceMode.Impulse);
-
-
+            anim.SetTrigger("Shoot");
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
@@ -416,19 +431,22 @@ public class wallRun : MonoBehaviour, IDamage
         }
 
         RaycastHit wallTouch;
-        bool TouchCheck = Physics.Raycast(playerObj.transform.position, wallTouchChecker, out wallTouch, 1);
+        bool TouchCheck = Physics.Raycast(playerObj.transform.position, (wallTouchChecker + -playerObj.transform.forward), out wallTouch, 3);
         
         controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
         isWallRunning = true;
 
         if(playerCanMove)
         {
+            //anim.SetBool("Jump1Bool", false);
+            //anim.SetBool("Jump2Bool", false);
             canSprint = false;
             playerCanMove = false;
         }
 
-        if (controller.collisionFlags != CollisionFlags.Sides && !TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged)
+        if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides)
         {
+            //anim.SetBool("Jump1Bool", true);
             ValuesReset();
         }
 
@@ -475,7 +493,8 @@ public class wallRun : MonoBehaviour, IDamage
         StartCoroutine(flashScreenRed());
         if (HP <= 0)
         {
-            GameManager.instance.youLose();
+            isDead = true;
+            anim.SetTrigger("isDead");
         }
     }
     IEnumerator flashScreenRed()
@@ -520,7 +539,9 @@ public class wallRun : MonoBehaviour, IDamage
 
     void BulletTimeActive()
     {
-        bTimeCurrent -= Time.deltaTime* barEmptyRate;
+        bTimeCurrent -= (Time.deltaTime* barEmptyRate) + attackDecreaseCurr;
+        if (attackDecreaseCurr != 0)
+            attackDecreaseCurr = 0;
         updateBPUI();
     }
     void BulletTimeRefill()
@@ -547,41 +568,51 @@ public class wallRun : MonoBehaviour, IDamage
     IEnumerator Slide()
     {
         isSliding = true;
-        slideDirection = moveDir.normalized; // Slide in the current movement direction
 
-        // Call IncreaseFOVForSlide() when the player starts sliding
-        fovController.IncreaseFovForSlide();
+        // Determine the slide direction
+        if (moveDir == Vector3.zero)
+        {
+            slideDirection = transform.forward;
+        }
+        else
+        {
+            slideDirection = moveDir.normalized;
+        }
+
+        // Apply appropriate camera effect based on the direction
+        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
+        {
+            // Forward dash
+            fovController.IncreaseFovForSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
+        {
+            // Backward dash
+            fovController.DecreaseFovForBackwardSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
+        {
+            // Left dash
+            fovController.TiltCameraLeft();
+        }
+        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
+        {
+            // Right dash
+            fovController.TiltCameraRight();
+        }
 
         float elapsedTime = 0f;
-        float initialGravity = gravity; // Store the initial gravity value
         while (elapsedTime < slideDuration)
         {
-            // Move the player in the slide direction
             Vector3 slideVelocity = slideDirection * slideSpeed;
-
-            //float originalHeight = controller.height;
-            //Vector3 originalCenter = controller.center;
-            // Adjust the character controller's height for the slide
-            // controller.height = originalHeight / 2;
-            // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
-
-            // Gradually reduce gravity to lower the player
-            float slideGravity = Mathf.Lerp(initialGravity, 0, elapsedTime / slideDuration);
-            slideVelocity.y -= slideGravity * Time.deltaTime;
-
+            slideVelocity.y -= gravity * Time.deltaTime;
             controller.Move(slideVelocity * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Reset the character controller's height after the slide
-        //controller.height = originalHeight;
-        // controller.center = originalCenter;
-
         isSliding = false;
-
-        // Call ResetFOV() when the player stops sliding
         fovController.ResetFov();
     }
 }

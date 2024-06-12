@@ -37,6 +37,7 @@ public class CreateBullet : MonoBehaviour
     {
         regKnifeModel.SetActive(false);
         GameObject Projectile = Instantiate(GameManager.instance.playerScript.knifeList[selectKnife].Knife, shootPos.position, Camera.main.transform.rotation);
+        GameManager.instance.playerScript.attackDecreaseCurr = GameManager.instance.playerScript.attackDecreaseAmmt;
         Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
         Vector3 ForceDir = Camera.main.transform.forward;
 

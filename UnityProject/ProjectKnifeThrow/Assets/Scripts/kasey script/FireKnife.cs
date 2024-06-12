@@ -19,12 +19,12 @@ public class FireKnife : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("critPoint"))
+        if (!other.gameObject.CompareTag("Player"))
         {
-            IFire dmg = other.gameObject.GetComponent<IFire>();
-            if (dmg != null)
+            IFire fmg = other.gameObject.GetComponent<IFire>();
+            if (fmg != null)
             {
-                dmg.FireDamage(Damage, Time);
+                fmg.FireDamage(Damage, Time);
             }
             Destroy(gameObject);
         }
