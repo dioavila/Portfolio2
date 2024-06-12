@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: bfe2c19acd17dba4b8e051e24c946b75
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CyberBreachMM.unity
     guid: 4f341e57030ce8843bae68b0a9acf3b4
+  - enabled: 1
+    path: Assets/Scenes/CyberBreach MM.unity
+    guid: 5576efca0c673d54ea1391437fcc5d5f
   m_configObjects: {}

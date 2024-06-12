@@ -16,6 +16,7 @@ namespace SlimUI.ModernMenu{
         public GameObject firstMenu;
         [Tooltip("The Menu for when the PLAY button is clicked")]
         public GameObject playMenu;
+		public GameObject loadMenu;
         [Tooltip("The Menu for when the EXIT button is clicked")]
         public GameObject exitMenu;
         [Tooltip("Optional 4th Menu")]
@@ -122,8 +123,33 @@ namespace SlimUI.ModernMenu{
 			if(extrasMenu) extrasMenu.SetActive(false);
 			playMenu.SetActive(true);
 		}
-		
-		public void PlayCampaignMobile(){
+
+        public void LoadCampaign()
+        {
+            loadMenu.SetActive(true);
+        }
+
+		public void tutorialLevel()
+		{
+			SceneManager.LoadScene("Tutorial");
+		}
+
+        public void level1()
+        {
+            SceneManager.LoadScene("Level1");
+        }
+
+        public void level2()
+        {
+            SceneManager.LoadScene("Level2");
+        }
+
+        public void level3()
+        {
+            SceneManager.LoadScene("Level3");
+        }
+
+        public void PlayCampaignMobile(){
 			exitMenu.SetActive(false);
 			if(extrasMenu) extrasMenu.SetActive(false);
 			playMenu.SetActive(true);

@@ -33,11 +33,6 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnPause();
     }
 
-    public void newGame()
-    {
-        SceneManager.LoadScene("Level1");
-    }
-
     public void onExitClick()
     {
         GameManager.instance.exitMenu.SetActive(true);
@@ -49,6 +44,7 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.exitMenu.SetActive(false);
         GameManager.instance.exitMenu1.SetActive(false);
     }
+
 
     public void quit()
     {

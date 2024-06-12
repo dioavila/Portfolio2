@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] public GameObject menuSettings;
+    [SerializeField] public GameObject menuLevelSelect;
     public GameObject UI;
     public GameObject Settings;
     [SerializeField] public GameObject invertON;
