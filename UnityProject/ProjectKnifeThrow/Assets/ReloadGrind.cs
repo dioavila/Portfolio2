@@ -6,6 +6,7 @@ public class ReloadGrind : MonoBehaviour
 {
     [SerializeField] ParticleSystem rechargeEffect;
     [SerializeField] GameObject particlePosition;
+    [SerializeField] GameObject neckJoint;
     public void RecoverGKnives()
     {
         GameManager.instance.playerScript.recoverOn = true;
@@ -24,4 +25,8 @@ public class ReloadGrind : MonoBehaviour
         
     }
 
+    public void DeathCamera()
+    {
+       // Camera.main.transform.SetParent(neckJoint.transform);
+    }
 }
