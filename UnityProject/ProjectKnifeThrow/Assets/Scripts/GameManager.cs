@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
             {
                 stateUnPause();
                 playerScript.anim.SetTrigger("isDead");
-                playerScript.controller.enabled = false;
+                playerScript.isDead = true;
             }
         }
     }

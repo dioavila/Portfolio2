@@ -30,6 +30,10 @@ public class ReloadGrind : MonoBehaviour
     {
         Camera.main.enabled = false;
         deathCam.enabled = true;
-       // Camera.main.transform.SetParent(neckJoint.transform);
+    }
+    public void Death()
+    {
+        GameManager.instance.youLose();
     }
 }
+
