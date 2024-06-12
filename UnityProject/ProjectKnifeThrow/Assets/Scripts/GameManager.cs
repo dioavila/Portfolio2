@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             else if (menuActive == menuPause)
             {
                 stateUnPause();
-                playerScript.anim.SetBool("isDead", true);
+                playerScript.anim.SetTrigger("isDead");
                 playerScript.controller.enabled = false;
             }
         }
