@@ -11,6 +11,7 @@ public class TriggerSwitch : MonoBehaviour
     [SerializeField] GameObject obj;
     [SerializeField] Transform Position;
     [SerializeField] float extendRate = 1f;
+    [SerializeField] float time;
 
     [Header("Timer Setup")]
     [SerializeField] float timerToRetract;
@@ -33,8 +34,14 @@ public class TriggerSwitch : MonoBehaviour
         if (Active)
         {
             Model.material.color = Color.green;
+            if(gameObject.CompareTag("Timed Switch"))
+            {
+                StartCoroutine(PuzzleDoor());
+            }
+            else
+            {
             MoveObj(Active);
-
+            }
         }
         if (!Active) 
         {
@@ -56,15 +63,43 @@ public class TriggerSwitch : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Enemy") && gameObject.CompareTag("Pressure Plate"))
+        {
+            Active = true;
+            obj.transform.position = Vector3.Lerp(obj.transform.position, new Vector3(Position.position.x, Position.position.y, Position.position.z), Time.deltaTime * extendRate);
+
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Enemy") && gameObject.CompareTag("Pressure Plate"))
+        {
+            Active = false;
+            obj.transform.position = Vector3.Lerp(obj.transform.position, startPos.position, Time.deltaTime * extendRate);
+        }
+    }
+
     void MoveObj(bool activeStatus)
     {
         if(activeStatus)
         {
-            obj.transform.position = Vector3.Lerp(obj.transform.position, new Vector3(startPos.position.x, Position.position.y, startPos.position.z), Time.deltaTime * extendRate);
+            obj.transform.position = Vector3.Lerp(obj.transform.position, new Vector3(Position.position.x, Position.position.y, Position.position.z), Time.deltaTime * extendRate);
         }
         else
         {
             obj.transform.position = Vector3.Lerp(obj.transform.position, startPos.position, Time.deltaTime * extendRate);
         }
+    }
+
+    IEnumerator PuzzleDoor()
+    {
+        Active = true;
+        obj.transform.position = Vector3.Lerp(obj.transform.position, new Vector3(Position.position.x, Position.position.y, Position.position.z), Time.deltaTime * extendRate);
+        yield return new WaitForSeconds(time);
+        obj.transform.position = Vector3.Lerp(obj.transform.position, startPos.position, Time.deltaTime * extendRate);
+        Active = false;
     }
 }
