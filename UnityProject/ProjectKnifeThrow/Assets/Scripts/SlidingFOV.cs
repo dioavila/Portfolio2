@@ -6,55 +6,102 @@ using UnityEngine;
 
 public class PlayerFovController : MonoBehaviour
 {
-    [SerializeField] float defaultFov = 60f;
-    [SerializeField] float slideFovIncrease = 20f;
     [SerializeField] float fovChangeDuration = 0.5f;
+    [SerializeField] float normalFov = 60f;
+    [SerializeField] float forwardFov = 50f;
+    [SerializeField] float backwardFov = 70f;
+    [SerializeField] float tiltAngle = 15f;
+    [SerializeField] float tiltSmoothDuration = 0.2f; // Additional duration for smoothing the tilt
 
-    Coroutine fovChangeCoroutine;
+    private Camera playerCamera;
+    private Coroutine tiltCoroutine;
 
-    // Start is called before the first frame update
     void Start()
     {
-        Camera.main.fieldOfView = defaultFov;
+        // Get the Camera component from the child object
+        playerCamera = GetComponentInChildren<Camera>();
+        if (playerCamera == null)
+        {
+            // Uncomment the line below to show an error if the camera is not found
+            // Debug.LogError("PlayerFovController: No Camera component found on the GameObject");
+        }
     }
 
+    // Methods to start the FOV change coroutines
     public void IncreaseFovForSlide()
     {
-        // If there's already a FOV change in progress, stop it
-        if (fovChangeCoroutine != null)
-        {
-            StopCoroutine(fovChangeCoroutine);
-        }
-        // Start a new coroutine to gradually increase FOV
-        fovChangeCoroutine = StartCoroutine(ChangeFov(defaultFov + slideFovIncrease));
+        StartCoroutine(LerpFov(playerCamera.fieldOfView, forwardFov, fovChangeDuration));
+    }
+
+    public void DecreaseFovForBackwardSlide()
+    {
+        StartCoroutine(LerpFov(playerCamera.fieldOfView, backwardFov, fovChangeDuration));
     }
 
     public void ResetFov()
     {
-        // If there's already a FOV change in progress, stop it
-        if (fovChangeCoroutine != null)
-        {
-            StopCoroutine(fovChangeCoroutine);
-        }
-        // Start a new coroutine to gradually reset FOV to default value
-        fovChangeCoroutine = StartCoroutine(ChangeFov(defaultFov));
+        StartCoroutine(LerpFov(playerCamera.fieldOfView, normalFov, fovChangeDuration));
     }
 
-    IEnumerator ChangeFov(float targetFov)
+    // Methods to start the camera tilt coroutines
+    public void TiltCameraLeft()
     {
-        float initialFov = Camera.main.fieldOfView;
+        StartTiltAndReset(tiltAngle);
+    }
+
+    public void TiltCameraRight()
+    {
+        StartTiltAndReset(-tiltAngle);
+    }
+
+    private void StartTiltAndReset(float targetAngle)
+    {
+        if (tiltCoroutine != null)
+        {
+            StopCoroutine(tiltCoroutine);
+        }
+        tiltCoroutine = StartCoroutine(TiltAndReset(targetAngle, fovChangeDuration + tiltSmoothDuration));
+    }
+
+    // Coroutine to smoothly change the field of view over a specified duration
+    IEnumerator LerpFov(float startFov, float endFov, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            playerCamera.fieldOfView = Mathf.Lerp(startFov, endFov, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        playerCamera.fieldOfView = endFov;
+    }
+
+    // Coroutine to tilt the camera and then return it to the original position smoothly
+    IEnumerator TiltAndReset(float targetAngle, float duration)
+    {
+        // First part: tilt to the target angle
+        float startAngle = playerCamera.transform.localEulerAngles.z;
         float elapsedTime = 0f;
 
-        while (elapsedTime < fovChangeDuration)
+        while (elapsedTime < duration / 2)
         {
-            // Gradually change FOV over time
-            Camera.main.fieldOfView = Mathf.Lerp(initialFov, targetFov, elapsedTime / fovChangeDuration);
+            float currentAngle = Mathf.LerpAngle(startAngle, targetAngle, elapsedTime / (duration / 2));
+            playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, currentAngle);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        Camera.main.fieldOfView = targetFov;
+        // Second part: smoothly return to the original angle
+        elapsedTime = 0f;
+        while (elapsedTime < duration / 2)
+        {
+            float currentAngle = Mathf.LerpAngle(targetAngle, 0f, elapsedTime / (duration / 2));
+            playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, currentAngle);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
-        fovChangeCoroutine = null;
+        // Ensure the final angle is exactly 0
+        playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, 0f);
     }
 }
