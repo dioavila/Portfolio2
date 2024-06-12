@@ -20,6 +20,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] GameObject muzzleFlash3;
     [SerializeField] GameObject muzzleFlash4;
     [SerializeField] GameObject critPoint;
+    [SerializeField] GameObject minigunRotate;
 
     [SerializeField] int HP;
     [SerializeField] int viewAngle;
@@ -36,6 +37,9 @@ public class enemyAI : MonoBehaviour, IFreeze
 
     [SerializeField] GameObject dropOnDeath;
 
+    public ParticleSystem eyeBlood;
+    [SerializeField] ParticleSystem robotExplosion;
+
     public NavMeshAgent agent;
    // private Transform spawnArea;
 
@@ -44,7 +48,6 @@ public class enemyAI : MonoBehaviour, IFreeze
     bool destChosen;
     bool finishedStartup = false;
     bool canshoot = true;
-    //bool isReadyToOrbit = false;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -105,8 +108,10 @@ public class enemyAI : MonoBehaviour, IFreeze
 
                 if (critPoint == null)
                 {
-                    gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    eyeBlood.Play();
+                    agent.SetDestination(agent.transform.position);
                     gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    gameObject.GetComponent<Rigidbody>().useGravity = true;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
@@ -120,7 +125,8 @@ public class enemyAI : MonoBehaviour, IFreeze
                     finishedStartup = true;
             }
         }
-        deathAnimation();
+        else if (isDead)
+            StartCoroutine(deathAnimation());
     }
 
     IEnumerator deathAnimation()
@@ -166,6 +172,7 @@ public class enemyAI : MonoBehaviour, IFreeze
 
                 if (!isShooting && canshoot)
                 {
+                    //minigunRotate.transform.rotation = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(0, 0, 90), Time.deltaTime * 1);
                     StartCoroutine(shoot());
                 }
 
@@ -190,11 +197,6 @@ public class enemyAI : MonoBehaviour, IFreeze
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, turnRate * Time.deltaTime);
     }
 
-    //void orbiting()
-    //{
-    //    Vector3 orbit = Vector3.Cross(transform.forward, Vector3.up);
-    //    transform.position = Vector3.Lerp(transform.position, orbit, Time.deltaTime * 5);
-    //}
 
     void OnTriggerEnter(Collider other)
     {
