@@ -569,19 +569,38 @@ public class wallRun : MonoBehaviour, IDamage
     {
         isSliding = true;
 
-        // If moveDir is zero (player is standing still), slide in the forward direction
+        // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
             slideDirection = transform.forward;
         }
         else
         {
-            slideDirection = moveDir.normalized; // Slide in the current movement direction
+            slideDirection = moveDir.normalized;
         }
 
-        // Call IncreaseFOVForSlide() when the player starts sliding
-        fovController.IncreaseFovForSlide();
-        
+        // Apply appropriate camera effect based on the direction
+        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
+        {
+            // Forward dash
+            fovController.IncreaseFovForSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
+        {
+            // Backward dash
+            fovController.DecreaseFovForBackwardSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
+        {
+            // Left dash
+            fovController.TiltCameraLeft();
+        }
+        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
+        {
+            // Right dash
+            fovController.TiltCameraRight();
+        }
+
         float elapsedTime = 0f;
         while (elapsedTime < slideDuration)
         {

@@ -8,8 +8,8 @@ public class PlayerFovController : MonoBehaviour
 {
     [SerializeField] float fovChangeDuration = 0.5f;
     [SerializeField] float normalFov = 60f;
-    [SerializeField] float forwardFov = 70f;
-    [SerializeField] float backwardFov = 50f;
+    [SerializeField] float forwardFov = 50f;
+    [SerializeField] float backwardFov = 70f;
     [SerializeField] float tiltAngle = 15f;
     [SerializeField] float tiltSmoothDuration = 0.2f; // Additional duration for smoothing the tilt
 
@@ -18,13 +18,16 @@ public class PlayerFovController : MonoBehaviour
 
     void Start()
     {
+        // Get the Camera component from the child object
         playerCamera = GetComponentInChildren<Camera>();
         if (playerCamera == null)
         {
+            // Uncomment the line below to show an error if the camera is not found
             // Debug.LogError("PlayerFovController: No Camera component found on the GameObject");
         }
     }
 
+    // Methods to start the FOV change coroutines
     public void IncreaseFovForSlide()
     {
         StartCoroutine(LerpFov(playerCamera.fieldOfView, forwardFov, fovChangeDuration));
@@ -40,34 +43,27 @@ public class PlayerFovController : MonoBehaviour
         StartCoroutine(LerpFov(playerCamera.fieldOfView, normalFov, fovChangeDuration));
     }
 
+    // Methods to start the camera tilt coroutines
     public void TiltCameraLeft()
     {
-        StartTilt(tiltAngle);
+        StartTiltAndReset(tiltAngle);
     }
 
     public void TiltCameraRight()
     {
-        StartTilt(-tiltAngle);
+        StartTiltAndReset(-tiltAngle);
     }
 
-    public void ResetTilt(float delay = 0f)
+    private void StartTiltAndReset(float targetAngle)
     {
         if (tiltCoroutine != null)
         {
             StopCoroutine(tiltCoroutine);
         }
-        tiltCoroutine = StartCoroutine(LerpTilt(0f, fovChangeDuration + tiltSmoothDuration, delay));
+        tiltCoroutine = StartCoroutine(TiltAndReset(targetAngle, fovChangeDuration + tiltSmoothDuration));
     }
 
-    private void StartTilt(float targetAngle)
-    {
-        if (tiltCoroutine != null)
-        {
-            StopCoroutine(tiltCoroutine);
-        }
-        tiltCoroutine = StartCoroutine(LerpTilt(targetAngle, fovChangeDuration + tiltSmoothDuration));
-    }
-
+    // Coroutine to smoothly change the field of view over a specified duration
     IEnumerator LerpFov(float startFov, float endFov, float duration)
     {
         float elapsedTime = 0f;
@@ -80,23 +76,32 @@ public class PlayerFovController : MonoBehaviour
         playerCamera.fieldOfView = endFov;
     }
 
-    IEnumerator LerpTilt(float targetAngle, float duration, float delay = 0f)
+    // Coroutine to tilt the camera and then return it to the original position smoothly
+    IEnumerator TiltAndReset(float targetAngle, float duration)
     {
-        if (delay > 0f)
-        {
-            yield return new WaitForSeconds(delay);
-        }
-
-        Quaternion startRotation = playerCamera.transform.localRotation;
-        Quaternion endRotation = Quaternion.Euler(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, targetAngle);
+        // First part: tilt to the target angle
+        float startAngle = playerCamera.transform.localEulerAngles.z;
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < duration / 2)
         {
-            playerCamera.transform.localRotation = Quaternion.Slerp(startRotation, endRotation, elapsedTime / duration);
+            float currentAngle = Mathf.LerpAngle(startAngle, targetAngle, elapsedTime / (duration / 2));
+            playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, currentAngle);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        playerCamera.transform.localRotation = endRotation;
+
+        // Second part: smoothly return to the original angle
+        elapsedTime = 0f;
+        while (elapsedTime < duration / 2)
+        {
+            float currentAngle = Mathf.LerpAngle(targetAngle, 0f, elapsedTime / (duration / 2));
+            playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, currentAngle);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the final angle is exactly 0
+        playerCamera.transform.localEulerAngles = new Vector3(playerCamera.transform.localEulerAngles.x, playerCamera.transform.localEulerAngles.y, 0f);
     }
 }
