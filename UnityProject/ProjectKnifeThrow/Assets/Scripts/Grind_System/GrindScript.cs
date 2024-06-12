@@ -25,7 +25,7 @@ public class GrindScript : MonoBehaviour
         GrindCheck();
         
 
-        if(Input.GetKeyDown(KeyCode.E) && canGrind && !GameManager.instance.playerScript.isGrinding && !GameManager.instance.playerScript.recoverOn)
+        if(Input.GetKeyDown(KeyCode.E) && canGrind && !GameManager.instance.playerScript.isGrinding)
         {
 
             StartGrind();

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
 using System.Threading;
-using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
@@ -15,6 +14,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     int gravityStorage;
+    public bool isDead = false;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -59,12 +59,11 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Sliding")]
     [SerializeField] float slideSpeed = 10f;
     [SerializeField] float slideDuration = 1f;
+    [SerializeField] float slideCameraOffset = 0.5f;
+    [SerializeField] Transform playerModel;
+    [SerializeField] Vector3 slideTilt = new Vector3(20f, 0f, 0f);
     PlayerFovController fovController;
 
-    [SerializeField] int slideCharges = 2;
-    [SerializeField] float slideCooldown = 3f;
-    private int currentSlideCharges;
-    private float slideCoolDownTimer;
     public bool isSliding = false;
     Vector3 slideDirection;
 
@@ -117,67 +116,51 @@ public class wallRun : MonoBehaviour, IDamage
         updateBPUI();
 
         fovController = GetComponent<PlayerFovController>();
-        currentSlideCharges = slideCharges;
-        slideCoolDownTimer = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.isPaused)
+        if (!isDead)
         {
-            
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-            if(gThrowCount <0)
-            {
-                gThrowCount = 0;
-            }
-
-            Selectknife();
-
-            //Bullet Time Check
-            BulletTimeCheck();
-
-            PlayerActions();
-
-            if (!isClimbing)
-            {
-                MovementCheck();
-            }
-
-            //Pick Up Logic
-            if (isInRange && Input.GetKeyDown(KeyCode.F))
-            {
-                currentPickup.PickUpItem();
-                GameManager.instance.CloseMessagePanel("");
-            }
-
-            //Slide logic
             if (!GameManager.instance.isPaused)
             {
-                // Slide cooldown logic
-                if (currentSlideCharges < slideCharges)
+            
+               // Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+                if(gThrowCount <0)
                 {
-                    slideCoolDownTimer += Time.deltaTime;
-                    if (slideCoolDownTimer >= slideCooldown)
-                    {
-                        currentSlideCharges++;
-                        slideCoolDownTimer = 0f;
-                    }
+                    gThrowCount = 0;
                 }
 
-                if (Input.GetKeyDown(KeyCode.C) && !isSliding && currentSlideCharges > 0)
+                Selectknife();
+
+                //Bullet Time Check
+                BulletTimeCheck();
+
+                PlayerActions();
+
+                if (!isClimbing)
                 {
-                    StartCoroutine(Slide());
-                    currentSlideCharges--;
+                    MovementCheck();
+                }
+
+                //Pick Up Logic
+                if (isInRange && Input.GetKeyDown(KeyCode.F))
+                {
+                    currentPickup.PickUpItem();
+                    GameManager.instance.CloseMessagePanel("");
                 }
             }
-        }
-    }
 
-        if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
-        {
-            anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
+            if (Input.GetKeyDown(KeyCode.C) && !isSliding)
+            {
+                StartCoroutine(Slide());
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
+            {
+                anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
+            }
         }
     }
 
@@ -497,6 +480,8 @@ public class wallRun : MonoBehaviour, IDamage
         StartCoroutine(flashScreenRed());
         if (HP <= 0)
         {
+            isDead = true;
+            anim.SetTrigger("isDead");
             GameManager.instance.youLose();
         }
     }
@@ -571,51 +556,41 @@ public class wallRun : MonoBehaviour, IDamage
     IEnumerator Slide()
     {
         isSliding = true;
+        slideDirection = moveDir.normalized; // Slide in the current movement direction
 
-        // Determine the slide direction
-        if (moveDir == Vector3.zero)
-        {
-            slideDirection = transform.forward;
-        }
-        else
-        {
-            slideDirection = moveDir.normalized;
-        }
-
-        // Apply appropriate camera effect based on the direction
-        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
-        {
-            // Forward dash
-            fovController.IncreaseFovForSlide();
-        }
-        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
-        {
-            // Backward dash
-            fovController.DecreaseFovForBackwardSlide();
-        }
-        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
-        {
-            // Left dash
-            fovController.TiltCameraLeft();
-        }
-        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
-        {
-            // Right dash
-            fovController.TiltCameraRight();
-        }
+        // Call IncreaseFOVForSlide() when the player starts sliding
+        fovController.IncreaseFovForSlide();
 
         float elapsedTime = 0f;
+        float initialGravity = gravity; // Store the initial gravity value
         while (elapsedTime < slideDuration)
         {
+            // Move the player in the slide direction
             Vector3 slideVelocity = slideDirection * slideSpeed;
-            slideVelocity.y -= gravity * Time.deltaTime;
+
+            //float originalHeight = controller.height;
+            //Vector3 originalCenter = controller.center;
+            // Adjust the character controller's height for the slide
+            // controller.height = originalHeight / 2;
+            // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
+
+            // Gradually reduce gravity to lower the player
+            float slideGravity = Mathf.Lerp(initialGravity, 0, elapsedTime / slideDuration);
+            slideVelocity.y -= slideGravity * Time.deltaTime;
+
             controller.Move(slideVelocity * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
+        // Reset the character controller's height after the slide
+        //controller.height = originalHeight;
+        // controller.center = originalCenter;
+
         isSliding = false;
+
+        // Call ResetFOV() when the player stops sliding
         fovController.ResetFov();
     }
 }
