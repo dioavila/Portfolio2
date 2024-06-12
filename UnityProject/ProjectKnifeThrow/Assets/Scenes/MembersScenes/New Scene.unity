@@ -5845,7 +5845,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573913483}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -7191,6 +7191,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9846951
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.052695904
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.13820115
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.09219183
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 4.491
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -16.425
+      objectReference: {fileID: 0}
+    - target: {fileID: 686639994505237901, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -11.346
+      objectReference: {fileID: 0}
     - target: {fileID: 3227463947445664204, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01668773
