@@ -14,6 +14,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     int gravityStorage;
+    public bool isDead = false;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -120,43 +121,46 @@ public class wallRun : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.isPaused)
+        if (!isDead)
         {
+            if (!GameManager.instance.isPaused)
+            {
             
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-            if(gThrowCount <0)
-            {
-                gThrowCount = 0;
+               // Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+                if(gThrowCount <0)
+                {
+                    gThrowCount = 0;
+                }
+
+                Selectknife();
+
+                //Bullet Time Check
+                BulletTimeCheck();
+
+                PlayerActions();
+
+                if (!isClimbing)
+                {
+                    MovementCheck();
+                }
+
+                //Pick Up Logic
+                if (isInRange && Input.GetKeyDown(KeyCode.F))
+                {
+                    currentPickup.PickUpItem();
+                    GameManager.instance.CloseMessagePanel("");
+                }
             }
 
-            Selectknife();
-
-            //Bullet Time Check
-            BulletTimeCheck();
-
-            PlayerActions();
-
-            if (!isClimbing)
+            if (Input.GetKeyDown(KeyCode.C) && !isSliding)
             {
-                MovementCheck();
+                StartCoroutine(Slide());
             }
 
-            //Pick Up Logic
-            if (isInRange && Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
             {
-                currentPickup.PickUpItem();
-                GameManager.instance.CloseMessagePanel("");
+                anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.C) && !isSliding)
-        {
-            StartCoroutine(Slide());
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
-        {
-            anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
         }
     }
 
@@ -476,6 +480,8 @@ public class wallRun : MonoBehaviour, IDamage
         StartCoroutine(flashScreenRed());
         if (HP <= 0)
         {
+            isDead = true;
+            anim.SetTrigger("isDead");
             GameManager.instance.youLose();
         }
     }

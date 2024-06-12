@@ -21,7 +21,10 @@ public class cameraController : MonoBehaviour
 
     void Update()
     {
-        HandleCameraRotation();
+        if (!GameManager.instance.playerScript.isDead)
+        {
+            HandleCameraRotation();
+        }
     }
 
     public void HandleCameraRotation()
