@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -16,10 +17,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject menuSettings;
     public GameObject UI;
     public GameObject Settings;
-    [SerializeField] public TMP_Text enemyCountTextHead;
-    [SerializeField] public TMP_Text enemyCountText;
     [SerializeField] public GameObject invertON;
     [SerializeField] public GameObject invertOFF;
+    [SerializeField] public GameObject sensSlider;
+    [Tooltip("The Menu for when the EXIT button is clicked")]
+    public GameObject exitMenu;
+    public GameObject exitMenu1;
 
     [Header("PANELS")]
     [Tooltip("The UI Panel parenting all sub menus")]
@@ -91,7 +94,6 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
     }
 
     private void Start()
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour
                 statePause();
                 menuActive = menuPause;
                 menuActive.SetActive(isPaused);
+                exitMenu.SetActive(false);
             }
             else if (menuActive == menuPause)
             {
@@ -118,6 +121,7 @@ public class GameManager : MonoBehaviour
                 menuSettings.SetActive(false);
             }
         }
+        
     }
 
     public void FindPlayer()
@@ -146,27 +150,11 @@ public class GameManager : MonoBehaviour
 
     public void updateGameGoal(int amount)
     {
-        enemyCount += amount;
-        // F0 is how many numbers after a decimal place
-        enemyCountText.text = enemyCount.ToString("F0");
 
-        if (enemyCount == 2 && doorIsDestroyable)
-        {
-            Destroy(GameObject.FindWithTag("Door"));            
-        }
-        if (enemyCount <= 0) 
-        {
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(isPaused);
-        }
     }
 
     public void youLose()
     {
-        enemyCountTextHead.enabled = false;
-        enemyCountText.enabled = false;
-        playerHPBarBack.enabled = false;
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
@@ -191,6 +179,8 @@ public class GameManager : MonoBehaviour
     IEnumerator RedToBlackTransition()
     {
         isTransitioning = true;
+
+        playerHPBarBack.enabled = false;
 
         float duration = 1f;
         float timer = 0f;

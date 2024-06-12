@@ -570,8 +570,6 @@ public class wallRun : MonoBehaviour, IDamage
         HP = startingHP;
         updatePlayerUI();
         GameManager.instance.redScreenImage.color = Color.clear;
-        GameManager.instance.enemyCountTextHead.enabled = true;
-        GameManager.instance.enemyCountText.enabled = true;
 
         controller.enabled = false;
         transform.position = GameManager.instance.playerSpawnPos.transform.position;

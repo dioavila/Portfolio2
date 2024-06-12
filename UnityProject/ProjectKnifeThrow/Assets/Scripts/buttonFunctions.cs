@@ -33,6 +33,23 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnPause();
     }
 
+    public void newGame()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+
+    public void onExitClick()
+    {
+        GameManager.instance.exitMenu.SetActive(true);
+        GameManager.instance.exitMenu1.SetActive(true);
+    }
+
+    public void onExitnotSureClick()
+    {
+        GameManager.instance.exitMenu.SetActive(false);
+        GameManager.instance.exitMenu1.SetActive(false);
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR
