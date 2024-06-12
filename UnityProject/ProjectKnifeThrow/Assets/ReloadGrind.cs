@@ -29,6 +29,7 @@ public class ReloadGrind : MonoBehaviour
     public void DeathCamera()
     {
         Camera.main.enabled = false;
+        deathCam.gameObject.SetActive(true);
         deathCam.enabled = true;
     }
     public void Death()
