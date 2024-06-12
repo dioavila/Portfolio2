@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] Rigidbody rb;
-
+    [SerializeField] ParticleSystem spark;
     [SerializeField] int damage;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
 
         IDamage dmg = other.gameObject.GetComponent<IDamage>();
 
-        if (dmg != null)
+        if (dmg != null && !GameManager.instance.playerScript.isDead)
         {
             dmg.TakeDamage(damage);
         }

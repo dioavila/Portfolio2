@@ -59,11 +59,12 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Sliding")]
     [SerializeField] float slideSpeed = 10f;
     [SerializeField] float slideDuration = 1f;
-    [SerializeField] float slideCameraOffset = 0.5f;
-    [SerializeField] Transform playerModel;
-    [SerializeField] Vector3 slideTilt = new Vector3(20f, 0f, 0f);
     PlayerFovController fovController;
 
+    [SerializeField] int slideCharges = 2;
+    [SerializeField] float slideCooldown = 3f;
+    private int currentSlideCharges;
+    private float slideCoolDownTimer;
     public bool isSliding = false;
     Vector3 slideDirection;
 
@@ -152,9 +153,21 @@ public class wallRun : MonoBehaviour, IDamage
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && !isSliding)
+            // Slide cooldown logic
+            if (currentSlideCharges < slideCharges)
+            {
+                slideCoolDownTimer += Time.deltaTime;
+                if (slideCoolDownTimer >= slideCooldown)
+                {
+                    currentSlideCharges++;
+                    slideCoolDownTimer = 0f;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.C) && !isSliding && currentSlideCharges > 0)
             {
                 StartCoroutine(Slide());
+                currentSlideCharges--;
             }
 
             if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
@@ -482,7 +495,6 @@ public class wallRun : MonoBehaviour, IDamage
         {
             isDead = true;
             anim.SetTrigger("isDead");
-            GameManager.instance.youLose();
         }
     }
     IEnumerator flashScreenRed()
@@ -556,41 +568,51 @@ public class wallRun : MonoBehaviour, IDamage
     IEnumerator Slide()
     {
         isSliding = true;
-        slideDirection = moveDir.normalized; // Slide in the current movement direction
 
-        // Call IncreaseFOVForSlide() when the player starts sliding
-        fovController.IncreaseFovForSlide();
+        // Determine the slide direction
+        if (moveDir == Vector3.zero)
+        {
+            slideDirection = transform.forward;
+        }
+        else
+        {
+            slideDirection = moveDir.normalized;
+        }
+
+        // Apply appropriate camera effect based on the direction
+        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
+        {
+            // Forward dash
+            fovController.IncreaseFovForSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
+        {
+            // Backward dash
+            fovController.DecreaseFovForBackwardSlide();
+        }
+        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
+        {
+            // Left dash
+            fovController.TiltCameraLeft();
+        }
+        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
+        {
+            // Right dash
+            fovController.TiltCameraRight();
+        }
 
         float elapsedTime = 0f;
-        float initialGravity = gravity; // Store the initial gravity value
         while (elapsedTime < slideDuration)
         {
-            // Move the player in the slide direction
             Vector3 slideVelocity = slideDirection * slideSpeed;
-
-            //float originalHeight = controller.height;
-            //Vector3 originalCenter = controller.center;
-            // Adjust the character controller's height for the slide
-            // controller.height = originalHeight / 2;
-            // controller.center = new Vector3(controller.center.x, controller.center.y / 2, controller.center.z);
-
-            // Gradually reduce gravity to lower the player
-            float slideGravity = Mathf.Lerp(initialGravity, 0, elapsedTime / slideDuration);
-            slideVelocity.y -= slideGravity * Time.deltaTime;
-
+            slideVelocity.y -= gravity * Time.deltaTime;
             controller.Move(slideVelocity * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Reset the character controller's height after the slide
-        //controller.height = originalHeight;
-        // controller.center = originalCenter;
-
         isSliding = false;
-
-        // Call ResetFOV() when the player stops sliding
         fovController.ResetFov();
     }
 }
