@@ -11,13 +11,18 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     [SerializeField] GameObject weakPoint;
     [SerializeField] GameObject eyePos;
 
+    [SerializeField] GameObject eyeball;
+    [SerializeField] ParticleSystem robotExplosion;
+
     [SerializeField] GameObject bomb;
     [SerializeField] float bombReload;
+    [SerializeField] int deathTimer;
 
     public NavMeshAgent agent;
 
     bool hasBomb;
     bool canShoot;
+    bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,29 +34,39 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     void Update()
     {
         eyeTrack();
-
-        if (modelTop.material.color == Color.blue && modelBottom.material.color == Color.blue)
+        if (!isDead)
         {
-            agent.isStopped = true;
-            canShoot = false;
+            if (modelTop.material.color == Color.blue && modelBottom.material.color == Color.blue)
+            {
+                agent.isStopped = true;
+                canShoot = false;
+            }
+            else
+            {
+                agent.isStopped = false;
+                canShoot = true;
+            }
+            agent.SetDestination(GameManager.instance.player.transform.position);
+            if (hasBomb && (agent.transform.position.x - GameManager.instance.player.transform.position.x) <= 2.0f && (agent.transform.position.z - GameManager.instance.player.transform.position.z) <= 2.0f)
+            {
+                StartCoroutine(bombDrop());
+            }
+            if (weakPoint == null)
+            {
+                isDead = true;
+                robotExplosion.Play();
+            }
         }
-        else
+        else if (isDead)
         {
-            agent.isStopped = false;
-            canShoot = true;
+            StartCoroutine(deathAnimation());
         }
+    }
 
-        agent.SetDestination(GameManager.instance.player.transform.position);
-
-        if (hasBomb && (agent.transform.position.x - GameManager.instance.player.transform.position.x) <= 2.0f && (agent.transform.position.z - GameManager.instance.player.transform.position.z) <= 2.0f)
-        {
-            StartCoroutine(bombDrop());
-        }
-
-        if (weakPoint == null)
-        {
-            Destroy(agent);
-        }
+    IEnumerator deathAnimation()
+    {
+        yield return new WaitForSeconds(deathTimer);
+        Destroy(agent.gameObject);
     }
 
     IEnumerator bombDrop()
