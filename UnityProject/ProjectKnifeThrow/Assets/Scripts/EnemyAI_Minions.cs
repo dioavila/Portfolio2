@@ -115,6 +115,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
+                    robotExplosion.Play();
                 }
             }
             else
@@ -126,7 +127,9 @@ public class enemyAI : MonoBehaviour, IFreeze
             }
         }
         else if (isDead)
+        {
             StartCoroutine(deathAnimation());
+        }
     }
 
     IEnumerator deathAnimation()
@@ -134,6 +137,8 @@ public class enemyAI : MonoBehaviour, IFreeze
         yield return new WaitForSeconds(deathTimer);
         Destroy(agent.gameObject);
     }
+
+       
 
     IEnumerator roam()
     {
