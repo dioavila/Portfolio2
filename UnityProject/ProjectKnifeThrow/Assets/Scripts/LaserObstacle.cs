@@ -26,7 +26,7 @@ public class LaserObstacle : MonoBehaviour
     void playerDetect()
     {
         RaycastHit hit;
-        if (Physics.Raycast(laserStart.transform.position, laserStart.transform.forward, out hit))
+        if (Physics.Raycast(laserStart.transform.position, laserStart.transform.forward * 1000, out hit))
         {
             if (hit.collider.CompareTag("Player"))
             {
