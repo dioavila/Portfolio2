@@ -25,10 +25,9 @@ public class Bomb_AI : MonoBehaviour
         if (bombDetonate)
         {
             gameObject.GetComponent<SphereCollider>().radius += 0.5f;
-            //if (gameObject.GetComponent<SphereCollider>().radius >= explosionRadMax)
-            //{
-            //    
-            //}
+            if (gameObject.GetComponent<SphereCollider>().radius >= explosionRadMax)
+            {
+            }
             bombExplosion.Play();
             bombDetonate = false;
             deleteBomb = true;
@@ -66,7 +65,7 @@ public class Bomb_AI : MonoBehaviour
         //else
         //{
         //}
-            bombRenderer.enabled = false;
-            bombDetonate = true;
+        bombRenderer.enabled = false;
+        bombDetonate = true;
     }
 }
