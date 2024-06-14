@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInRange: 0
   knife: {fileID: 11400000, guid: 8af174a4c70034c4ea38673e8b47394b, type: 2}
+  Pickedup: 0
 --- !u!136 &758909882954980102
 CapsuleCollider:
   m_ObjectHideFlags: 0

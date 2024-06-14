@@ -147,6 +147,8 @@ public class wallRun1 : MonoBehaviour, IDamage
                 currentPickup.PickUpItem();
                 GameManager.instance.CloseMessagePanel("");
             }
+
+            GameManager.instance.updateKnifeCount(knifeList[selectedKnife].CurrentKinfeCount);
         }
 
         if (Input.GetKeyDown(KeyCode.C) && !isSliding)

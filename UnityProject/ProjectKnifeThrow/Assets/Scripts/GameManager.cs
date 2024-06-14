@@ -14,12 +14,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text enemyCountText;
+    [SerializeField] TMP_Text KnifeCountText;
 
     [Header("HUD Components")]
     public Image playerHPBar;
     public Image playerBTBar;
     public bool isPaused;
     public int enemyCount;
+    public int Knifecount;
     public GameObject playerBPUI;
     public GameObject playerFlashDamage;
 
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        
     }
 
     // Update is called once per frame
@@ -110,6 +113,12 @@ public class GameManager : MonoBehaviour
             menuActive = menuWin;
             menuActive.SetActive(isPaused);
         }
+    }
+
+    public void updateKnifeCount(int amount)
+    {
+        Knifecount = amount;
+        KnifeCountText.text = Knifecount.ToString("F0");
     }
 
     public void youLose()

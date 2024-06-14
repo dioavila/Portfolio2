@@ -30,6 +30,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] GameObject grindBullet;
     [SerializeField] Transform grindKnifeModelLoc;
     [SerializeField] List<GameObject> gKnifeModels = new List<GameObject>();
+    public int AmmoCount;
     public int gThrowCount;
     public bool resetOn = false;
     public bool recoverOn = false;
@@ -48,7 +49,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [Header("Movement")]
     [SerializeField] int jumpSpeed;
     [SerializeField] int jumpMax;
-    [SerializeField] int playerSpeed;
+    [SerializeField] public int playerSpeed;
     [SerializeField] int sprintMod;
     public bool isGrinding = false;
     public Vector3 moveDir;
@@ -164,6 +165,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
                 anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
             }
         }
+        GameManager.instance.updateKnifeCount(knifeList[selectedKnife].CurrentKinfeCount);
     }
 
     public void GKnifeDisplayReset()
@@ -341,6 +343,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         shootDamage = _Knife.Damage;
         shootspeed = _Knife.speed;
         freezeTime = _Knife.freeze;
+        AmmoCount = _Knife.CurrentKinfeCount;
 
         knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
         knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
@@ -365,6 +368,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         shootDamage = knifeList[selectedKnife].Damage;
         shootspeed = knifeList[selectedKnife].speed;
         freezeTime = knifeList[selectedKnife].freeze;
+        AmmoCount = knifeList[selectedKnife].CurrentKinfeCount;
 
         knifeModelLoc.GetComponent<MeshFilter>().sharedMesh = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshFilter>().sharedMesh;
         knifeModelLoc.GetComponent<MeshRenderer>().sharedMaterial = knifeList[selectedKnife].Knife.GetComponentInChildren<MeshRenderer>().sharedMaterial;
