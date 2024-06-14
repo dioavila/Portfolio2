@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
-public class wallRun : MonoBehaviour, IDamage
+public class wallRun : MonoBehaviour, IDamage, IPushback
 {
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
@@ -15,6 +15,7 @@ public class wallRun : MonoBehaviour, IDamage
     [SerializeField] public int HP;
     int gravityStorage;
     public bool isDead = false;
+    [SerializeField] int Force;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -54,6 +55,7 @@ public class wallRun : MonoBehaviour, IDamage
     int playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
+    Vector3 PushBack;
 
     //sliding 
     [Header("Sliding")]
@@ -312,10 +314,19 @@ public class wallRun : MonoBehaviour, IDamage
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
         }
-        else
+        else if (bulletType.name == "Standard Knife")
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
+            yield return new WaitForSeconds(shootRate);
+            isShooting = false;
+            knifeModelLoc.gameObject.SetActive(true);
+        }
+        else if (knifeList[selectedKnife].CurrentKinfeCount > 0)
+        {
+            isShooting = true;
+            anim.SetTrigger("Shoot");
+            knifeList[selectedKnife].CurrentKinfeCount--;
             yield return new WaitForSeconds(shootRate);
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
@@ -461,6 +472,10 @@ public class wallRun : MonoBehaviour, IDamage
             GameManager.instance.OpenMessagePanel("");
             currentPickup = pickup;
         }
+        if(other.name == "Enemy - Destroyer (DB) v2.0.0 1")
+        {
+           //  Pushback((transform.position - other.transform.position) * Force);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -592,5 +607,10 @@ public class wallRun : MonoBehaviour, IDamage
 
         // Call ResetFOV() when the player stops sliding
         fovController.ResetFov();
+    }
+
+    public void Pushback(Vector3 dir)
+    {
+        gameObject.transform.position = new Vector3(dir.x, 0, dir.z);
     }
 }
