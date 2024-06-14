@@ -15,14 +15,12 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] Transform shootPos4;
     [SerializeField] Transform headPos;
 
-    [SerializeField] GameObject muzzleFlash1;
-    [SerializeField] GameObject muzzleFlash2;
-    [SerializeField] GameObject muzzleFlash3;
-    [SerializeField] GameObject muzzleFlash4;
     [SerializeField] GameObject critPoint;
-    [SerializeField] GameObject minigunRotate;
+    [SerializeField] ParticleSystem eyeBlood;
+    [SerializeField] ParticleSystem robotExplosion;
+    [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] GameObject dropOnDeath;
 
-    [SerializeField] int HP;
     [SerializeField] int viewAngle;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDistance;
@@ -35,13 +33,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] Transform spawnPath;
     private Transform startingSpawn;
 
-    [SerializeField] GameObject dropOnDeath;
-
-    public ParticleSystem eyeBlood;
-    [SerializeField] ParticleSystem robotExplosion;
-
     public NavMeshAgent agent;
-   // private Transform spawnArea;
 
     bool isShooting;
     bool playerInRange;
@@ -55,11 +47,9 @@ public class enemyAI : MonoBehaviour, IFreeze
     float angleToPlayer;
     float stoppingDistOrig;
 
+    bool isDead = false;
     bool lookPlayer = false;
     public int turnRate;
-    float timer = 3;
-
-    bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -83,16 +73,13 @@ public class enemyAI : MonoBehaviour, IFreeze
                 agent.isStopped = false;
                 canshoot = true;
             }
-
             if (finishedStartup)
             {
                 startingPos = transform.position;
-
                 if (lookPlayer)
                 {
                     faceTarget();
                 }
-
                 if (playerInRange && !canSeePlayer())
                 {
                     if (!lookPlayer)
@@ -105,7 +92,6 @@ public class enemyAI : MonoBehaviour, IFreeze
                     Debug.Log("Roam General");
                     StartCoroutine(roam());
                 }
-
                 if (critPoint == null)
                 {
                     eyeBlood.Play();
@@ -138,8 +124,6 @@ public class enemyAI : MonoBehaviour, IFreeze
         Destroy(agent.gameObject);
     }
 
-       
-
     IEnumerator roam()
     {
         if (!destChosen && agent.remainingDistance < 1f)
@@ -149,14 +133,11 @@ public class enemyAI : MonoBehaviour, IFreeze
             yield return new WaitForSeconds(roamTimer);
             Vector3 ranPos = Random.insideUnitSphere * roamDistance;
             ranPos += startingPos;
-
             NavMeshHit hit;
             NavMesh.SamplePosition(ranPos, out hit, roamDistance, 1);
             agent.SetDestination(hit.position);
-
             Quaternion resetRot = Quaternion.LookRotation(agent.transform.forward, Vector3.up);
             gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, resetRot, 1);
-
             destChosen = false;
         }
     }
@@ -167,30 +148,23 @@ public class enemyAI : MonoBehaviour, IFreeze
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
         //Debug.Log(angleToPlayer);
         //Debug.DrawRay(headPos.position, playerDir);
-
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
             { 
                 agent.stoppingDistance = stoppingDistOrig;
-
                 if (!isShooting && canshoot)
                 {
-                    //minigunRotate.transform.rotation = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(0, 0, 90), Time.deltaTime * 1);
                     StartCoroutine(shoot());
                 }
-
-
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
                     lookPlayer = true;
                 }
-
                 return true;
             }
         }
-
         agent.stoppingDistance = 0;
         return false;
     }
@@ -226,25 +200,24 @@ public class enemyAI : MonoBehaviour, IFreeze
         isShooting = true;
         if (shootPos1 != null)
         {
-            StartCoroutine(flashMuzzle(muzzleFlash1));
+            muzzleFlash.Play();
             createBullet(shootPos1);
         }
         if (shootPos2 != null)
         {
-            StartCoroutine(flashMuzzle(muzzleFlash2));
+            muzzleFlash.Play();
             createBullet(shootPos2);
         }
         if (shootPos3 != null)
         {
-            StartCoroutine(flashMuzzle(muzzleFlash3));
+            muzzleFlash.Play();
             createBullet(shootPos3);
         }
         if (shootPos4 != null)
         {
-            StartCoroutine(flashMuzzle(muzzleFlash4));
+            muzzleFlash.Play();
             createBullet(shootPos4);
         }
-
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
@@ -252,13 +225,6 @@ public class enemyAI : MonoBehaviour, IFreeze
     public void createBullet(Transform shootPos)
     {
         Instantiate(bullet, shootPos.position, transform.rotation);
-    }
-
-    IEnumerator flashMuzzle(GameObject muzzleFlash)
-    {
-        muzzleFlash.SetActive(true);
-        yield return new WaitForSeconds(.1f);
-        muzzleFlash.SetActive(false);
     }
 
     public void FreezeTime(int time)

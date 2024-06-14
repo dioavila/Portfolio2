@@ -180,7 +180,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1640770508689667708}
   m_Enabled: 1
   m_AgentTypeID: -334000983
-  m_Radius: 0.4
+  m_Radius: 2
   m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1369,6 +1369,8 @@ MonoBehaviour:
   jointHP: 5
   player: {fileID: 0}
   limbTurnRate: 5
+  body: {fileID: 0}
+  viewAngle: 0
 --- !u!33 &7354135280307728914
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1581,18 +1583,20 @@ MonoBehaviour:
   shootPos3: {fileID: 0}
   shootPos4: {fileID: 0}
   headPos: {fileID: 1380449194798069367}
-  muzzleFlash1: {fileID: 3127816036261111526}
-  muzzleFlash2: {fileID: 3561829493939801169}
-  muzzleFlash3: {fileID: 0}
-  muzzleFlash4: {fileID: 0}
   critPoint: {fileID: 6918379528238860539}
+  eyeBlood: {fileID: 0}
+  robotExplosion: {fileID: 0}
+  muzzleFlash: {fileID: 0}
+  dropOnDeath: {fileID: 0}
   HP: 5
   viewAngle: 90
   faceTargetSpeed: 10
   roamDistance: 20
   roamTimer: 3
+  deathTimer: 0
   bullet: {fileID: 8752580559077277474, guid: 6c4fbce91830b4945b4a19967a5e026c, type: 3}
   shootRate: 0.5
+  spawnPath: {fileID: 0}
   agent: {fileID: 6189318836152876518}
   turnRate: 5
 --- !u!136 &821571242326938294
