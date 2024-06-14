@@ -10,12 +10,12 @@ public class DisappearingPlatform : MonoBehaviour
     [SerializeField] Transform platformPOS;
     [SerializeField] int time;
     Renderer model;
-    bool Active;
+    bool Active = true;
     // Start is called before the first frame update
     void Start()
     {
         model = DisapperingFloor.GetComponent<Renderer>();
-        Active = true;
+        //Active = true;
     }
 
     // Update is called once per frame

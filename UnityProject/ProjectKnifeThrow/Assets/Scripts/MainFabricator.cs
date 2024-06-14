@@ -83,5 +83,5 @@ public class MainFabricator : MonoBehaviour
         if (eyeF1Three == null & eyeF1Four == null && eyeF1Five == null)
             Destroy(laserF1Door);
     }
-    
+ 
 }
