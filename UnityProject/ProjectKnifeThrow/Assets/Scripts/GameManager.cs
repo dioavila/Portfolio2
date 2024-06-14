@@ -35,9 +35,11 @@ public class GameManager : MonoBehaviour
     public GameObject keyRejection;
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
-
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
+
+    [SerializeField] bool boss2Scene = false;
+    public BossManager bossManager;
 
 
     // Start is called before the first frame update
@@ -48,6 +50,10 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        if (boss2Scene)
+        {
+            bossManager = GameObject.FindWithTag("BossManager").GetComponent<BossManager>();
+        }
     }
 
     // Update is called once per frame

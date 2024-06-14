@@ -42,7 +42,7 @@ public class KBullet : MonoBehaviour
                 if (dmg == null && !hitConfirmed)// && other.gameObject.CompareTag("Enemy"))
                 {
                     Instantiate(hitBlock, transform.position, Quaternion.identity);
-                    bool hitBlocked = true;
+                    hitBlocked = true;
                 }
                 Destroy(gameObject);
             }

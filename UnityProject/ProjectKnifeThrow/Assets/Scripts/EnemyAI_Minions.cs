@@ -8,6 +8,10 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IFreeze
 {
+    [Header("Boss Toggle")]
+    [SerializeField] bool belongsToGORE = false;
+
+    [Header("Standard Setting")]
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos1;
     [SerializeField] Transform shootPos2;
@@ -54,6 +58,10 @@ public class enemyAI : MonoBehaviour, IFreeze
     // Start is called before the first frame update
     void Start()
     {
+        if (belongsToGORE)
+        {
+            GameManager.instance.bossManager.enemiesAlive += 1;
+        }
         startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
     }
@@ -122,6 +130,10 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         yield return new WaitForSeconds(deathTimer);
         Destroy(agent.gameObject);
+        if (belongsToGORE)
+        {
+            GameManager.instance.bossManager.enemiesAlive -= 1;
+        }
     }
 
     IEnumerator roam()
