@@ -8,24 +8,41 @@ public class Bomb_AI : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] int explosionRadMax;
     [SerializeField] MeshRenderer bombRenderer;
+    public ParticleSystem bombExplosion;
 
-    bool expandRadius;
+    bool bombDetonate = false;
+    bool deleteBomb = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        expandRadius = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (expandRadius)
+        if (bombDetonate)
         {
             gameObject.GetComponent<SphereCollider>().radius += 0.5f;
-            if (gameObject.GetComponent<SphereCollider>().radius >= explosionRadMax)
-                Destroy(gameObject);
+            //if (gameObject.GetComponent<SphereCollider>().radius >= explosionRadMax)
+            //{
+            //    
+            //}
+            bombExplosion.Play();
+            bombDetonate = false;
+            deleteBomb = true;
         }
+        if (deleteBomb)
+        {
+            StartCoroutine(destroyBomb());
+        }
+    }
+
+    IEnumerator destroyBomb()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,8 +61,12 @@ public class Bomb_AI : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //gameObject.GetComponent<SphereCollider>().isTrigger = true;
-        expandRadius = true;
-        bombRenderer.enabled = false;
+        //if (collision.collider.CompareTag("Enemy"))
+        //    return;
+        //else
+        //{
+        //}
+            bombRenderer.enabled = false;
+            bombDetonate = true;
     }
 }
