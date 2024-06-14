@@ -65,7 +65,6 @@ public class RailTurrets : MonoBehaviour
     {
         Vector3 direction = player.transform.position - transform.position;
         angleToPlayer = Vector3.Angle(direction, -transform.up);
-        Debug.Log(angleToPlayer);
         if (angleToPlayer < viewAngle)
         {
             Quaternion rotation = Quaternion.LookRotation(direction);

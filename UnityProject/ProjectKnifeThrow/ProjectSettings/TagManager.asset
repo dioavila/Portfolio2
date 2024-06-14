@@ -15,6 +15,7 @@ TagManager:
   - KeyDoor
   - Tutorial Door
   - Player Spawn Pos
+  - Laser
   layers:
   - Default
   - TransparentFX
