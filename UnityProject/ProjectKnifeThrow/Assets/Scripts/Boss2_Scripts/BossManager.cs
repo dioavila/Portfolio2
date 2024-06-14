@@ -26,6 +26,7 @@ public class BossManager : MonoBehaviour
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int numberToSpawn = 3, spawnCount;
     [SerializeField] float minionSpawnDelay = 1.5f;
+    public int enemiesAlive = 0;
     bool isSpawning = false, spawnTransition = false;
     //Access to Laser spawners
 
@@ -34,7 +35,11 @@ public class BossManager : MonoBehaviour
     [SerializeField] List<GameObject> laserList;
 
     //Access to weakpoint containers
-    
+    [SerializeField] public List<GameObject> weakspotList;
+    [SerializeField] public List<GameObject> barrierList;
+    bool vulExpose = false;
+    float vulTimer = 5f;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -71,19 +76,26 @@ public class BossManager : MonoBehaviour
                         StartCoroutine(patternWaitGuns());
                 }
 
+                //Spawn minions
                 if(canSpawn)
                 {
                     SpawnCheck();
                 }
                 else
                 {
-                    if (!spawnTransition)
-                        StartCoroutine(patternWaitSpawn());
+                    canSpawn = false;
+                    if (spawnTransition)
+                    {
+                        if (enemiesAlive == 0)
+                            StartCoroutine(patternWaitSpawn());
+                    }
                 }
-                //Spawn minions
 
                 //open vulnerability
-
+                if (vulExpose)
+                {
+                    ShowVulnerable();
+                }
                 //Close pattern
             }
 
@@ -108,11 +120,24 @@ public class BossManager : MonoBehaviour
         }
     }
 
+    void ShowVulnerable()
+    {
+        for(int i = 0; i < barrierList.Count; ++i)
+        {
+            barrierList[i].SetActive(false);
+        }
+        /*StartTimerVul();
+        for (int i = 0; i < barrierList.Count; ++i)
+        {
+            barrierList[i].SetActive(true);
+        }*/
+    }
+
     void ActivateGuns()
     {
-            rightScript.isActive = true;
-            leftScript.isActive = true;
-            StartTimer();
+        rightScript.isActive = true;
+        leftScript.isActive = true;
+        StartTimer();
     }
 
     void SpawnCheck()
@@ -123,17 +148,17 @@ public class BossManager : MonoBehaviour
         }
         else if (spawnCount == numberToSpawn)
         {
-            spawnCount = 0;
+            spawnTransition = true;
             canSpawn = false;
         }
     }
     IEnumerator spawnMinions()
     {
         isSpawning = true;
+        spawnCount++;
         Instantiate(enemyToSpawn, rSpawn1.transform.position, rSpawn1.transform.rotation);
         Instantiate(enemyToSpawn, rSpawn2.transform.position, rSpawn2.transform.rotation);
         yield return new WaitForSeconds(minionSpawnDelay);
-        ++spawnCount;
         isSpawning = false;
     }
 
@@ -149,6 +174,19 @@ public class BossManager : MonoBehaviour
             canGun = false;
         }
     }
+    void StartTimerVul()
+    {
+        if (vulTimer > 0)
+        {
+            vulTimer -= Time.deltaTime;
+            Debug.Log(gunTimer);
+        }
+        else
+        {
+            pattern1 = false;
+            ResetPatterns();
+        }
+    }
 
     IEnumerator patternWaitGuns()
     {
@@ -160,7 +198,19 @@ public class BossManager : MonoBehaviour
     IEnumerator patternWaitSpawn()
     {
         yield return new WaitForSeconds(4);
-        //vulExpose = true;
-        spawnTransition = true;
+        vulExpose = true;
+        spawnTransition = false;
+    }
+
+    void ResetPatterns()
+    {
+        gunTransition = false; 
+        spawnTransition = false;
+        vulExpose = false;
+        canGun = true;
+        canSpawn = false;
+        gunTimer = 0;
+        spawnCount = 0;
+        vulTimer = 0;
     }
 }

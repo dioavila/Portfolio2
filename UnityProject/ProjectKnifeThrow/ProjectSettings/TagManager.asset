@@ -16,6 +16,7 @@ TagManager:
   - Tutorial Door
   - Player Spawn Pos
   - Laser
+  - BossManager
   layers:
   - Default
   - TransparentFX
