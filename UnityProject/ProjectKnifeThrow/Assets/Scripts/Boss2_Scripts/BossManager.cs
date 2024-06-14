@@ -16,8 +16,9 @@ public class BossManager : MonoBehaviour
     //Access Guns
     [Header("Gun Control")]
     [SerializeField] GameObject rightGun, leftGun;
-    RailTurrets rightScript, leftScript;
     [SerializeField] float gunTimer = 3f;
+    float gunTimerOrig;
+    RailTurrets rightScript, leftScript;
     bool gunTransition = false;
 
     //Access to enemy spawners
@@ -33,18 +34,26 @@ public class BossManager : MonoBehaviour
     [Header("Laser Control")]
     [SerializeField] Transform lSpawn1, lSpawn2;
     [SerializeField] List<GameObject> laserList;
+    [SerializeField] int lasersToSpawn = 3;
+    [SerializeField] float laserSpawnDelay = 1.5f;
+    bool laserOn = false, laserTransition = false;
+    public int activeLasers = 0;
+    bool laserFirst = false;
 
     //Access to weakpoint containers
     [SerializeField] public List<GameObject> weakspotList;
-    [SerializeField] public List<GameObject> barrierList;
+    [SerializeField] List<GameObject> barrierList;
     bool vulExpose = false;
-    float vulTimer = 5f;
+    float vulTimer = 5f, vulTimerOrig;
 
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         rightScript = rightGun.GetComponent<RailTurrets>();
         leftScript = leftGun.GetComponent<RailTurrets>();
+
+        gunTimerOrig = gunTimer;
+        vulTimerOrig = vulTimer;
     }
 
     // Update is called once per frame
@@ -56,6 +65,8 @@ public class BossManager : MonoBehaviour
             startOff = true;
             pattern1 = true;
             canGun = true;
+            //pattern2 = true;
+            //canLaser = true;
         }
         else
         {
@@ -66,14 +77,13 @@ public class BossManager : MonoBehaviour
                 {
                     ActivateGuns();
                 }
-                //Disable Guns
                 else
                 {
                     rightScript.isActive = false;
                     leftScript.isActive = false;
                     canGun = false;
                     if(!gunTransition)
-                        StartCoroutine(patternWaitGuns());
+                        StartCoroutine(patternWaitGunsToSpawn());
                 }
 
                 //Spawn minions
@@ -83,11 +93,11 @@ public class BossManager : MonoBehaviour
                 }
                 else
                 {
-                    canSpawn = false;
+                   // canSpawn = false;
                     if (spawnTransition)
                     {
                         if (enemiesAlive == 0)
-                            StartCoroutine(patternWaitSpawn());
+                            StartCoroutine(patternWaitSpawnToVul());
                     }
                 }
 
@@ -98,48 +108,253 @@ public class BossManager : MonoBehaviour
                 }
                 //Close pattern
             }
-
+            //Needs transition timer!!
             if (pattern2)
             {
                 //Start Lasers
+                if(canLaser)
+                {
+                    ActivateLasers();
+                }
+                else
+                {
+                    if(laserTransition)
+                    {
+                        if (activeLasers == 0)
+                            if (!laserFirst)
+                                StartCoroutine(patternWaitLaserToSpawn());
+                            else
+                                StartCoroutine(patternWaitLaserToVul());
+                    }
+                }
                 //Disable Lasers
 
-                //startGuns
-                //Spawn minions
-                //disableGuns
+                if (canSpawn)
+                {
+                    rightScript.isActive = true;
+                    leftScript.isActive = true;
+                    SpawnCheck();
+                }
+                else
+                {
+                    if (spawnTransition)
+                    {
+                        if (enemiesAlive <= 0)
+                        {
+                            StartCoroutine(patternWaitSpawnNGunsToLaser());
+                            rightScript.isActive = false;
+                            leftScript.isActive = false;
+                        }
+                    }
+                }
 
-                //open vulnerability
-
-                //Close pattern
+                if (vulExpose)
+                {
+                   ShowVulnerable();
+                }
             }
 
             if (pattern3)
             {
-
+                //if (vulExpose)
+                //{
+                //    ShowVulnerable();
+                //}
             }
         }
     }
 
+    //Add timer between patterns
+    //Add Final Pattern
+    //Add Death Logic
+
+    /// <summary>
+    /// WEAKSPOT METHODS
+    /// </summary>
     void ShowVulnerable()
     {
+
         for(int i = 0; i < barrierList.Count; ++i)
         {
-            barrierList[i].SetActive(false);
+            if (barrierList[i] != null)
+                barrierList[i].SetActive(false);
         }
-        /*StartTimerVul();
-        for (int i = 0; i < barrierList.Count; ++i)
+        if (pattern1)
         {
-            barrierList[i].SetActive(true);
-        }*/
+            StartTimerVul();
+        }
+        else if (pattern2 && laserFirst)
+        {
+            MidTimerVul();
+        }
+        else
+        {
+            EndTimerVul();
+        }
+    }
+    void StartTimerVul()
+    {
+        if (vulTimer > 0 && weakspotList.Count == 3)
+        {
+            vulTimer -= Time.deltaTime;
+        }
+        else
+        {
+            for (int i = 0; i < barrierList.Count; ++i)
+            {
+                if (barrierList[i] != null)
+                    barrierList[i].SetActive(true);
+            }
+            if(weakspotList.Count == 3)
+            {
+                canGun = true;
+                gunTimer = gunTimerOrig;
+                gunTransition = false;
+                spawnTransition = false;
+            }
+            else
+            {
+                pattern1 = false;
+                canLaser = true;
+                pattern2 = true;
+                ResetPatterns();
+                numberToSpawn *= 2;
+            }
+            vulTimer = vulTimerOrig;
+            spawnCount = 0;
+            vulExpose = false;
+        }
+    }
+    void MidTimerVul()
+    {
+        if (vulTimer > 0 && weakspotList.Count == 2)
+        {
+            vulTimer -= Time.deltaTime;
+            Debug.Log(vulTimer);
+        }
+        else
+        {
+            for (int i = 0; i < barrierList.Count; ++i)
+            {
+                if (barrierList[i] != null)
+                    barrierList[i].SetActive(true);
+            }
+            if (weakspotList.Count == 2)
+            {
+                canSpawn = false;
+                laserFirst = false;
+                canLaser = true;
+                spawnTransition = false;
+                laserTransition = false;
+                lasersToSpawn = 4;
+            }
+            else
+            {
+                pattern2 = false;
+                canSpawn = true;
+                pattern3 = true;
+                ResetPatterns();
+                numberToSpawn *= 2;
+            }
+            vulTimer = vulTimerOrig;
+            spawnCount = 0;
+            vulExpose = false;
+        }
+    }
+    void EndTimerVul()
+    {
+        if (vulTimer > 0 && weakspotList.Count == 2)
+        {
+            vulTimer -= Time.deltaTime;
+            Debug.Log(vulTimer);
+        }
+        else
+        {
+            for (int i = 0; i < barrierList.Count; ++i)
+            {
+                if (barrierList[i] != null)
+                    barrierList[i].SetActive(true);
+            }
+            pattern3 = false;
+            ResetPatterns();
+        }
+    }
+    //**********************************************************
+
+    /// <summary>
+    /// LASER METHODS
+    /// </summary>
+    void ActivateLasers()
+    {
+        if (lasersToSpawn > 0 && !laserOn)
+        {
+            StartCoroutine(spawnLasers());
+        }
+        else if (lasersToSpawn == 0)
+        {
+            laserTransition = true;
+            canLaser = false;
+        }
     }
 
+    IEnumerator spawnLasers()
+    {
+        laserOn = true;
+        int patternIndex = Random.Range(0, 2);
+        Instantiate(laserList[patternIndex], lSpawn1.transform.position, lSpawn1.transform.rotation);
+        yield return new WaitForSeconds(laserSpawnDelay);
+        patternIndex = Random.Range(0, 2);
+        Instantiate(laserList[patternIndex], lSpawn2.transform.position, lSpawn2.transform.rotation);
+        --lasersToSpawn;
+        yield return new WaitForSeconds(laserSpawnDelay);
+        laserOn = false;
+    }
+    IEnumerator patternWaitLaserToSpawn()
+    {
+        yield return new WaitForSeconds(4);
+        canSpawn = true;
+        laserTransition = false;
+        laserFirst = true;
+    }
+    IEnumerator patternWaitLaserToVul()
+    {
+        yield return new WaitForSeconds(4);
+        laserTransition = false;
+        vulExpose = true;
+    }
+    //**********************************************************
+
+    /// <summary>
+    /// GUN METHODS
+    /// </summary>
     void ActivateGuns()
     {
         rightScript.isActive = true;
         leftScript.isActive = true;
         StartTimer();
     }
+    void StartTimer()
+    {
+        if(gunTimer > 0)
+        {
+            gunTimer -= Time.deltaTime;
+        }
+        else
+        {
+            canGun = false;
+        }
+    }
+    IEnumerator patternWaitGunsToSpawn()
+    {
+        yield return new WaitForSeconds(4);
+        canSpawn = true;
+        gunTransition = true;
+    }
+    //**********************************************************
 
+    /// <summary>
+    /// SPAWN METHODS
+    /// </summary>
     void SpawnCheck()
     {
         if (spawnCount < numberToSpawn && !isSpawning)
@@ -161,44 +376,20 @@ public class BossManager : MonoBehaviour
         yield return new WaitForSeconds(minionSpawnDelay);
         isSpawning = false;
     }
-
-    void StartTimer()
-    {
-        if(gunTimer > 0)
-        {
-            gunTimer -= Time.deltaTime;
-            Debug.Log(gunTimer);
-        }
-        else
-        {
-            canGun = false;
-        }
-    }
-    void StartTimerVul()
-    {
-        if (vulTimer > 0)
-        {
-            vulTimer -= Time.deltaTime;
-            Debug.Log(gunTimer);
-        }
-        else
-        {
-            pattern1 = false;
-            ResetPatterns();
-        }
-    }
-
-    IEnumerator patternWaitGuns()
-    {
-        yield return new WaitForSeconds(4);
-        canSpawn = true;
-        gunTransition = true;
-    }
-
-    IEnumerator patternWaitSpawn()
+    IEnumerator patternWaitSpawnToVul()
     {
         yield return new WaitForSeconds(4);
         vulExpose = true;
+        spawnTransition = false;
+    }
+
+
+
+    IEnumerator patternWaitSpawnNGunsToLaser()
+    {
+        yield return new WaitForSeconds(4);
+        lasersToSpawn = 2;
+        canLaser = true;
         spawnTransition = false;
     }
 

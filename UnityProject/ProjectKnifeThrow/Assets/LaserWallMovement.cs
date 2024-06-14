@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class LaserWallMovement : MonoBehaviour
 {
-    [SerializeField] Transform readyPoint, endPoint;
+    [SerializeField] public Transform readyPoint, endPoint;
     [SerializeField] float movSpeed = 2f;
     [SerializeField] float timerToStart = 2f;
     bool ready = false;
     Vector3 lerpDistance1, lerpDistance2;
     void Start()
     {
+        GameManager.instance.bossManager.activeLasers++;
         lerpDistance1 = transform.position - readyPoint.position;
         lerpDistance2 = transform.position - endPoint.position;
     }
@@ -34,6 +35,7 @@ public class LaserWallMovement : MonoBehaviour
             Debug.Log(lerpDistance2.magnitude);
             if (lerpDistance2.magnitude <= 10)
             {
+                GameManager.instance.bossManager.activeLasers--;
                 Destroy(gameObject);
             }
         }

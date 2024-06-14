@@ -21,7 +21,11 @@ public class WallMov : MonoBehaviour
 
     [SerializeField] Transform exitDoorPoint;
     public bool charIn = false;
+
+    [Header("Laser Settings")]
     [SerializeField] bool isLaser = false;
+    [SerializeField] Transform laserReadyPoint;
+    [SerializeField] Transform laserExitPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -72,8 +76,9 @@ public class WallMov : MonoBehaviour
                 {
                     return;
                 }
-                //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
                 charIn = true;
+                other.GetComponent<LaserWallMovement>().readyPoint = laserReadyPoint;
+                other.GetComponent<LaserWallMovement>().endPoint = laserExitPoint;
 
             }
         }
