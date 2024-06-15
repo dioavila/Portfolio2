@@ -15,7 +15,6 @@ public class DisappearingPlatform : MonoBehaviour
     void Start()
     {
         model = DisapperingFloor.GetComponent<Renderer>();
-        //Active = true;
     }
 
     // Update is called once per frame
