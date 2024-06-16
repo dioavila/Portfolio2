@@ -161,10 +161,9 @@ public class MainFabricator : MonoBehaviour
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
-    [SerializeField] List<Transform> spawnLocationList2F = new List<Transform>();
+    [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
     [SerializeField] bool goal = false;
     int numberSpawned = 0;
-    [SerializeField] List<Transform> spawnLocationList3F = new List<Transform>();
 
     bool glassSpawn = false;
     bool topSpawn = false;
@@ -495,14 +494,13 @@ public class MainFabricator : MonoBehaviour
     {
         StartCoroutine(Spawn());
     }
-
     IEnumerator Spawn()
     {
         for (int i = 0; i < numberToSpawn; i++)
         {
-            for (int spawnLocIter = 0; spawnLocIter < spawnLocationList2F.Count; ++spawnLocIter)
+            for (int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
             {
-                Instantiate(enemyToSpawn, spawnLocationList2F[spawnLocIter].position, spawnLocationList2F[spawnLocIter].rotation);
+                Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
             }
             numberSpawned++;
             yield return new WaitForSeconds(spawnTimer);
