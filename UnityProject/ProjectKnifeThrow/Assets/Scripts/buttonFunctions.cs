@@ -45,8 +45,6 @@ public class buttonFunctions : MonoBehaviour
     public void onPlayClick()
     {
         GameManager.instance.playMenu.SetActive(true);
-        GameManager.instance.exitMenu.SetActive(false);
-        GameManager.instance.exitMenu1.SetActive(false);
         GameManager.instance.exitMenu2.SetActive(false);
     }
 

@@ -54,10 +54,6 @@ public class GameManager : MonoBehaviour
     public GameObject lineControls;
     [Tooltip("Highlight Image for when KEY BINDINGS Tab is selected in Settings")]
     public GameObject lineKeyBindings;
-    [Tooltip("Highlight Image for when MOVEMENT Sub-Tab is selected in KEY BINDINGS")]
-    public GameObject lineMovement;
-    [Tooltip("Highlight Image for when COMBAT Sub-Tab is selected in KEY BINDINGS")]
-    public GameObject lineCombat;
     [Tooltip("Highlight Image for when GENERAL Sub-Tab is selected in KEY BINDINGS")]
     public GameObject lineGeneral;
 
@@ -89,33 +85,25 @@ public class GameManager : MonoBehaviour
     public GameObject checkpointPopup;
     public float sensitivity;
 
+    [SerializeField] bool boss2Scene = false;
+    public BossManager bossManager;
+    public AudioController audioScript;
+
 
     // Start is called before the first frame update
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            InitializeSettings();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            playerScript = player.GetComponent<wallRun>();
-            grindScript = player.GetComponent<GrindScript>();
-        }
-            playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        instance = this;
+        //audioScript = player.GetComponent<AudioController>();
+
+        InitializeSettings();
+        InitializePlayer();
     }
 
     private void Start()
     {
         Debug.Log("GameManager Start called");
-       
+
         startColor = redScreenImage.color;
         startColor.a = 0f;
         redScreenImage.color = startColor;
@@ -124,7 +112,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "Main Menu")
         {
             if (menuActive == null)
             {
@@ -174,7 +162,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        
+
         Debug.Log("Saved Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
         PlayerPrefs.SetFloat("Sensitivity", sensitivity);
         PlayerPrefs.SetInt("InvertMouse", isInverted ? 1 : 0);
@@ -197,6 +185,17 @@ public class GameManager : MonoBehaviour
         sensitivity = value;
         Debug.Log("Sensitivity after update: " + sensitivity);
         SaveSettings();
+    }
+
+    private void InitializePlayer()
+    {
+        player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerScript = player.GetComponent<wallRun>();
+            grindScript = player.GetComponent<GrindScript>();
+        }
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
     public void FindPlayer()
