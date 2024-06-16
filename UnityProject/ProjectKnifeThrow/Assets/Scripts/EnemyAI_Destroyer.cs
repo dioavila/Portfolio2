@@ -11,16 +11,19 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] Transform[] shootPos = new Transform[4];
     [SerializeField] int HP;
 
-    // [SerializeField] Rigidbody rb;
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
     [SerializeField] int PushbackAmount;
-    [SerializeField] int range;
-
+    [SerializeField] ParticleSystem FocusFire;
+    [SerializeField] AudioSource pushAudio;
+    [SerializeField] AudioClip pushAudioClip;
+    float range;
+    float turnspeed;
     bool isShooting;
     public bool playerInRange;
     public Transform playerLocation;
     CapsuleCollider colid;
+    SphereCollider sphereCollider;
     Vector3 dir;
     [SerializeField] List<GameObject> muzzleFlash = new List<GameObject>();
 
@@ -28,6 +31,9 @@ public class enemyAITest : MonoBehaviour
     void Start()
     {
         colid = GetComponent<CapsuleCollider>();
+        sphereCollider = GetComponent<SphereCollider>();
+        range = colid.radius;
+        turnspeed = GameManager.instance.jointCS.limbTurnRate;
     }
 
     // Update is called once per frame
@@ -52,15 +58,18 @@ public class enemyAITest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            colid.radius += range;
+           colid.radius = sphereCollider.radius;
+            pushAudio.PlayOneShot(pushAudioClip);
+            StartCoroutine(pushflash());
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
-            colid.radius -= range;
-        
+        if (other.CompareTag("Player"))
+        {
+            colid.radius = range;
+        }
     }
     IEnumerator shoot()
     {
@@ -69,27 +78,93 @@ public class enemyAITest : MonoBehaviour
         {
             StartCoroutine(flashMuzzle(muzzleFlash[0]));
             Instantiate(bullet, shootPos[0].position, transform.rotation, shootPos[0]);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(shootRate);
         }
         if (shootPos[1] != null)
         {
             StartCoroutine(flashMuzzle(muzzleFlash[1]));
             Instantiate(bullet, shootPos[1].position, transform.rotation, shootPos[1]);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(shootRate);
 
         }
         if (shootPos[2] != null)
         {
             StartCoroutine(flashMuzzle(muzzleFlash[2]));
             Instantiate(bullet, shootPos[2].position, transform.rotation, shootPos[2]);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(shootRate);
         }
         if (shootPos[3] != null)
         {
             StartCoroutine(flashMuzzle(muzzleFlash[3]));
             Instantiate(bullet, shootPos[3].position, transform.rotation, shootPos[3]);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(shootRate);
         }
+        if (shootPos[0] == null)
+        {
+            shootRate -= 0.2f;
+            turnspeed = turnspeed / 2;
+            FocusFire.Play();
+            //FocusFire[1].Play();
+            //FocusFire[2].Play();
+            //FocusFire[3].Play();
+        }
+        if (shootPos[1] == null)
+        {
+            shootRate -= 0.2f;
+            turnspeed = turnspeed / 2;
+            FocusFire.Play();
+            //FocusFire[0].Play();
+            //FocusFire[2].Play();
+            //FocusFire[3].Play();
+        }
+        if (shootPos[2] == null)
+        {
+            shootRate -= 0.2f;
+            turnspeed = turnspeed / 2;
+            FocusFire.Play();
+            //FocusFire[1].Play();
+            //FocusFire[0].Play();
+            //FocusFire[3].Play();
+        }
+        if (shootPos[3] == null)
+        {
+            shootRate -= 0.2f;
+            turnspeed = turnspeed / 2;
+            FocusFire.Play();
+            //FocusFire[1].Play();
+            //FocusFire[2].Play();
+            //FocusFire[0].Play();
+        }
+        //if (shootPos[0] == null && shootPos[1] == null)
+        //{
+        //    FocusFire[2].Play();
+        //    FocusFire[3].Play();
+        //}
+        //if (shootPos[0] == null && shootPos[2] == null)
+        //{
+        //    FocusFire[1].Play();
+        //    FocusFire[3].Play();
+        //}
+        //if (shootPos[0] == null && shootPos[3] == null)
+        //{
+        //    FocusFire[2].Play();
+        //    FocusFire[1].Play();
+        //}
+        //if (shootPos[1] == null && shootPos[2] == null)
+        //{
+        //    FocusFire[0].Play();
+        //    FocusFire[3].Play();
+        //}
+        //if (shootPos[1] == null && shootPos[3] == null)
+        //{
+        //    FocusFire[0].Play();
+        //    FocusFire[2].Play();
+        //}
+        //if (shootPos[2] == null && shootPos[3] == null)
+        //{
+        //    FocusFire[0].Play();
+        //    FocusFire[1].Play();
+        //}
         isShooting = false;
     }
 
@@ -105,4 +180,18 @@ public class enemyAITest : MonoBehaviour
             }
         }
     }
+    IEnumerator pushflash()
+    {
+        GameManager.instance.playerPushBack.SetActive(true);
+        yield return new WaitForSeconds(.1f);
+        GameManager.instance.playerPushBack.SetActive(false);
+    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    IPushback player = collision.collider.GetComponent<IPushback>();
+    //    if (player != null)
+    //    {
+    //        player.Pushback((transform.position - collision.transform.position) * PushbackAmount);
+    //    }
+    //}
 }

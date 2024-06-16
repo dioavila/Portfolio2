@@ -24,12 +24,14 @@ public class GameManager : MonoBehaviour
     public int Knifecount;
     public GameObject playerBPUI;
     public GameObject playerFlashDamage;
+    public GameObject playerPushBack;
 
     [Header("Object Access")]
     public GameObject player;
     public wallRun playerScript;
     public kwallRun kplayerCS;
     public KnifeSpawnners spawnners;
+    public JointDamage jointCS;
     public enemyAI AIScript;
     public GrindScript grindScript;
     public bool doorIsDestroyable = false;

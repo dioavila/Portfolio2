@@ -6,7 +6,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
 {
     [SerializeField] int jointHP;
     [SerializeField] GameObject player;
-    [SerializeField] float limbTurnRate;
+    [SerializeField] public float limbTurnRate;
     Quaternion currRot;
     int origHP;
     Renderer jointModel;

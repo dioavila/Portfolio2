@@ -13,9 +13,10 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] int gravity;
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
+    [SerializeField] int Force;
     int gravityStorage;
     public bool isDead = false;
-    [SerializeField] int Force;
+    Rigidbody rb;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -119,6 +120,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         updateBPUI();
 
         fovController = GetComponent<PlayerFovController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -615,6 +617,8 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
     public void Pushback(Vector3 dir)
     {
-        gameObject.transform.position = new Vector3(dir.x, 0, dir.z);
+        PushBack = new Vector3(dir.x, 0, dir.z);
+        rb.velocity = PushBack * Force;
+        transform.position = Vector3.Slerp(transform.position, PushBack, Time.deltaTime);
     }
 }
