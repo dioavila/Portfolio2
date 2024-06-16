@@ -7,7 +7,7 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage
 {
     [SerializeField] int HP;
     [SerializeField] bool partOfList;
-    [SerializeField] int listElementNum;
+    //[SerializeField] int listElementNum;
     [SerializeField] ParticleSystem particle;
     //Add code to remove weakspot from the list;
 
@@ -17,7 +17,10 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             if (partOfList)
-                GameManager.instance.bossManager.weakspotList.Remove(GameManager.instance.bossManager.weakspotList[listElementNum]);
+            {
+                int currIndex = GameManager.instance.bossManager.weakspotList.IndexOf(gameObject);
+                GameManager.instance.bossManager.weakspotList.Remove(GameManager.instance.bossManager.weakspotList[currIndex]);
+            }
             Instantiate(particle, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

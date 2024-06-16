@@ -90374,6 +90374,8 @@ MonoBehaviour:
   endPoint: {fileID: 0}
   movSpeed: 0.8
   timerToStart: 2
+  isBossMechanic: 1
+  isMovable: 1
 --- !u!54 &-3203488709036318503
 Rigidbody:
   m_ObjectHideFlags: 0

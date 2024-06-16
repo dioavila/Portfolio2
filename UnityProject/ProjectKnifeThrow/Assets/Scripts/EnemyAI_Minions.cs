@@ -92,12 +92,10 @@ public class enemyAI : MonoBehaviour, IFreeze
                 {
                     if (!lookPlayer)
                         lookPlayer = true;
-                    Debug.Log("Roam Forgot");
                     StartCoroutine(roam());
                 }
                 else if (!playerInRange)
                 {
-                    Debug.Log("Roam General");
                     StartCoroutine(roam());
                 }
                 if (critPoint == null)
