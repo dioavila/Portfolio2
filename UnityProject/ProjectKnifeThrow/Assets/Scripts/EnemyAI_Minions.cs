@@ -37,6 +37,9 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] Transform spawnPath;
     private Transform startingSpawn;
 
+    [Header("Sounds")]
+    [SerializeField] AudioSource gunSound;
+
     public NavMeshAgent agent;
 
     bool isShooting;
@@ -211,21 +214,25 @@ public class enemyAI : MonoBehaviour, IFreeze
         if (shootPos1 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos1);
         }
         if (shootPos2 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos2);
         }
         if (shootPos3 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos3);
         }
         if (shootPos4 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos4);
         }
         yield return new WaitForSeconds(shootRate);

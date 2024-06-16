@@ -107,6 +107,9 @@ public class MainFabricator : MonoBehaviour
     Vector3 bottomEyeElevenLoc;
     Vector3 bottomEyeTwelveLoc;
 
+    [Header("Third Floor")]
+
+
     [Header("Eye Explosion Effect")]
     public ParticleSystem eyeExplosionEffect;
 
@@ -491,7 +494,6 @@ public class MainFabricator : MonoBehaviour
     {
         StartCoroutine(Spawn());
     }
-
     IEnumerator Spawn()
     {
         for (int i = 0; i < numberToSpawn; i++)

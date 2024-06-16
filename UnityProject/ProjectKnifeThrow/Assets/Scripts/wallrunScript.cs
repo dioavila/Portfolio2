@@ -92,7 +92,7 @@ public class wallRun : MonoBehaviour, IDamage
     [Header("Char States")]
     bool canSprint = true;
     public bool playerCanMove = true;
-    bool isWallRunning = false;
+    public bool isWallRunning = false;
     public bool isClimbing = false;
 
     [Header("Item Pickup")]
@@ -311,6 +311,7 @@ public class wallRun : MonoBehaviour, IDamage
             GameObject Projectile = Instantiate(bulletType, playerShootPosG.position, Camera.main.transform.rotation);
             Rigidbody ProjectileRB = Projectile.GetComponent<Rigidbody>();
             Vector3 ForceDir = Camera.main.transform.forward;
+            GameManager.instance.audioScript.PlayThrowG();
 
             RaycastHit hit;
 
@@ -491,6 +492,7 @@ public class wallRun : MonoBehaviour, IDamage
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
+        GameManager.instance.audioScript.PlayDamage();
         if (HP <= 0)
         {
             isDead = true;
@@ -568,7 +570,6 @@ public class wallRun : MonoBehaviour, IDamage
     IEnumerator Slide()
     {
         isSliding = true;
-
         // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
@@ -600,7 +601,7 @@ public class wallRun : MonoBehaviour, IDamage
             // Right dash
             fovController.TiltCameraRight();
         }
-
+        GameManager.instance.audioScript.PlayDash();
         float elapsedTime = 0f;
         while (elapsedTime < slideDuration)
         {
