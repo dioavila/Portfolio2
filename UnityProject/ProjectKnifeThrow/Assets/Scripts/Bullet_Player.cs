@@ -16,10 +16,14 @@ public class KBullet : MonoBehaviour
     [SerializeField] ParticleSystem hitMiss;
     bool hitConfirmed = false;
     bool hitBlocked = false;
+
+    [SerializeField] AudioSource knifeAudio;
+    [SerializeField] AudioClip deflectAudio;
     // Start is called before the first frame update
     void Start()
     {
         rb.velocity = transform.forward * Speed;
+        knifeAudio.clip = deflectAudio;
         Destroy(gameObject, DestroyTime);
     }
    
@@ -39,12 +43,23 @@ public class KBullet : MonoBehaviour
             }
             else
             {
-                if (dmg == null && !hitConfirmed)// && other.gameObject.CompareTag("Enemy"))
+                if (dmg == null && !hitConfirmed && other.gameObject.CompareTag("Enemy"))
                 {
                     Instantiate(hitBlock, transform.position, Quaternion.identity);
+<<<<<<< Updated upstream
                     bool hitBlocked = true;
+=======
+                    knifeAudio.pitch = Random.Range(0.20f, 0.50f);
+                    knifeAudio.volume = 0.2f;
+                    knifeAudio.Play();
+                    hitBlocked = true;
+>>>>>>> Stashed changes
                 }
-                Destroy(gameObject);
+                else
+                {
+                    Instantiate(hitMiss, transform.position, Quaternion.identity);
+                }
+                Destroy(gameObject,1);
             }
         }
     }

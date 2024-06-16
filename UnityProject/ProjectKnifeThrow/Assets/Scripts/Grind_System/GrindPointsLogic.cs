@@ -7,9 +7,11 @@ public class GrindPointsLogic : MonoBehaviour
     [Header("Grind Logic")]
     [SerializeField] Transform gPoint;
     public bool inRangePlayer = false;
-
+    [SerializeField] List<AudioClip> gKAudio;
+    [SerializeField] AudioSource gKAudioSource;
+    [SerializeField] AudioSource reachSource;
     [SerializeField] ParticleSystem particles;
-    ParticleSystem currParticle;
+    ParticleSystem currParticle, particleBase;
     //[Header("Destruction Settings")]
     //[SerializeField] int destructionTimerMax;
     //[SerializeField] [Range(0,3)] int destructionSpeed;
@@ -20,7 +22,10 @@ public class GrindPointsLogic : MonoBehaviour
     {
         //Can use start to initiate VFX
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
+        gKAudioSource.clip = gKAudio[0];
+        gKAudioSource.Play();
         currParticle = Instantiate(particles, gPoint.position, Quaternion.identity);
+        particleBase = Instantiate(particles, transform.position, Quaternion.identity);
         //destructionTimerCurr = destructionTimerMax;
     }
 
@@ -47,7 +52,10 @@ public class GrindPointsLogic : MonoBehaviour
         //{
         GameManager.instance.playerScript.gThrowCount--;
         currParticle.Stop();
+        particleBase.Stop();
+        particleBase.Clear();
         currParticle.Clear();
+        gKAudioSource.Stop();
         Destroy(gameObject);
         //}
     }
@@ -56,7 +64,12 @@ public class GrindPointsLogic : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            inRangePlayer = true;
+            int index = GameManager.instance.grindScript.grindPoints.IndexOf(gPoint);
+            if (index == GameManager.instance.grindScript.grindPoints.Count - 1)
+            {
+                reachSource.PlayOneShot(gKAudio[1], 1f);
+                inRangePlayer = true;
+            }
         }
     }
 
