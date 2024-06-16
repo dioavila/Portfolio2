@@ -107,6 +107,9 @@ public class MainFabricator : MonoBehaviour
     Vector3 bottomEyeElevenLoc;
     Vector3 bottomEyeTwelveLoc;
 
+    [Header("Third Floor")]
+
+
     [Header("Eye Explosion Effect")]
     public ParticleSystem eyeExplosionEffect;
 
@@ -158,9 +161,10 @@ public class MainFabricator : MonoBehaviour
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
-    [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
+    [SerializeField] List<Transform> spawnLocationList2F = new List<Transform>();
     [SerializeField] bool goal = false;
     int numberSpawned = 0;
+    [SerializeField] List<Transform> spawnLocationList3F = new List<Transform>();
 
     bool glassSpawn = false;
     bool topSpawn = false;
@@ -496,9 +500,9 @@ public class MainFabricator : MonoBehaviour
     {
         for (int i = 0; i < numberToSpawn; i++)
         {
-            for (int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
+            for (int spawnLocIter = 0; spawnLocIter < spawnLocationList2F.Count; ++spawnLocIter)
             {
-                Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+                Instantiate(enemyToSpawn, spawnLocationList2F[spawnLocIter].position, spawnLocationList2F[spawnLocIter].rotation);
             }
             numberSpawned++;
             yield return new WaitForSeconds(spawnTimer);

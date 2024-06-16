@@ -37,7 +37,6 @@ public class enemyAITest : MonoBehaviour
         if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
         {
             muzzleFlash.Clear ();
-            GameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
