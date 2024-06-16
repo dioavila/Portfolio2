@@ -22,10 +22,10 @@ public class CreateBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(selectKnife != GameManager.instance.playerScript.selectedKnife)
-        {
-            selectKnife = GameManager.instance.playerScript.selectedKnife;
-        }
+       if(selectKnife != GameManager.instance.playerScript.selectedKnife)
+       {
+           selectKnife = GameManager.instance.playerScript.selectedKnife;
+       }
     }
 
     //public void CreateBG()
