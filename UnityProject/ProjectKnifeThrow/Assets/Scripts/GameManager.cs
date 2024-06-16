@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] bool boss2Scene = false;
     public BossManager bossManager;
+    public AudioController audioScript;
 
 
     // Start is called before the first frame update
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<wallRun>();
         grindScript = player.GetComponent<GrindScript>();
+        audioScript = player.GetComponent<AudioController>();
+
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
         if (boss2Scene)
         {

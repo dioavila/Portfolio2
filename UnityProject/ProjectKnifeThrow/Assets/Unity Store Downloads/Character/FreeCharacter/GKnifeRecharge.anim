@@ -18098,8 +18098,29 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.53333336
+    functionName: PlayRecharge
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
     functionName: PlayEffect
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.2666667
+    functionName: StopRecharge
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.4333333
+    functionName: KnifeReadyL
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
