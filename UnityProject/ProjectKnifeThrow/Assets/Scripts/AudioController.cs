@@ -57,9 +57,9 @@ public class AudioController : MonoBehaviour
 
     public void PlayThrow()
     {
-        audioRightArm.clip = rightThrow[Random.Range(0, rightThrow.Count)];
-        audioRightArm.pitch = Random.Range(0.50f, 0.80f);
-        audioRightArm.Play();
+        //audioRightArm.clip = rightThrow[Random.Range(0, rightThrow.Count)];
+        //audioRightArm.pitch = Random.Range(0.50f, 0.80f);
+        //audioRightArm.Play();
     }
     public void PlayThrowG()
     {
@@ -120,8 +120,8 @@ public class AudioController : MonoBehaviour
 
     public void KnifeReadyR()
     {
-        audioRightArm.clip = knifeReady[Random.Range(0, knifeReady.Count)];
-        audioRightArm.pitch = Random.Range(0.80f, 1f);
-        audioRightArm.Play();
+        //audioRightArm.clip = knifeReady[Random.Range(0, knifeReady.Count)];
+        //audioRightArm.pitch = Random.Range(0.80f, 1f);
+        //audioRightArm.Play();
     }
 }

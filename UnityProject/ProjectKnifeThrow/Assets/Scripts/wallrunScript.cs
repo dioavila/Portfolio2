@@ -492,7 +492,7 @@ public class wallRun : MonoBehaviour, IDamage
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
-        GameManager.instance.audioScript.PlayDamage();
+        //GameManager.instance.audioScript.PlayDamage();
         if (HP <= 0)
         {
             isDead = true;

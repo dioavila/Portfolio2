@@ -70,7 +70,10 @@ public class buttonFunctions : MonoBehaviour
     {
         GameManager.instance.exitMenu.SetActive(false);
         GameManager.instance.exitMenu1.SetActive(false);
-        GameManager.instance.exitMenu2.SetActive(false);
+        if (GameManager.instance.exitMenu2 != null)
+        {
+            GameManager.instance.exitMenu2.SetActive(false);
+        }
     }
 
     public void toMain()

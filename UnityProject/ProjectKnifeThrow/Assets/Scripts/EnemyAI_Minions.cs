@@ -63,7 +63,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         if (belongsToGORE)
         {
-            GameManager.instance.bossManager.enemiesAlive += 1;
+            //GameManager.instance.bossManager.enemiesAlive += 1;
         }
         startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
