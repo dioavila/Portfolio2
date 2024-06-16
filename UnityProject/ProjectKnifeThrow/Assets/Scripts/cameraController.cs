@@ -5,38 +5,31 @@ using UnityEngine.UI;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] float sensitivity = 100; 
     [SerializeField] int lockVertMin = -45, lockVertMax = 45;
     [SerializeField] bool invertY = false;
     [SerializeField] int sensitivityComp = 2;
     [SerializeField] float sliderValue;
-    int sensitivityOrig;
 
     float rotX;
 
     void Start()
     {
-        GameManager.instance.sensSlider.GetComponent<Slider>().value = 0.5f;
+        GameManager.instance.LoadSettings();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        sliderValue = GameManager.instance.sensSlider.GetComponent<Slider>().value;
         HandleCameraRotation();
-        SensSlider();
-    }
-
-    public void SensSlider()
-    {
-        sliderValue = GameManager.instance.sensSlider.GetComponent<Slider>().value;
+        invertY = GameManager.instance.isInverted;
     }
 
     public void HandleCameraRotation()
     {
         // Get Input
-        sensitivity = sliderValue * 1000f;
+        float sensitivity = GameManager.instance.sensitivity * 1000f;
+        invertY = GameManager.instance.isInverted;
         float mouseY, mouseX;
         mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
         mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;

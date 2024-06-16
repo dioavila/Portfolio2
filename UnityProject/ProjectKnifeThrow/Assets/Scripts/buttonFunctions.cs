@@ -5,13 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+
     public void resume()
     {
         GameManager.instance.stateUnPause();
     }
 
+    public void inGameSettings()
+    {
+        GameManager.instance.SwitchToSettings();
+    }
+
     public void settings()
     {
+        GameManager.instance.playMenu.SetActive(false);
+        GameManager.instance.menuLevelSelect.SetActive(false);
+        GameManager.instance.exitMenu2.SetActive(false);
         GameManager.instance.SwitchToSettings();
     }
 
@@ -22,7 +31,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-        
+
         GameManager.instance.playerScript.spawnPlayer();
         GameManager.instance.stateUnPause();
     }
@@ -33,18 +42,65 @@ public class buttonFunctions : MonoBehaviour
         GameManager.instance.stateUnPause();
     }
 
-    public void onExitClick()
+    public void onPlayClick()
+    {
+        GameManager.instance.playMenu.SetActive(true);
+        GameManager.instance.exitMenu.SetActive(false);
+        GameManager.instance.exitMenu1.SetActive(false);
+        GameManager.instance.exitMenu2.SetActive(false);
+    }
+
+    public void onLevelSelect()
+    {
+        GameManager.instance.menuLevelSelect.SetActive(true);
+    }
+
+    public void onExitLevelClick()
     {
         GameManager.instance.exitMenu.SetActive(true);
         GameManager.instance.exitMenu1.SetActive(true);
+    }
+
+    public void onExitClick()
+    {
+        GameManager.instance.playMenu.SetActive(false);
+        GameManager.instance.menuLevelSelect.SetActive(false);
+        GameManager.instance.exitMenu2.SetActive(true);
     }
 
     public void onExitnotSureClick()
     {
         GameManager.instance.exitMenu.SetActive(false);
         GameManager.instance.exitMenu1.SetActive(false);
+        GameManager.instance.exitMenu2.SetActive(false);
     }
 
+    public void toMain()
+    {
+        SceneManager.LoadScene("Main Menu");
+        GameManager.instance.InitializeSettings();
+    }
+
+    public void tutorialLevel()
+    {
+        SceneManager.LoadScene("Tutorial");
+        GameManager.instance.InitializeSettings();
+    }
+
+    public void level1()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+
+    public void level2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
+
+    public void level3()
+    {
+        SceneManager.LoadScene("Level3");
+    }
 
     public void quit()
     {
@@ -55,10 +111,14 @@ public class buttonFunctions : MonoBehaviour
 #endif
     }
 
-    public void invertMouse()
+    public void OnInvertMouseToggle()
     {
-        bool isCurrentlyActive = GameManager.instance.invertON.activeSelf;
-        GameManager.instance.invertON.SetActive(!isCurrentlyActive);
-        GameManager.instance.invertOFF.SetActive(isCurrentlyActive);
+        GameManager.instance.ToggleInvertMouse();
+    }
+
+    public void OnSensitivityChanged(float value)
+    {
+        GameManager.instance.SetSensitivity(value);
+        Debug.Log("Sensitivity Changed - New Value: " + value);
     }
 }

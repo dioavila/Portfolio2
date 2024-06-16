@@ -17,13 +17,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject menuSettings;
     [SerializeField] public GameObject menuLevelSelect;
     public GameObject UI;
-    public GameObject Settings;
     [SerializeField] public GameObject invertON;
     [SerializeField] public GameObject invertOFF;
-    [SerializeField] public GameObject sensSlider;
+    public bool isInverted = false;
+    [SerializeField] public Slider sensSlider;
     [Tooltip("The Menu for when the EXIT button is clicked")]
     public GameObject exitMenu;
     public GameObject exitMenu1;
+    public GameObject exitMenu2;
+    public GameObject playMenu;
 
     [Header("PANELS")]
     [Tooltip("The UI Panel parenting all sub menus")]
@@ -85,20 +87,35 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
+    public float sensitivity;
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            InitializeSettings();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<wallRun>();
-        grindScript = player.GetComponent<GrindScript>();
-        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        if (player != null)
+        {
+            playerScript = player.GetComponent<wallRun>();
+            grindScript = player.GetComponent<GrindScript>();
+        }
+            playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
     private void Start()
     {
+        Debug.Log("GameManager Start called");
+       
         startColor = redScreenImage.color;
         startColor.a = 0f;
         redScreenImage.color = startColor;
@@ -122,7 +139,64 @@ public class GameManager : MonoBehaviour
                 menuSettings.SetActive(false);
             }
         }
+
+    }
+
+    public void InitializeSettings()
+    {
+        LoadSettings();
+        if (sensSlider != null)
+        {
+            Debug.Log("Setting up sensitivity slider listener");
+            sensSlider.onValueChanged.AddListener(SetSensitivity);
+            sensSlider.value = sensitivity;
+        }
+    }
+
+    public void LoadSettings()
+    {
+        sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        isInverted = PlayerPrefs.GetInt("InvertMouse", 0) == 1;
+
+        Debug.Log("Loaded Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
+
+        if (invertON != null && invertOFF != null)
+        {
+            invertON.SetActive(isInverted);
+            invertOFF.SetActive(!isInverted);
+        }
+
+        if (sensSlider != null)
+        {
+            sensSlider.value = sensitivity;
+        }
+    }
+
+    public void SaveSettings()
+    {
         
+        Debug.Log("Saved Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
+        PlayerPrefs.SetFloat("Sensitivity", sensitivity);
+        PlayerPrefs.SetInt("InvertMouse", isInverted ? 1 : 0);
+        PlayerPrefs.Save();
+        Debug.Log("Settings Saved");
+    }
+
+
+    public void ToggleInvertMouse()
+    {
+        isInverted = !isInverted;
+        invertON.SetActive(isInverted);
+        invertOFF.SetActive(!isInverted);
+        SaveSettings();
+    }
+
+    public void SetSensitivity(float value)
+    {
+        Debug.Log("Set Sensitivity - New Value: " + value);
+        sensitivity = value;
+        Debug.Log("Sensitivity after update: " + sensitivity);
+        SaveSettings();
     }
 
     public void FindPlayer()
@@ -167,7 +241,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    
+
 
     public void TriggerRedToBlackScreen()
     {
@@ -255,13 +329,13 @@ public class GameManager : MonoBehaviour
     public void SwitchToSettings()
     {
         UI.SetActive(false);
-        Settings.SetActive(true);
+        menuSettings.SetActive(true);
     }
 
     public void SwitchToUI()
     {
         UI.SetActive(true);
-        Settings.SetActive(false);
+        menuSettings.SetActive(false);
     }
 
     void DisablePanels()
@@ -277,9 +351,9 @@ public class GameManager : MonoBehaviour
         lineKeyBindings.SetActive(false);
 
         PanelMovement.SetActive(false);
-        lineMovement.SetActive(false);
+        //lineMovement.SetActive(false);
         PanelCombat.SetActive(false);
-        lineCombat.SetActive(false);
+        //lineCombat.SetActive(false);
         PanelGeneral.SetActive(false);
         lineGeneral.SetActive(false);
     }
@@ -305,7 +379,7 @@ public class GameManager : MonoBehaviour
         lineControls.SetActive(true);
     }
 
-    public void KeyBindingsPanel()
+    public void SkillsPanel()
     {
         DisablePanels();
         MovementPanel();
@@ -318,7 +392,7 @@ public class GameManager : MonoBehaviour
         DisablePanels();
         PanelKeyBindings.SetActive(true);
         PanelMovement.SetActive(true);
-        lineMovement.SetActive(true);
+        //lineMovement.SetActive(true);
     }
 
     public void CombatPanel()
@@ -326,7 +400,7 @@ public class GameManager : MonoBehaviour
         DisablePanels();
         PanelKeyBindings.SetActive(true);
         PanelCombat.SetActive(true);
-        lineCombat.SetActive(true);
+        //lineCombat.SetActive(true);
     }
 
     public void GeneralPanel()
