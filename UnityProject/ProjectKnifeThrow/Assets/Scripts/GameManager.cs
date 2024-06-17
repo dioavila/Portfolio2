@@ -80,6 +80,11 @@ public class GameManager : MonoBehaviour
     public GameObject keyRejection;
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
+    [SerializeField] AudioSource ambientMusic;
+    [SerializeField] AudioSource battleMusic;
+    [SerializeField] TransitionMusic musicChanger;
+    public bool inBattle = false;
+    //public bool inBoss;
 
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
@@ -119,6 +124,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (inBattle)
+        {
+            Debug.Log("Battle");
+            musicChanger.musictochange = battleMusic;
+            musicChanger.ChangeSong();
+        }
+        else
+        {
+            Debug.Log("Ambient");
+            musicChanger.musictochange = ambientMusic;
+            musicChanger.ChangeSong();
+        }
+
         if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "Main Menu")
         {
             if (menuActive == null)
@@ -429,4 +447,5 @@ public class GameManager : MonoBehaviour
         Knifecount = amount;
         KnifeCountText.text = Knifecount.ToString("F0");
     }
+
 }

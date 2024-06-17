@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TransitionMusic : MonoBehaviour
 {
-    [SerializeField] AudioSource musictochange;
+    [SerializeField] public AudioSource musictochange;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,7 +15,7 @@ public class TransitionMusic : MonoBehaviour
         }
     }
 
-    private void ChangeSong()
+    public void ChangeSong()
     {
         MusicManager musicManager = FindObjectOfType<MusicManager>();
         if (musicManager == null) 
