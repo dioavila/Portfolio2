@@ -997,6 +997,7 @@ MonoBehaviour:
   partOfList: 0
   particle: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
   takeDamageSound: {fileID: 5920344529733915988}
+  weakpointSound: {fileID: 5141448411783814763, guid: 09f6346adc594374981de053f0c87c1a, type: 3}
 --- !u!65 &8716915246426908613
 BoxCollider:
   m_ObjectHideFlags: 0
