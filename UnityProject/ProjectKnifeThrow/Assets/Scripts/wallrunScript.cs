@@ -60,17 +60,17 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     Vector3 PushBack;
 
     //sliding 
-    [Header("Sliding")]
-    [SerializeField] float slideSpeed = 10f;
-    [SerializeField] float slideDuration = 1f;
+    [Header("Dashing")]
+    [SerializeField] float dashSpeed = 10f;
+    [SerializeField] float dashDuration = 1f;
     PlayerFovController fovController;
 
-    [SerializeField] int slideCharges = 2;
-    [SerializeField] float slideCooldown = 3f;
-    private int currentSlideCharges;
-    private float slideCoolDownTimer;
-    public bool isSliding = false;
-    Vector3 slideDirection;
+    [SerializeField] int dashCharges = 2;
+    [SerializeField] float dashCooldown = 3f;
+    private int currentDashCharges;
+    private float dashCoolDownTimer;
+    public bool isDashing = false;
+    Vector3 dashDirection;
 
     //Wallrun Variables
     [Header("Wall Detection")]
@@ -159,20 +159,20 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             }
 
             // Slide cooldown logic
-            if (currentSlideCharges < slideCharges)
+            if (currentDashCharges < dashCharges)
             {
-                slideCoolDownTimer += Time.deltaTime;
-                if (slideCoolDownTimer >= slideCooldown)
+                dashCoolDownTimer += Time.deltaTime;
+                if (dashCoolDownTimer >= dashCooldown)
                 {
-                    currentSlideCharges++;
-                    slideCoolDownTimer = 0f;
+                    currentDashCharges++;
+                    dashCoolDownTimer = 0f;
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && !isSliding && currentSlideCharges > 0)
+            if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0)
             {
                 StartCoroutine(Slide());
-                currentSlideCharges--;
+                currentDashCharges--;
             }
 
             if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
@@ -247,7 +247,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             }
         }
 
-        if (isSliding)
+        if (isDashing)
         {
             //skip other movement if sliding
             return;
@@ -591,43 +591,43 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
     IEnumerator Slide()
     {
-        isSliding = true;
+        isDashing = true;
         // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
-            slideDirection = transform.forward;
+            dashDirection = transform.forward;
         }
         else
         {
-            slideDirection = moveDir.normalized;
+            dashDirection = moveDir.normalized;
         }
 
         // Apply appropriate camera effect based on the direction
-        if (Vector3.Dot(slideDirection, transform.forward) > 0.5f)
+        if (Vector3.Dot(dashDirection, transform.forward) > 0.5f)
         {
             // Forward dash
             fovController.IncreaseFovForSlide();
         }
-        else if (Vector3.Dot(slideDirection, -transform.forward) > 0.5f)
+        else if (Vector3.Dot(dashDirection, -transform.forward) > 0.5f)
         {
             // Backward dash
             fovController.DecreaseFovForBackwardSlide();
         }
-        else if (Vector3.Dot(slideDirection, -transform.right) > 0.5f)
+        else if (Vector3.Dot(dashDirection, -transform.right) > 0.5f)
         {
             // Left dash
             fovController.TiltCameraLeft();
         }
-        else if (Vector3.Dot(slideDirection, transform.right) > 0.5f)
+        else if (Vector3.Dot(dashDirection, transform.right) > 0.5f)
         {
             // Right dash
             fovController.TiltCameraRight();
         }
         GameManager.instance.audioScript.PlayDash();
         float elapsedTime = 0f;
-        while (elapsedTime < slideDuration)
+        while (elapsedTime < dashDuration)
         {
-            Vector3 slideVelocity = slideDirection * slideSpeed;
+            Vector3 slideVelocity = dashDirection * dashSpeed;
             slideVelocity.y -= gravity * Time.deltaTime;
             controller.Move(slideVelocity * Time.deltaTime);
 
@@ -635,7 +635,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             yield return null;
         }
 
-        isSliding = false;
+        isDashing = false;
         fovController.ResetFov();
     }
 

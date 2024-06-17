@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject dashMes;
     [SerializeField] public GameObject grindMes;
     [SerializeField] public GameObject BTMessage;
+    [SerializeField] public GameObject movementMessage;
+
 
     [Header("Object Access")]
     public GameObject player;
