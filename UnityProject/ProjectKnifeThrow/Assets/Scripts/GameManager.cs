@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
     public Image redScreenImage;
     public bool isTransitioning = false;
     Color startColor;
+    [SerializeField] public GameObject dashMes;
+    [SerializeField] public GameObject grindMes;
+    [SerializeField] public GameObject BTMessage;
 
     [Header("Object Access")]
     public GameObject player;

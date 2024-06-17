@@ -58,10 +58,9 @@ public class GrindPointsLogic : MonoBehaviour
         //{
         GameManager.instance.playerScript.gThrowCount--;
         currParticle.Stop();
-        currParticle.Stop();
+        baseParticle.Stop();
         currParticle.Clear();
-        currParticle.Clear();
-        baseSource.Stop();
+        baseParticle.Clear();
         Destroy(gameObject);
         //}
     }
