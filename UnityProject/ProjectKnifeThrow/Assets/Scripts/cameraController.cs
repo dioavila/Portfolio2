@@ -7,7 +7,7 @@ public class cameraController : MonoBehaviour
 {
     [SerializeField] int lockVertMin = -45, lockVertMax = 45;
     [SerializeField] bool invertY = false;
-    //[SerializeField] int sensitivityComp = 2;
+    [SerializeField] int sensitivityComp;
     [SerializeField] float sliderValue;
 
     float rotX;

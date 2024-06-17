@@ -16,10 +16,10 @@ public class CreateBullet : MonoBehaviour
         shootPos = GameManager.instance.playerScript.playerShootPos;
         selectKnife = GameManager.instance.playerScript.selectedKnife;
         upForce = GameManager.instance.playerScript.UpWardForce;
-        //shootPosGrind = GameManager.instance.playerScript.playerShootPos;
+        shootPosGrind = GameManager.instance.playerScript.playerShootPos;
     }
 
-
+    //Update is called once per frame
     void Update()
     {
         if (selectKnife != GameManager.instance.playerScript.selectedKnife)
@@ -28,10 +28,10 @@ public class CreateBullet : MonoBehaviour
         }
     }
 
-    //public void CreateBG()
-    //{
-    //    Instantiate(grindBullet, shootPosGrind.position, Camera.main.transform.rotation);
-    //}
+    public void CreateBG()
+    {
+        Instantiate(grindBullet, shootPosGrind.position, Camera.main.transform.rotation);
+    }
 
     public void CreateB()
     {

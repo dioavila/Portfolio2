@@ -43,7 +43,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     bool playerInRange;
     bool destChosen;
     bool finishedStartup = false;
-    bool canshoot = true;
+    bool canShoot = true;
 
     Vector3 playerDir;
     Vector3 startingPos;
@@ -58,6 +58,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     // Start is called before the first frame update
     void Start()
     {
+        canShoot = true;
         startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
     }
@@ -70,12 +71,12 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             if (model.material.color == Color.blue)
             {
                 agent.isStopped = true;
-                canshoot = false;
+                canShoot = false;
             }
             else
             {
                 agent.isStopped = false;
-                canshoot = true;
+                canShoot = true;
             }
             if (finishedStartup)
             {
