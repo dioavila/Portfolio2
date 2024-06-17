@@ -22,7 +22,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     [SerializeField] GameObject dropOnDeath;
 
     [SerializeField] int viewAngle;
-    [SerializeField] int faceTargetSpeed;
+    [SerializeField] float faceTargetSpeed;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
     [SerializeField] int deathTimer;
@@ -53,7 +53,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 
     bool isDead = false;
     bool lookPlayer = false;
-    public int turnRate;
+    public float turnRate;
 
     // Start is called before the first frame update
     void Start()

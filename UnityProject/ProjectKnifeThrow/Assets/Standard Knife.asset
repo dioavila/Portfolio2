@@ -15,6 +15,6 @@ MonoBehaviour:
   Knife: {fileID: 7487187445853999764, guid: cd7c2a6ec3dd62a408220bb31187c64b, type: 3}
   Damage: 1
   freeze: 0
-  speed: 50
+  speed: 60
   MaxKinfeCount: 2147483647
   CurrentKinfeCount: 2147483629

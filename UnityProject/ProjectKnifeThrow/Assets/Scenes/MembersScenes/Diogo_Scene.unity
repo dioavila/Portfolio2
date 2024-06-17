@@ -558,6 +558,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy - Big Grunt v1.0.0
       objectReference: {fileID: 0}
+    - target: {fileID: 2744700056141883684, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3383688030039045148, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17.684647
@@ -597,6 +601,14 @@ PrefabInstance:
     - target: {fileID: 3383688030039045148, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296721825976847211, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
+      propertyPath: turnRate
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296721825976847211, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
+      propertyPath: faceTargetSpeed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
