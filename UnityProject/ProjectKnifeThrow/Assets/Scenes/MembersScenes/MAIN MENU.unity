@@ -8802,7 +8802,7 @@ PrefabInstance:
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: redScreenImage
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6238733802255872786}
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: checkpointPopup
       value: 
@@ -22357,7 +22357,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5561533920205401638}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 7912917559763739259}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -22748,6 +22748,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7827150934573137766}
   - {fileID: 7318835198022749159}
   - {fileID: 2269425465768451588}
   - {fileID: 4145517133794277469}
@@ -26000,7 +26001,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 316097687}
-  - {fileID: 7827150934573137766}
   - {fileID: 361264730}
   - {fileID: 2878044183017145480}
   - {fileID: 1915100977}

@@ -131,13 +131,19 @@ public class GameManager : MonoBehaviour
     {
         if (inBattle)
         {
-            musicChanger.musictochange = battleMusic;
-            musicChanger.ChangeSong();
+            if (battleMusic != null)
+            {
+                musicChanger.musictochange = battleMusic;
+                musicChanger.ChangeSong();    
+            }
         }
         else
         {
-            musicChanger.musictochange = ambientMusic;
-            musicChanger.ChangeSong();
+            if (ambientMusic != null)
+            {
+                musicChanger.musictochange = ambientMusic;
+                musicChanger.ChangeSong();
+            }
         }
 
         if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "Main Menu")
