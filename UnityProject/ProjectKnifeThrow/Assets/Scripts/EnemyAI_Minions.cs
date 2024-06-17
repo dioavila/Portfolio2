@@ -39,6 +39,7 @@ public class enemyAI : MonoBehaviour, IFreeze
 
     [Header("Sounds")]
     [SerializeField] AudioSource gunSound;
+    [SerializeField] AudioSource deathSound;
 
     public NavMeshAgent agent;
 
@@ -111,6 +112,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
                     robotExplosion.Play();
+                    deathSound.Play();
                 }
             }
             else

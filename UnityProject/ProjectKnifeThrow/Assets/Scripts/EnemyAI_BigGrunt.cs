@@ -33,6 +33,10 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     [SerializeField] public Transform spawnPath;
     private Transform startingSpawn;
 
+    [Header("Sounds")]
+    [SerializeField] AudioSource gunSound;
+    [SerializeField] AudioSource deathSound;
+
     public NavMeshAgent agent;
 
     bool isShooting;
@@ -111,6 +115,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
                     robotExplosion.Play();
+                    deathSound.Play();
                 }
             }
             else
@@ -209,21 +214,25 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
         if (shootPos1 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos1);
         }
         if (shootPos2 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos2);
         }
         if (shootPos3 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos3);
         }
         if (shootPos4 != null)
         {
             muzzleFlash.Play();
+            gunSound.Play();
             createBullet(shootPos4);
         }
         yield return new WaitForSeconds(shootRate);
