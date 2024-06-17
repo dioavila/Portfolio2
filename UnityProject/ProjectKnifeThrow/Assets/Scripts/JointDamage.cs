@@ -48,10 +48,10 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     public void TakeDamage(int damage)
     {
         jointHP -= damage;
-        takeDamageSound.Play();
         StartCoroutine(flashred());
         if ( jointHP <= 0 ) 
         {
+            Instantiate(takeDamageSound, transform.position, Quaternion.identity, transform);
             Destroy(gameObject);
         }
     }
