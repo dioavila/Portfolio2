@@ -9,7 +9,14 @@ public class GrindPointsLogic : MonoBehaviour
     public bool inRangePlayer = false;
 
     [SerializeField] ParticleSystem particles;
-    ParticleSystem currParticle;
+    [SerializeField] ParticleSystem particlesB;
+    ParticleSystem currParticle, baseParticle;
+
+    [SerializeField] AudioSource baseSource;
+    [SerializeField] AudioClip baseClip;
+    [SerializeField] AudioSource pointSource;
+    [SerializeField] AudioClip pointClip;
+
     //[Header("Destruction Settings")]
     //[SerializeField] int destructionTimerMax;
     //[SerializeField] [Range(0,3)] int destructionSpeed;
@@ -19,8 +26,12 @@ public class GrindPointsLogic : MonoBehaviour
     void Start()
     {
         //Can use start to initiate VFX
+        baseSource.clip = baseClip;
+        baseSource.Play();
+        pointSource.clip = pointClip;
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
         currParticle = Instantiate(particles, gPoint.position, Quaternion.identity);
+        baseParticle = Instantiate(particlesB, transform.position, Quaternion.identity);
         //destructionTimerCurr = destructionTimerMax;
     }
 
@@ -47,15 +58,19 @@ public class GrindPointsLogic : MonoBehaviour
         //{
         GameManager.instance.playerScript.gThrowCount--;
         currParticle.Stop();
+        currParticle.Stop();
         currParticle.Clear();
+        currParticle.Clear();
+        baseSource.Stop();
         Destroy(gameObject);
         //}
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && GameManager.instance.grindScript.grindPoints.IndexOf(gPoint) == GameManager.instance.grindScript.grindPoints.Count - 1)
         {
+            pointSource.Play();
             inRangePlayer = true;
         }
     }

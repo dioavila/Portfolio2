@@ -8,7 +8,7 @@ public class IceKnifePickup : MonoBehaviour, IPickup
 
     wallRun player;
 
-    public bool isInRange;
+    public bool isInRange = false;
 
     public KnifeStats knife;
 

@@ -18,33 +18,36 @@ public class KeyTurnIn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerInv.keys.Count == 3) // Check if the player has 3 keys
+        if (playerInv != null)
         {
-            has3Keys = true;
-        }
-
-        if (isPlayerInRange)
-        {
-            if (has3Keys)
+            if (playerInv.keys.Count == 3) // Check if the player has 3 keys
             {
-                GameManager.instance.OpenAcceptPanel("");
+                has3Keys = true;
+            }
 
-                if (Input.GetKeyDown(KeyCode.F))
+            if (isPlayerInRange)
+            {
+                if (has3Keys)
                 {
-                    playerInv.keys.Clear();
-                    GameManager.instance.CloseAcceptPanel("");
-                    keyIsInserted = true;
+                    GameManager.instance.OpenAcceptPanel("");
+
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        playerInv.keys.Clear();
+                        GameManager.instance.CloseAcceptPanel("");
+                        keyIsInserted = true;
+                    }
+                }
+                else
+                {
+                    GameManager.instance.OpenRejectPanel("");
                 }
             }
-            else
-            {
-                GameManager.instance.OpenRejectPanel("");
-            }
-        }
 
-        if (keyIsInserted)
-        {
-            Destroy(GameObject.FindWithTag("KeyDoor"));
+            if (keyIsInserted)
+            {
+                Destroy(GameObject.FindWithTag("KeyDoor"));
+            }
         }
     }
 

@@ -13,6 +13,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     [SerializeField] GameObject body;
     float angleToPlayer;
     [SerializeField] float viewAngle;
+    [SerializeField] AudioSource takeDamageSound;
 
     //enemyAITest enemyScript;
 
@@ -40,7 +41,6 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         if (angleToPlayer < viewAngle)
         {
             Quaternion rotation = Quaternion.LookRotation(direction);
-
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation,  limbTurnRate *Time.deltaTime);
         }
     }
@@ -51,10 +51,9 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         StartCoroutine(flashred());
         if ( jointHP <= 0 ) 
         {
+            Instantiate(takeDamageSound, transform.position, Quaternion.identity, transform);
             Destroy(gameObject);
         }
-
-
     }
     IEnumerator flashred()
     {
@@ -73,6 +72,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         for (int i = 0; i <= time; i++)
         {
             jointHP -= amount;
+            takeDamageSound.Play();
             jointModel.material.color = Color.red;
             yield return new WaitForSeconds(0.1f);
             jointModel.material.color = Color.white;

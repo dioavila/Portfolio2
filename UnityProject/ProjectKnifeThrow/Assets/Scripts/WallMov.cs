@@ -16,13 +16,21 @@ public class WallMov : MonoBehaviour
     [SerializeField] Transform startingPositionL;
     [SerializeField] Transform finalPositionL;
 
+    //[SerializeField] Transform spawnPath;
+    //public GameObject enemy;
+
     [SerializeField] Transform exitDoorPoint;
     public bool charIn = false;
+
+    [Header("Laser Settings")]
+    [SerializeField] bool isLaser = false;
+    [SerializeField] Transform laserReadyPoint;
+    [SerializeField] Transform laserExitPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -41,23 +49,55 @@ public class WallMov : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-  {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+    {
+        if (!isLaser)
         {
-            if (other.isTrigger)
+            if (other.CompareTag("Enemy"))
             {
-                return;
+                //other.GetComponent<enemyAI>().spawnPath = spawnPath;
             }
-            //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
-            charIn = true;
 
+            if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+            {
+                if (other.isTrigger)
+                {
+                    return;
+                }
+                //other.GetComponent<enemyAI>().spawnPath = exitDoorPoint;
+                charIn = true;
+
+            }
+        }
+        else
+        {
+            if (other.CompareTag("Laser"))
+            {
+                if (other.isTrigger)
+                {
+                    return;
+                }
+                charIn = true;
+                other.GetComponent<LaserWallMovement>().readyPoint = laserReadyPoint;
+                other.GetComponent<LaserWallMovement>().endPoint = laserExitPoint;
+
+            }
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") || other.CompareTag("Enemy"))
+        if (!isLaser)
         {
-            charIn = false;
+            if (other.gameObject.CompareTag("Player") || other.CompareTag("Enemy"))
+            {
+                charIn = false;
+            }
+        }
+        else
+        {
+            if (other.CompareTag("Laser"))
+            {
+                charIn = false;
+            }
         }
     }
 }

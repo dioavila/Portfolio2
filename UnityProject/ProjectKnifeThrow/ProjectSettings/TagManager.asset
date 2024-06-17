@@ -15,8 +15,8 @@ TagManager:
   - KeyDoor
   - Tutorial Door
   - Player Spawn Pos
-  - Pressure Plate
-  - Timed Switch
+  - Laser
+  - BossManager
   layers:
   - Default
   - TransparentFX
