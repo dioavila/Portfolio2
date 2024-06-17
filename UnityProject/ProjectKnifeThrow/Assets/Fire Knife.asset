@@ -17,4 +17,4 @@ MonoBehaviour:
   freeze: 0
   speed: 50
   MaxKinfeCount: 5
-  CurrentKinfeCount: 0
+  CurrentKinfeCount: 6
