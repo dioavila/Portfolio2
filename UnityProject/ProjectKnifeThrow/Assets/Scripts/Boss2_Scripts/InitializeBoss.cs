@@ -9,6 +9,7 @@ public class InitializeBoss : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.instance.bossManager.startOff = true;
+            GameManager.instance.inBattle = true;
         }
     }
 }
