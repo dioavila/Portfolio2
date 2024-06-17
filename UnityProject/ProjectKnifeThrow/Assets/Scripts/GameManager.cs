@@ -89,6 +89,11 @@ public class GameManager : MonoBehaviour
     public BossManager bossManager;
     public AudioController audioScript;
 
+    public GameObject playerPushBack;
+    public int Knifecount;
+    public JointDamage jointCS;
+    [SerializeField] TMP_Text KnifeCountText;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -417,5 +422,11 @@ public class GameManager : MonoBehaviour
         PanelKeyBindings.SetActive(true);
         PanelGeneral.SetActive(true);
         lineGeneral.SetActive(true);
+    }
+
+    public void updateKnifeCount(int amount)
+    {
+        Knifecount = amount;
+        KnifeCountText.text = Knifecount.ToString("F0");
     }
 }

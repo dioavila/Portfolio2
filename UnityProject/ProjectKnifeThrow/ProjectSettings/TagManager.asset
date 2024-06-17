@@ -17,6 +17,8 @@ TagManager:
   - Player Spawn Pos
   - Laser
   - BossManager
+  - Timed Switch
+  - Pressure Plate
   layers:
   - Default
   - TransparentFX

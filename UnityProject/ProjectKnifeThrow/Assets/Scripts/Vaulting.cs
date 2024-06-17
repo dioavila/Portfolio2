@@ -6,7 +6,7 @@ public class Vaulting : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private LayerMask vaultLayer; // Layer mask for detecting vaultable objects
-    [SerializeField] private float playerHeight = 2f;
+    //[SerializeField] private float playerHeight = 2f;
     [SerializeField] private float playerRadius = 0.5f;
     [SerializeField] private float vaultDistance = 1.5f; // Maximum distance to detect vaultable objects
     [SerializeField] private float vaultHeight = 1.5f; // Maximum height to detect vaultable objects
