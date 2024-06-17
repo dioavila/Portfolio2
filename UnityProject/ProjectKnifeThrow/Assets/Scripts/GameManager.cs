@@ -94,8 +94,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        //audioScript = player.GetComponent<AudioController>();
-
+        if (boss2Scene)
+        {
+            bossManager = GameObject.FindWithTag("BossManager").GetComponent<BossManager>();
+        }
         InitializeSettings();
         InitializePlayer();
     }
@@ -194,6 +196,7 @@ public class GameManager : MonoBehaviour
         {
             playerScript = player.GetComponent<wallRun>();
             grindScript = player.GetComponent<GrindScript>();
+            audioScript = player.GetComponent<AudioController>();
         }
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
