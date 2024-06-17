@@ -4902,7 +4902,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2336932430221318097}
   m_Enabled: 1
   m_AgentTypeID: 1479372276
-  m_Radius: 3
+  m_Radius: 5
   m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 49
@@ -5677,7 +5677,7 @@ MonoBehaviour:
   eyeBlood: {fileID: 4259229146678167559}
   robotExplosion: {fileID: 92478737581124}
   muzzleFlash: {fileID: 8412992019840425928}
-  dropOnDeath: {fileID: 0}
+  dropOnDeath: {fileID: 4381402757193416671, guid: bf7aa5f0cb43a8144a01ede6c53c7ba6, type: 3}
   viewAngle: 90
   faceTargetSpeed: 2
   roamDistance: 20
@@ -5689,7 +5689,7 @@ MonoBehaviour:
   gunSound: {fileID: 952332577143968015}
   deathSound: {fileID: 4037241812749389701}
   agent: {fileID: 2744700056141883684}
-  turnRate: 1
+  turnRate: 0.5
 --- !u!136 &7510273391695725765
 CapsuleCollider:
   m_ObjectHideFlags: 0

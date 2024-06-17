@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class MainFabricatorElevator : MonoBehaviour
 {
     [Header("Spawner")]
-    [SerializeField] GameObject enemy1;
+    //[SerializeField] GameObject destoryer;
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] Transform spawn1;
     [SerializeField] Transform spawn2;
@@ -24,7 +24,8 @@ public class MainFabricatorElevator : MonoBehaviour
     [SerializeField] Transform finalPositionL;
 
     [SerializeField] int doorOpenSpeed;
-    private bool noEnemies = false;
+    private bool buttonPressed = false;
+    //private bool noEnemies = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +36,11 @@ public class MainFabricatorElevator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!noEnemies && enemy1 == null)
-        {
-            noEnemies = true;
-        }
-        if (noEnemies)
+        //if(!noEnemies && enemy1 == null)
+        //{
+        //    noEnemies = true;
+        //}
+        if (buttonPressed)
         {
             rightDoor.transform.position = Vector3.Slerp(rightDoor.transform.position, finalPositionR.position, Time.deltaTime * doorOpenSpeed);
             leftDoor.transform.position = Vector3.Slerp(leftDoor.transform.position, finalPositionL.position, Time.deltaTime * doorOpenSpeed);
@@ -56,7 +57,7 @@ public class MainFabricatorElevator : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             gameObject.GetComponent<BoxCollider>().enabled = false;
-            enemy1.SetActive(true);
+            //destroyer.SetActive(true);
             Instantiate(enemyToSpawn, spawn1.position, spawn1.rotation);
             Instantiate(enemyToSpawn, spawn2.position, spawn2.rotation);
         }
