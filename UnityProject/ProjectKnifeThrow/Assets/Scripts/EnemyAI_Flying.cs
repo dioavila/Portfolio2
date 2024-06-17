@@ -18,6 +18,9 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     [SerializeField] float bombReload;
     [SerializeField] int deathTimer;
 
+    [Header("Sounds")]
+    [SerializeField] AudioSource deathSound;
+
     public NavMeshAgent agent;
 
     bool hasBomb;
@@ -47,7 +50,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
                 canShoot = true;
             }
             agent.SetDestination(GameManager.instance.player.transform.position);
-            if (hasBomb && (agent.transform.position.x - GameManager.instance.player.transform.position.x) <= 2.0f && (agent.transform.position.z - GameManager.instance.player.transform.position.z) <= 2.0f)
+            if (hasBomb && canShoot && (agent.transform.position.x - GameManager.instance.player.transform.position.x) <= 2.0f && (agent.transform.position.z - GameManager.instance.player.transform.position.z) <= 2.0f)
             {
                 StartCoroutine(bombDrop());
             }
@@ -55,6 +58,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
             {
                 isDead = true;
                 robotExplosion.Play();
+                deathSound.Play();
             }
         }
         else if (isDead)

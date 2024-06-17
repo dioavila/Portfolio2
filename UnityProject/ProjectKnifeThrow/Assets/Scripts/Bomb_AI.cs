@@ -6,12 +6,15 @@ using UnityEngine;
 public class Bomb_AI : MonoBehaviour
 {
     [SerializeField] int damage;
-    [SerializeField] int explosionRadMax;
     [SerializeField] MeshRenderer bombRenderer;
     public ParticleSystem bombExplosion;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource bombSource;
+
     bool bombDetonate = false;
     bool deleteBomb = false;
+    bool tookDmg = false;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +27,8 @@ public class Bomb_AI : MonoBehaviour
     {
         if (bombDetonate)
         {
-            gameObject.GetComponent<SphereCollider>().radius += 0.5f;
-            if (gameObject.GetComponent<SphereCollider>().radius >= explosionRadMax)
-            {
-            }
             bombExplosion.Play();
+            bombSource.Play();
             bombDetonate = false;
             deleteBomb = true;
         }
@@ -40,7 +40,8 @@ public class Bomb_AI : MonoBehaviour
 
     IEnumerator destroyBomb()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
+        tookDmg = true;
         Destroy(gameObject);
     }
 
@@ -48,24 +49,28 @@ public class Bomb_AI : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            IDamage dmg = other.gameObject.GetComponent<IDamage>();
-
-            if (dmg != null)
+            if (!tookDmg)
             {
-                dmg.TakeDamage(damage);
+                IDamage dmg = other.gameObject.GetComponent<IDamage>();
+
+                if (dmg != null)
+                {
+                    dmg.TakeDamage(damage);
+                }
+                StartCoroutine(destroyBomb());
             }
-            Destroy(gameObject);
+        }
+        else
+        {
+            StartCoroutine(destroyBomb());
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.collider.CompareTag("Enemy"))
-        //    return;
-        //else
-        //{
-        //}
+        gameObject.GetComponent<SphereCollider>().enabled = true;
         bombRenderer.enabled = false;
         bombDetonate = true;
     }
+
 }
