@@ -49,7 +49,6 @@ public class enemyAITest : MonoBehaviour
         if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
         {
             muzzleFlash.Clear();
-            GameManager.instance.updateGameGoal(-1);
             Destroy(gameObject);
         }
     }
@@ -58,9 +57,9 @@ public class enemyAITest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-           colid.radius = sphereCollider.radius;
-            pushAudio.PlayOneShot(pushAudioClip);
-            StartCoroutine(pushflash());
+           //colid.radius = sphereCollider.radius;
+           // pushAudio.PlayOneShot(pushAudioClip);
+           // StartCoroutine(pushflash());
         }
     }
 
@@ -68,7 +67,7 @@ public class enemyAITest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            colid.radius = range;
+            //colid.radius = range;
         }
     }
     IEnumerator shoot()

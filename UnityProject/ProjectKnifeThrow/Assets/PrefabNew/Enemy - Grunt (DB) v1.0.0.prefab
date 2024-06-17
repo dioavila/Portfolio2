@@ -39806,7 +39806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 2
+  jointHP: 1
   player: {fileID: 0}
   limbTurnRate: 5
   body: {fileID: 256887638187867142}

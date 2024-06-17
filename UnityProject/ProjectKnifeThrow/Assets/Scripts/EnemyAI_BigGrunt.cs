@@ -88,12 +88,10 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                 {
                     if (!lookPlayer)
                         lookPlayer = false;
-                    Debug.Log("Roam Forgot");
                     StartCoroutine(roam());
                 }
                 else if (!playerInRange)
                 {
-                    Debug.Log("Roam General");
                     StartCoroutine(roam());
                 }
                 if (critPoints.Count != 0)
