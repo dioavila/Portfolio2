@@ -11,9 +11,10 @@ public class BossManager : MonoBehaviour
     [Header(("States"))]
     [SerializeField] float patternTimer = 5f;
     float patternTimerOrig;
-    bool startOff = false, pattern1 = false, pattern2 = false, pattern3 = false, patternTrans = false;
+    public bool startOff = false;
+    bool pattern1 = false, pattern2 = false, pattern3 = false, patternTrans = false;
     bool canGun = false, canSpawn = false, canLaser = false;
-    bool startLaser = false;
+    //bool startLaser = false;
     public bool startSpawn = false;
     bool Death = false;
     [SerializeField] List<GameObject> listEyes;
@@ -73,7 +74,7 @@ public class BossManager : MonoBehaviour
         if (!startOff)
         {
             //Can add "cinematic" code here
-            startOff = true;
+            //startOff = true;
             pattern1 = true;
             canGun = true;
             //Death = true;

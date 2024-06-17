@@ -1836,7 +1836,6 @@ MonoBehaviour:
   vaultLayer:
     serializedVersion: 2
     m_Bits: 128
-  playerHeight: 3
   playerRadius: 0.75
   vaultDistance: 1.5
   vaultHeight: 1.5
@@ -1857,6 +1856,7 @@ MonoBehaviour:
   gravity: 25
   startingHP: 1000
   HP: 0
+  Force: 0
   isDead: 0
   playerShootPos: {fileID: 8373682491851246608}
   knifeModelLoc: {fileID: 2682171571688388462}
@@ -1873,6 +1873,7 @@ MonoBehaviour:
   - {fileID: 1432925847024907964}
   - {fileID: 4046811004349517534}
   - {fileID: 5520338983412665646}
+  AmmoCount: 0
   gThrowCount: 0
   resetOn: 0
   recoverOn: 0
@@ -1881,6 +1882,8 @@ MonoBehaviour:
   shootspeed: 0
   knifeList:
   - {fileID: 11400000, guid: 60cad60f34c616b45a73a154675c1e2d, type: 2}
+  - {fileID: 11400000, guid: 3cf6e9da7787a534ea4f3b8166a81d2a, type: 2}
+  - {fileID: 11400000, guid: 8af174a4c70034c4ea38673e8b47394b, type: 2}
   selectedKnife: 0
   knifeModel: {fileID: 0}
   freezeTime: 0

@@ -18,7 +18,6 @@ public class SpawnTrig : MonoBehaviour
         if (goal)
         {
             GameManager.instance.updateGameGoal(numberToSpawn);
-
         }
     }
 

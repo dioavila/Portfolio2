@@ -180,7 +180,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
                 anim.SetTrigger("ResetG");//Fix Bug where player stop in place if reload takes place right before pressing grind button
             }
         }
-        GameManager.instance.updateKnifeCount(knifeList[selectedKnife].CurrentKinfeCount);
+        GameManager.instance.updateKnifeCount(knifeList[2].CurrentKinfeCount);
     }
 
     public void GKnifeDisplayReset()
@@ -517,6 +517,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (HP <= 0)
         {
             isDead = true;
+            GameManager.instance.TriggerRedToBlackScreen();
             anim.SetTrigger("isDead");
         }
     }
