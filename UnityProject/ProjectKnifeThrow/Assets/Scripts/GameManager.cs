@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     public Image playerBTBar;
     public Image playerBTBarBack;
     public bool isPaused;
-    public int enemyCount;
+    public int enemyCount = 1;
     public GameObject playerBPUI;
     public GameObject playerFlashDamage;
     public Image redScreenImage;
@@ -227,7 +227,13 @@ public class GameManager : MonoBehaviour
 
     public void updateGameGoal(int amount)
     {
-
+        enemyCount += amount;
+        if (enemyCount <= 0)
+        {
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(isPaused);
+        }
     }
 
     public void youLose()

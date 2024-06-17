@@ -49107,6 +49107,7 @@ MonoBehaviour:
   limbTurnRate: 5
   body: {fileID: 3557174970279971516}
   viewAngle: 180
+  takeDamageSound: {fileID: 0}
 --- !u!33 &6563291934726333626
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -54299,6 +54300,7 @@ MonoBehaviour:
   shootRate: 0.5
   spawnPath: {fileID: 1454545118298566193}
   gunSound: {fileID: 7664631644329881497}
+  deathSound: {fileID: 5141448411783814763, guid: 09f6346adc594374981de053f0c87c1a, type: 3}
   agent: {fileID: 5793474664709523737}
   turnRate: 5
 --- !u!136 &8868078718078803768

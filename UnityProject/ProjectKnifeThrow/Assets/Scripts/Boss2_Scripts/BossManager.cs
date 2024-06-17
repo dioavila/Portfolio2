@@ -451,5 +451,6 @@ public class BossManager : MonoBehaviour
         listEyes.Clear();
         Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
         Destroy(lastEye);
+        GameManager.instance.updateGameGoal(-1);
     }
 }
