@@ -129,13 +129,11 @@ public class GameManager : MonoBehaviour
     {
         if (inBattle)
         {
-            Debug.Log("Battle");
             musicChanger.musictochange = battleMusic;
             musicChanger.ChangeSong();
         }
         else
         {
-            Debug.Log("Ambient");
             musicChanger.musictochange = ambientMusic;
             musicChanger.ChangeSong();
         }

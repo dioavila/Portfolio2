@@ -32,7 +32,11 @@ public class IceKnifePickup : MonoBehaviour, IPickup
         if (isInRange)
         {
             knife.CurrentKinfeCount = knife.MaxKinfeCount;
-            Destroy(gameObject);
+            if(gameObject != null )
+            {
+                gameObject.SetActive( false ); 
+                //Destroy(gameObject);
+            }
         }
     }
 

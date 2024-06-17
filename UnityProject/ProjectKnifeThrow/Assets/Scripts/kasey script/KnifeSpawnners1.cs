@@ -53,7 +53,8 @@ public class KnifeSpawnners : MonoBehaviour
         {
             isSpawnning = true;
             int arraypos = Random.Range(0, spawnpos.Length);
-            Instantiate(objecttospawn, spawnpos[arraypos].position, spawnpos[arraypos].rotation);
+            objecttospawn.SetActive(true);
+            //Instantiate(objecttospawn, spawnpos[arraypos].position, spawnpos[arraypos].rotation);
             KnifeGrabbed = false;
             yield return new WaitUntil(() => KnifeGrabbed == true);
             yield return new WaitForSeconds(spawntimer);

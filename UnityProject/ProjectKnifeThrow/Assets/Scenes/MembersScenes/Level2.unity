@@ -1142,6 +1142,63 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7290160308609331674, guid: 68e92dabf5dc99f439ec2aca6cfdc5d2, type: 3}
   m_PrefabInstance: {fileID: 8133188680139781440}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &658680767
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5413731771690279837, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_Name
+      value: Fire Knife spawn location 2.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.4600286
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -74.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686342949646637667, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3683a99190cf9f4c9284f28c4b56b1f, type: 3}
 --- !u!1 &660607227
 GameObject:
   m_ObjectHideFlags: 0
@@ -2807,3 +2864,4 @@ SceneRoots:
   - {fileID: 6176359760344787266}
   - {fileID: 391645177256541780}
   - {fileID: 297376271814631802}
+  - {fileID: 658680767}
