@@ -44,7 +44,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -19859,7 +19859,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -34969,7 +34969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &183625630975081986
 Transform:
   m_ObjectHideFlags: 0
@@ -34995,12 +34995,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3590534810905563871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb463168e0a8f3a4f831f48d9074462f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParticleColor: {r: 0.4493592, g: 0.7247308, b: 0.9622642, a: 1}
+  ParticleColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &3754388097730024132
 GameObject:
   m_ObjectHideFlags: 0
@@ -69715,7 +69715,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6472865594367414419}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ed272d777ab0b54aab440770f18e9ec, type: 3}
   m_Name: 
@@ -69881,7 +69881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLaserActivated: 1
   physicsMode: 0
-  LaserColor: {r: 9.622605, g: 0.0000018927216, b: 0, a: 1}
+  LaserColor: {r: 17.151663, g: 0, b: 0, a: 1}
   MaxLaserDistance: 100
   layersThatStopLaser:
     serializedVersion: 2
@@ -75173,7 +75173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7732643146374621194
 Transform:
   m_ObjectHideFlags: 0
@@ -80306,7 +80306,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8193586025401414381}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ed272d777ab0b54aab440770f18e9ec, type: 3}
   m_Name: 
@@ -80336,7 +80336,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5236772131194069714
 Transform:
   m_ObjectHideFlags: 0
@@ -90375,7 +90375,6 @@ MonoBehaviour:
   movSpeed: 0.8
   timerToStart: 2
   isBossMechanic: 1
-  isMovable: 1
 --- !u!54 &-3203488709036318503
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90467,7 +90466,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
