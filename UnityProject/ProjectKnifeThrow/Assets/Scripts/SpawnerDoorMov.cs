@@ -11,7 +11,7 @@ public class SpawnerDoorMov : MonoBehaviour
     [SerializeField] Transform startingPosition;
     [SerializeField] Transform finalPosition;
     public bool charIn = false;
-    bool doorOpen = false;
+    //bool doorOpen = false;
     bool doorClosed = true;
 
     // Start is called before the first frame update

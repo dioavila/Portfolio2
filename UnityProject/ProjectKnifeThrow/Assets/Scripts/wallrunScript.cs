@@ -515,7 +515,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     /// </summary>
     public void TakeDamage(int amount)
     {
-        StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
+        //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
