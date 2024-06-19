@@ -43,7 +43,7 @@ public class cameraController : MonoBehaviour
         //    mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
         //    mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
         //}
-        
+
         if (invertY)
         {
             rotX += mouseY;
