@@ -114,7 +114,8 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     // Start is called before the first frame update
     void Start()
     {
-       // knifeModel = knifeList[0].Knife;
+        StartCoroutine(GameManager.instance.EndLoading());
+        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;

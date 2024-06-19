@@ -78,6 +78,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject grindMes;
     [SerializeField] public GameObject BTMessage;
     [SerializeField] public GameObject movementMessage;
+    public Image loadScreenImage;
+    public TMP_Text loadScreenText;
+    public GameObject loadScreen;
 
 
     [Header("Object Access")]
@@ -343,6 +346,60 @@ public class GameManager : MonoBehaviour
         isTransitioning = false;
 
         youLose();
+    }
+
+    public IEnumerator StartLoadingCoroutine(string sceneName)
+    {
+        loadScreen.SetActive(true);
+
+        float duration = 1f;
+        float timer = 0f;
+
+        Color startColor = new Color(0f, 0f, 0f, 0f);
+        Color midIMGColor = new Color(0f, 0f, 0f, 1f);
+        Color midTXTColor = new Color(1f, 1f, 1f, 1f);
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+            loadScreenImage.color = Color.Lerp(startColor, midIMGColor, t);
+            loadScreenText.color = Color.Lerp(startColor, midTXTColor, t);
+            yield return null;
+        }
+
+        loadScreenImage.color = midIMGColor;
+        loadScreenText.color = midTXTColor;
+
+        // Load the scene asynchronously
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+        while (!asyncOperation.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    public IEnumerator EndLoading()
+    {
+        float duration = 1f;
+        float timer = 0f;
+
+        Color midIMGColor = new Color(0f, 0f, 0f, 1f);
+        Color midTXTColor = new Color(1f, 1f, 1f, 1f);
+        Color endColor = new Color(0f, 0f, 0f, 0f);
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = timer / duration;
+            loadScreenImage.color = Color.Lerp(midIMGColor, endColor, t);
+            loadScreenText.color = Color.Lerp(midTXTColor, endColor, t);
+            yield return null;
+        }
+
+        loadScreenImage.color = endColor;
+        loadScreenText.color = endColor;
+        loadScreen.SetActive(false);
     }
 
     public void OpenMessagePanel(string text)
