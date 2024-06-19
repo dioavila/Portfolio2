@@ -9,6 +9,7 @@ public class SpawnTrig : MonoBehaviour
     [SerializeField] GameObject doorsToOpen;
     
     [Header("Spawn Settings")]
+    [SerializeField] bool masterTrigger = true;
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
@@ -34,16 +35,18 @@ public class SpawnTrig : MonoBehaviour
         {
                 StartCoroutine(Spawn());   
         }
-        else
+        else if(spawnStart && !isSpawning && numberSpawned >= numberToSpawn)
         {
             spawnDone = true;
         }
-
-        if (spawnDone && enemiesAlive <= 0)
+        if (masterTrigger)
         {
-            if(triggersDoor)
+            if (spawnDone && enemiesAlive <= 0 && spawnStart)
             {
-                doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
+                if(triggersDoor)
+                {
+                    doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
+                }
             }
         }
     }
@@ -67,7 +70,14 @@ public class SpawnTrig : MonoBehaviour
         for(int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
         {
             Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
-            enemiesAlive++;
+            if (masterTrigger)
+            {
+                enemiesAlive++;
+            }
+            else
+            {
+                GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive++;
+            }
         }
         numberSpawned++;
         yield return new WaitForSeconds(spawnTimer);

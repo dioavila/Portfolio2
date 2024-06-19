@@ -11,7 +11,8 @@ public class DoorControl : MonoBehaviour
     [SerializeField] Transform startingPosition;
     [SerializeField] Transform finalPosition;
 
-    [SerializeField] Transform exitDoorPoint;
+    [SerializeField] Light lightDoor;
+    [SerializeField] Renderer lightPrefab;
     public bool clearToOpen = false;
 
     // Start is called before the first frame update
@@ -25,11 +26,14 @@ public class DoorControl : MonoBehaviour
     {
         if (clearToOpen)
         {
-            door.transform.position = Vector3.Slerp(door.transform.position, finalPosition.position, Time.deltaTime * doorOpenSpeed);
+            door.transform.position = Vector3.Lerp(door.transform.position, finalPosition.position, Time.deltaTime * doorOpenSpeed);
+            lightDoor.color = Color.green;
+            lightPrefab.material.SetColor("_Color", Color.green);
+            lightPrefab.material. SetColor("_EmissionColor", Color.green);
         }
         else
         {
-            door.transform.position = Vector3.Slerp(door.transform.position, startingPosition.position, Time.deltaTime * doorOpenSpeed);
+            door.transform.position = Vector3.Lerp(door.transform.position, startingPosition.position, Time.deltaTime * doorOpenSpeed);
         }
     }
 }
