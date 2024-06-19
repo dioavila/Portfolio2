@@ -1,3 +1,5 @@
+// Ignore Spelling: anim
+
 using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
@@ -11,9 +13,9 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 {
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
-    [SerializeField] int gravity;
-    [SerializeField] public int startingHP;
-    [SerializeField] public int HP;
+    [SerializeField] int gravity = 27;
+    [SerializeField] public int startingHP = 15;
+    [SerializeField] public int HP = 15;
     [SerializeField] int Force;
     [SerializeField] float ShakeTime;
     [SerializeField] float ShakeStrength;
@@ -52,13 +54,13 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] public int UpWardForce;
 
     [Header("Movement")]
-    [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] public int playerSpeed;
-    [SerializeField] int sprintMod;
+    [SerializeField] int jumpSpeed = 12;
+    [SerializeField] int jumpMax = 2;
+    [SerializeField] public float playerSpeed = 10;
+    [SerializeField] float sprintMod = 1.7f;
     public bool isGrinding = false;
     public Vector3 moveDir;
-    int playerSpeedStorage;
+    float playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
     Vector3 PushBack;
@@ -126,6 +128,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         spawnPlayer();
         updateBPUI();
 
+        ShakeCamera = FindObjectOfType<CameraShake>();
         fovController = GetComponent<PlayerFovController>();
         rb = GetComponent<Rigidbody>();
 
@@ -225,7 +228,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         }
 
-        if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
+        if (Input.GetButtonDown("Fire2") && !isShooting && gThrowCount < gThrowCountMax)
         {
             if(gThrowCount >= 0 && gThrowCount < 4)
             {
@@ -235,7 +238,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             }
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Grind Throw"))
         {
             if (Time.timeScale == 1f)
             {
