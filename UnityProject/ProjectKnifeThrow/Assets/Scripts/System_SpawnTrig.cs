@@ -9,8 +9,12 @@ public class SpawnTrig : MonoBehaviour
     [SerializeField] int numberToSpawn;
     [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
     [SerializeField] bool goal = false;
-     bool isSpawning = false, spawnStart = false;
+    [SerializeField] float time;
+    [SerializeField] float strength;
+    bool isSpawning = false, spawnStart = false;
     int numberSpawned = 0;
+    CameraShake Shake;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +23,7 @@ public class SpawnTrig : MonoBehaviour
         {
             GameManager.instance.updateGameGoal(numberToSpawn);
         }
+        Shake = FindAnyObjectByType<CameraShake>();
     }
 
     // Update is called once per frame
@@ -26,7 +31,7 @@ public class SpawnTrig : MonoBehaviour
     {
         if (spawnStart && !isSpawning && numberSpawned < numberToSpawn)
         {
-                StartCoroutine(Spawn());   
+            StartCoroutine(Spawn());
         }
     }
 
@@ -41,9 +46,17 @@ public class SpawnTrig : MonoBehaviour
     IEnumerator Spawn()
     {
         isSpawning = true;
-        for(int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
+        for (int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
         {
-            Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+            if (enemyToSpawn.name == "Enemy - Destroyer (DB) v2.0.0 1")
+            {
+                Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+                StartCoroutine(Shake.Shake(time, strength));
+            }
+            else
+            {
+                Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+            }
         }
         numberSpawned++;
         yield return new WaitForSeconds(spawnTimer);
