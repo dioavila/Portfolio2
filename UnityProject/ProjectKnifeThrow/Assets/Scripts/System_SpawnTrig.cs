@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SpawnTrig : MonoBehaviour
 {
+    [Header("Door Settings")]
+    [SerializeField] bool triggersDoor = false;
+    [SerializeField] GameObject doorsToOpen;
+    
+    [Header("Spawn Settings")]
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
     [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
     [SerializeField] bool goal = false;
-     bool isSpawning = false, spawnStart = false;
+    bool isSpawning = false, spawnStart = false, numberUpdated = false;
     int numberSpawned = 0;
-
+    public int enemiesAlive;
+    bool spawnDone = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +34,29 @@ public class SpawnTrig : MonoBehaviour
         {
                 StartCoroutine(Spawn());   
         }
+        else
+        {
+            spawnDone = true;
+        }
+
+        if (spawnDone && enemiesAlive <= 0)
+        {
+            if(triggersDoor)
+            {
+                doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            if(numberUpdated != false)
+            {
+                GameManager.instance.sceneBattleRoomIndex++;
+                numberUpdated = true;
+            }
             spawnStart = true;
         }
     }
@@ -44,6 +67,7 @@ public class SpawnTrig : MonoBehaviour
         for(int spawnLocIter = 0; spawnLocIter < spawnLocationList.Count; ++spawnLocIter)
         {
             Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+            enemiesAlive++;
         }
         numberSpawned++;
         yield return new WaitForSeconds(spawnTimer);

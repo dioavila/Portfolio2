@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
     public GameObject exitMenu2;
     public GameObject playMenu;
 
+    [Header("Spawner Access")]
+    [SerializeField] public List<GameObject> sceneSpawners;
+    public int sceneBattleRoomIndex;
+
+
     [Header("PANELS")]
     [Tooltip("The UI Panel parenting all sub menus")]
     public GameObject mainCanvas;
