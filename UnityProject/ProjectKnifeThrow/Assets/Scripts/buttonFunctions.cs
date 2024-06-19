@@ -68,8 +68,14 @@ public class buttonFunctions : MonoBehaviour
 
     public void onExitnotSureClick()
     {
-        GameManager.instance.exitMenu.SetActive(false);
-        GameManager.instance.exitMenu1.SetActive(false);
+        if (GameManager.instance.exitMenu != null)
+        {
+            GameManager.instance.exitMenu.SetActive(false);
+        }
+        if (GameManager.instance.exitMenu1 != null)
+        {
+            GameManager.instance.exitMenu1.SetActive(false);
+        }
         if (GameManager.instance.exitMenu2 != null)
         {
             GameManager.instance.exitMenu2.SetActive(false);
@@ -86,21 +92,33 @@ public class buttonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
         GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level1()
     {
         SceneManager.LoadScene("Level1");
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level2()
     {
         SceneManager.LoadScene("Level2");
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level3()
     {
         SceneManager.LoadScene("Level3");
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void quit()

@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
             if (battleMusic != null)
             {
                 musicChanger.musictochange = battleMusic;
-                musicChanger.ChangeSong();    
+                musicChanger.ChangeSong();
             }
         }
         else
@@ -151,19 +151,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "Main Menu")
+        if (Input.GetButtonDown("Cancel"))
         {
-            if (menuActive == null)
+            if (SceneManager.GetActiveScene().name != "Main Menu")
             {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(isPaused);
-                exitMenu.SetActive(false);
-            }
-            else if (menuActive == menuPause)
-            {
-                stateUnPause();
-                menuSettings.SetActive(false);
+                if (menuActive == null)
+                {
+                    statePause();
+                    menuActive = menuPause;
+                    menuActive.SetActive(isPaused);
+                    exitMenu.SetActive(false);
+                }
+                else if (menuActive == menuPause)
+                {
+                    stateUnPause();
+                    menuSettings.SetActive(false);
+                }
             }
         }
 
