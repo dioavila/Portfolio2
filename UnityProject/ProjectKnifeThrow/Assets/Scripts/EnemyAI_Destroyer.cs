@@ -11,7 +11,15 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] Renderer model;
     [SerializeField] float spawnMoveTime;
 
+    [Header("Weak Points")]
+    [SerializeField] List<List<GameObject>> allWeakPoints = new List<List<GameObject>>();
+    [SerializeField] List<GameObject> weakPointsTop = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsLeft = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsRight = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsBottom = new List<GameObject>();
+
     [Header("Guns")]
+    [SerializeField] List<GameObject> turretJoint = new List<GameObject>();
     [SerializeField] Transform[] shootPos = new Transform[4];
     [SerializeField] List<ParticleSystem> muzzleFlash = new List<ParticleSystem>();
     [SerializeField] GameObject bullet;
@@ -36,12 +44,21 @@ public class enemyAITest : MonoBehaviour
     bool isShooting;
     bool knockbackReady;
     bool playerInRange;
-
+    bool allWeakPointsDestroyed;
+    bool topGone;
+    bool leftGone;
+    bool rightGone;
+    bool bottomGone;
+    bool animStarted;
     bool isDead;
 
     // Start is called before the first frame update
     void Start()
     {
+        allWeakPoints.Add(weakPointsTop);
+        allWeakPoints.Add(weakPointsLeft);
+        allWeakPoints.Add(weakPointsRight);
+        allWeakPoints.Add(weakPointsBottom);
         //turnspeed = GameManager.instance.jointCS.limbTurnRate;
     }
 
@@ -60,15 +77,21 @@ public class enemyAITest : MonoBehaviour
                 {
                     StartCoroutine(shoot());
                 }
+                
+                if(!allWeakPointsDestroyed)
+                    checkWeakPointDestroy();
 
-                if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
+                if (allWeakPointsDestroyed)
                 {
-                    ragDoll();
+                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    if (dropOnDeath != null)
+                        Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
                 }
             }
         }
-        else
+        else if (isDead && animStarted)
         {
             StartCoroutine(deathAnimation());
         }
@@ -81,18 +104,85 @@ public class enemyAITest : MonoBehaviour
         finishedStartup = true;
     }
 
-    private void ragDoll()
+    private void checkWeakPointDestroy()
     {
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Rigidbody>().useGravity = true;
-        if (dropOnDeath != null)
-            Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+        for (int theWeakPoint = 0; theWeakPoint < allWeakPoints.Count; theWeakPoint++)
+        {
+            if (theWeakPoint == 0 && !topGone)
+            {
+                for (int j = 0; j < weakPointsTop.Count; j++)
+                {
+                    if (weakPointsTop[j] == null)
+                    {
+                        weakPointsTop.RemoveAt(j);
+                    }
+                    if (weakPointsTop.Count == 0)
+                    {
+                        Destroy(turretJoint[0]);
+                        topGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 1 && !leftGone)
+            {
+                for (int j = 0; j < weakPointsLeft.Count; j++)
+                {
+                    if (weakPointsLeft[j] == null)
+                    {
+                        weakPointsLeft.RemoveAt(j);
+                    }
+                    if (weakPointsLeft.Count == 0)
+                    {
+                        Destroy(turretJoint[1]);
+                        leftGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 2 && !rightGone)
+            {
+                for (int j = 0; j < weakPointsRight.Count; j++)
+                {
+                    if (weakPointsRight[j] == null)
+                    {
+                        weakPointsRight.RemoveAt(j);
+                    }
+                    if (weakPointsRight.Count == 0)
+                    {
+                        Destroy(turretJoint[2]);
+                        rightGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 3 && !bottomGone)
+            {
+                for (int j = 0; j < weakPointsBottom.Count; j++)
+                {
+                    if (weakPointsBottom[j] == null)
+                    {
+                        weakPointsBottom.RemoveAt(j);
+                    }
+                    if (weakPointsBottom.Count == 0)
+                    {
+                        Destroy(turretJoint[3]);
+                        bottomGone = true;
+                    }
+                }
+            }
+        }
+        if (topGone && leftGone && rightGone && bottomGone)
+            allWeakPointsDestroyed = true;
     }
 
     IEnumerator deathAnimation()
     {
+        deadEffect.Play();
+        deadEffectAudio.Play();
         yield return new WaitForSeconds(deathTimer);
         Destroy(gameObject);
+        animStarted = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -119,12 +209,12 @@ public class enemyAITest : MonoBehaviour
             {
                 muzzleFlash[i].Play();
                 muzzleSound.Play();
-                Instantiate(bullet, shootPos[i].position, transform.rotation, shootPos[0]);
+                Instantiate(bullet, shootPos[i].position, transform.rotation, shootPos[i]);
                 yield return new WaitForSeconds(shootRate);
             }
         }
         isShooting = false;
- 
+
         //if (shootPos[0] == null)
         //{
         //    shootRate -= 0.2f;

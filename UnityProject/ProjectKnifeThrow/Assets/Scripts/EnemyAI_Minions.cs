@@ -96,7 +96,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                 {
                     if (!lookPlayer)
                         lookPlayer = true;
-                    StartCoroutine(roam());
+                    //StartCoroutine(roam());
                 }
                 else if (!playerInRange)
                 {
