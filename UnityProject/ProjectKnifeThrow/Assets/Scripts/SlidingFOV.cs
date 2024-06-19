@@ -12,14 +12,18 @@ public class PlayerFovController : MonoBehaviour
     [SerializeField] float backwardFov = 70f;
     [SerializeField] float tiltAngle = 15f;
     [SerializeField] float tiltSmoothDuration = 0.2f; // Additional duration for smoothing the tilt
+    [SerializeField] Camera bodyCamera;
+    [SerializeField] Camera mainCamera;
 
     private Camera playerCamera;
+    private Camera playerCamera2;
     private Coroutine tiltCoroutine;
 
     void Start()
     {
         // Get the Camera component from the child object
-        playerCamera = GetComponentInChildren<Camera>();
+        playerCamera = mainCamera;
+        playerCamera2 = bodyCamera;
         if (playerCamera == null)
         {
             // Uncomment the line below to show an error if the camera is not found
@@ -30,17 +34,17 @@ public class PlayerFovController : MonoBehaviour
     // Methods to start the FOV change coroutines
     public void IncreaseFovForSlide()
     {
-        StartCoroutine(LerpFov(playerCamera.fieldOfView, forwardFov, fovChangeDuration));
+        StartCoroutine(LerpFov(playerCamera2.fieldOfView, forwardFov, fovChangeDuration));
     }
 
     public void DecreaseFovForBackwardSlide()
     {
-        StartCoroutine(LerpFov(playerCamera.fieldOfView, backwardFov, fovChangeDuration));
+        StartCoroutine(LerpFov(playerCamera2.fieldOfView, backwardFov, fovChangeDuration));
     }
 
     public void ResetFov()
     {
-        StartCoroutine(LerpFov(playerCamera.fieldOfView, normalFov, fovChangeDuration));
+        StartCoroutine(LerpFov(bodyCamera.fieldOfView, normalFov, fovChangeDuration));
     }
 
     // Methods to start the camera tilt coroutines
@@ -69,11 +73,11 @@ public class PlayerFovController : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            playerCamera.fieldOfView = Mathf.Lerp(startFov, endFov, elapsedTime / duration);
+            playerCamera2.fieldOfView = Mathf.Lerp(startFov, endFov, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        playerCamera.fieldOfView = endFov;
+        playerCamera2.fieldOfView = endFov;
     }
 
     // Coroutine to tilt the camera and then return it to the original position smoothly

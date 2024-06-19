@@ -91,16 +91,19 @@ public class buttonFunctions : MonoBehaviour
     public void level1()
     {
         SceneManager.LoadScene("Level1");
+        GameManager.instance.InitializeSettings();
     }
 
     public void level2()
     {
         SceneManager.LoadScene("Level2");
+        GameManager.instance.InitializeSettings();
     }
 
     public void level3()
     {
         SceneManager.LoadScene("Level3");
+        GameManager.instance.InitializeSettings();
     }
 
     public void quit()

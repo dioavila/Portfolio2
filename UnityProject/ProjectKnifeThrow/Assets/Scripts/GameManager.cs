@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
     public Image playerHPBarBack;
     public Image playerBTBar;
     public Image playerBTBarBack;
+    public Image playerDashBar;
+    public Image playerDashBarBack;
     public bool isPaused;
     public int enemyCount = 1;
     public GameObject playerBPUI;

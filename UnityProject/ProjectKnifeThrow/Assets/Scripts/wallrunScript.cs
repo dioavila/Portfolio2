@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 //using static UnityEditor.Progress;
 
 public class wallRun : MonoBehaviour, IDamage, IPushback
@@ -61,15 +62,17 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
     //sliding 
     [Header("Dashing")]
-    [SerializeField] float dashSpeed = 10f;
-    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashSpeed = 60f;
+    [SerializeField] float dashDuration = .2f;
     PlayerFovController fovController;
 
-    [SerializeField] int dashCharges = 2;
+    [SerializeField] int dashCharges = 3;
     [SerializeField] float dashCooldown = 3f;
+
     private int currentDashCharges;
     private float dashCoolDownTimer;
     public bool isDashing = false;
+    public bool isCoolDownActive = false;
     Vector3 dashDirection;
 
     //Wallrun Variables
@@ -122,6 +125,9 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         fovController = GetComponent<PlayerFovController>();
         rb = GetComponent<Rigidbody>();
+
+        currentDashCharges = dashCharges;
+        updateDashUI();
     }
 
     // Update is called once per frame
@@ -158,21 +164,37 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
                 }
             }
 
-            // Slide cooldown logic
-            if (currentDashCharges < dashCharges)
+            // Dash cooldown logic
+            if (currentDashCharges <= 0 && !isCoolDownActive)
+            {
+                isCoolDownActive = true;
+                dashCoolDownTimer = 0f;
+            }
+            if (!isCoolDownActive)
             {
                 dashCoolDownTimer += Time.deltaTime;
                 if (dashCoolDownTimer >= dashCooldown)
                 {
                     currentDashCharges++;
                     dashCoolDownTimer = 0f;
+                    updateDashUI();
+
+                    if (currentDashCharges >= dashCharges)
+                    {
+                        isCoolDownActive = false;
+                    }
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0)
             {
-                StartCoroutine(Slide());
+                StartCoroutine(Dash());
                 currentDashCharges--;
+                updateDashUI();
+            }
+            if (currentDashCharges <= 0)
+            {
+                isCoolDownActive = true;
             }
 
             if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
@@ -589,7 +611,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         controller.enabled = true;
     }
 
-    IEnumerator Slide()
+    IEnumerator Dash()
     {
         isDashing = true;
         // Determine the slide direction
@@ -637,6 +659,11 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         isDashing = false;
         fovController.ResetFov();
+    }
+
+    void updateDashUI()
+    {
+        GameManager.instance.playerDashBar.fillAmount = (float)currentDashCharges / dashCharges;
     }
 
     public void Pushback(Vector3 dir)
