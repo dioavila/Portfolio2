@@ -2814,6 +2814,8 @@ MonoBehaviour:
   exitMenu1: {fileID: 8099612144616785295}
   exitMenu2: {fileID: 0}
   playMenu: {fileID: 0}
+  sceneSpawners: []
+  sceneBattleRoomIndex: 0
   mainCanvas: {fileID: 8081203567033821345}
   PanelControls: {fileID: 5860274521705993845}
   PanelVideo: {fileID: 6820211144437697511}
@@ -2840,6 +2842,7 @@ MonoBehaviour:
   dashMes: {fileID: 7256340712098505877}
   grindMes: {fileID: 4111147401333335027}
   BTMessage: {fileID: 6095117393562186608}
+  movementMessage: {fileID: 0}
   player: {fileID: 0}
   playerScript: {fileID: 0}
   AIScript: {fileID: 0}
@@ -8694,7 +8697,7 @@ PrefabInstance:
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: exitMenu
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5894399236124400082}
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: invertON
       value: 
@@ -8718,7 +8721,7 @@ PrefabInstance:
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: exitMenu1
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5894399236124400082}
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: exitMenu2
       value: 
@@ -8734,7 +8737,7 @@ PrefabInstance:
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: menuPause
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8718860367980552535}
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: PanelVideo
       value: 
