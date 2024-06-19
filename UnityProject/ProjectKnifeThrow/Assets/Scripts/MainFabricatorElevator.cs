@@ -7,58 +7,37 @@ using UnityEngine.UIElements;
 public class MainFabricatorElevator : MonoBehaviour
 {
     [Header("Spawner")]
-    [SerializeField] GameObject enemy1;
+    //[SerializeField] GameObject destoryer;
     [SerializeField] GameObject enemyToSpawn;
+    [SerializeField] GameObject enemyToSpawn2;
     [SerializeField] Transform spawn1;
     [SerializeField] Transform spawn2;
+    [SerializeField] Transform spawn3;
 
-
-    [Header("Right Door Components")]
-    [SerializeField] GameObject rightDoor;
-    [SerializeField] Transform startingPositionR;
-    [SerializeField] Transform finalPositionR;
-
-    [Header("Left Door Components")]
-    [SerializeField] GameObject leftDoor;
-    [SerializeField] Transform startingPositionL;
-    [SerializeField] Transform finalPositionL;
-
-    [SerializeField] int doorOpenSpeed;
-    private bool noEnemies = false;
+    bool enemySpawned;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        enemySpawned = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!noEnemies && enemy1 == null)
-        {
-            noEnemies = true;
-        }
-        if (noEnemies)
-        {
-            rightDoor.transform.position = Vector3.Slerp(rightDoor.transform.position, finalPositionR.position, Time.deltaTime * doorOpenSpeed);
-            leftDoor.transform.position = Vector3.Slerp(leftDoor.transform.position, finalPositionL.position, Time.deltaTime * doorOpenSpeed);
-        }
-        else
-        {
-            rightDoor.transform.position = Vector3.Slerp(rightDoor.transform.position, startingPositionR.position, Time.deltaTime * doorOpenSpeed);
-            leftDoor.transform.position = Vector3.Slerp(leftDoor.transform.position, startingPositionL.position, Time.deltaTime * doorOpenSpeed);
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && enemySpawned)
         {
             gameObject.GetComponent<BoxCollider>().enabled = false;
-            enemy1.SetActive(true);
+            //destroyer.SetActive(true);
             Instantiate(enemyToSpawn, spawn1.position, spawn1.rotation);
             Instantiate(enemyToSpawn, spawn2.position, spawn2.rotation);
+            Instantiate(enemyToSpawn2, spawn3.position, spawn3.rotation);
+            enemySpawned=false;
         }
     }
 }

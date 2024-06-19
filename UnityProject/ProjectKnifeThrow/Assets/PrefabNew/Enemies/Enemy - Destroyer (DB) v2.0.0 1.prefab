@@ -143,7 +143,11 @@ MonoBehaviour:
   - {fileID: 2044154415693079643}
   HP: 1
   bullet: {fileID: 2097555871284643747, guid: 1ed63234cccb49b479fef94d1c031ac3, type: 3}
-  shootRate: 1
+  shootRate: 0.25
+  PushbackAmount: 0
+  FocusFire: {fileID: 0}
+  pushAudio: {fileID: 0}
+  pushAudioClip: {fileID: 0}
   playerInRange: 0
   playerLocation: {fileID: 0}
   muzzleFlash:

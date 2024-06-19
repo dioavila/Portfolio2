@@ -5,7 +5,11 @@ using UnityEngine;
 public class Player_Interact_Button : MonoBehaviour
 {
     bool playerInRange = false;
+    [SerializeField] GameObject objectToMove;
+    [SerializeField] Transform moveTo;
     public bool openSesame = false;
+
+    float moveRate = 1.0f;
     // Update is called once per frame
     void Update()
     {
@@ -16,7 +20,8 @@ public class Player_Interact_Button : MonoBehaviour
 
         if (openSesame)
         {
-            Destroy(GameObject.FindWithTag("Tutorial Door"));
+            objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, new Vector3(objectToMove.transform.position.x, 
+                moveTo.transform.position.y, objectToMove.transform.position.z), Time.deltaTime* moveRate);
         }
     }
 

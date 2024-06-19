@@ -159,12 +159,15 @@ public class MainFabricator : MonoBehaviour
     //Spawn enemy settings
     [Header("Spawner")]
     [SerializeField] GameObject enemyToSpawn;
+    [SerializeField] GameObject floor2RoomEnemy;
     [SerializeField] int spawnTimer;
     [SerializeField] int numberToSpawn;
     [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
+    [SerializeField] List<Transform> spawn2ndFloorLocs = new List<Transform>();
     [SerializeField] bool goal = false;
     int numberSpawned = 0;
 
+    bool floor2Start = true;
     bool glassSpawn = false;
     bool topSpawn = false;
     bool bottomSpawn = false;
@@ -227,6 +230,7 @@ public class MainFabricator : MonoBehaviour
     {
         destroyF1WallLaser();
         destroyF1DoorLaser();
+        initial2ndFloorSpawn();
         activateWave1();
         activateWave2();
         activateWave3();
@@ -269,6 +273,16 @@ public class MainFabricator : MonoBehaviour
         }
         if (eyeF1Three == null && eyeF1Four == null && eyeF1Five == null)
             Destroy(laserF1Door);
+    }
+
+    private void initial2ndFloorSpawn()
+    {
+        if(laserF1Door == null && floor2Start)
+        {
+            Instantiate(floor2RoomEnemy, spawn2ndFloorLocs[0].position, Quaternion.identity);
+            Instantiate(floor2RoomEnemy, spawn2ndFloorLocs[1].position, Quaternion.identity);
+            floor2Start = false;
+        }
     }
 
     private void activateWave1()

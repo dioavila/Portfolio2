@@ -19,6 +19,7 @@ TagManager:
   - BossManager
   - Timed Switch
   - Pressure Plate
+  - deathCam
   layers:
   - Default
   - TransparentFX

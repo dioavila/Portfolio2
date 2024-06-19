@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 6716801329541485073}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75.76, y: 0.38, z: -47.57}
+  m_LocalPosition: {x: -83.050735, y: 10.57, z: -158.6668}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8916378090311298176}
+  - {fileID: 93559059526103105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4070359889246944836
@@ -106,65 +106,75 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &2011576984344035995
-PrefabInstance:
+--- !u!1 &8672494164059757224
+GameObject:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1215430621100775580}
-    m_Modifications:
-    - target: {fileID: 2490831711775525076, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_Name
-      value: 'Fire Knife Pickup '
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 71.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -40.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
---- !u!4 &8916378090311298176 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6942255110646476315, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
-  m_PrefabInstance: {fileID: 2011576984344035995}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93559059526103105}
+  - component: {fileID: 2593197891153167923}
+  - component: {fileID: 8957643337524205143}
+  m_Layer: 0
+  m_Name: Spawner Fire knife 2.0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &93559059526103105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8672494164059757224}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.2, y: 3.54, z: -0.03}
+  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1215430621100775580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2593197891153167923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8672494164059757224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59886cdfef7c4c442b2dc08086be2c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objecttospawn: {fileID: 2490831711775525076, guid: 5d47de3e53ad1d642aa74089db80f8a7, type: 3}
+  numbertospawn: 1
+  spawntimer: 2
+  spawnpos:
+  - {fileID: 93559059526103105}
+  KnifeGrabbed: 0
+--- !u!135 &8957643337524205143
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8672494164059757224}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}

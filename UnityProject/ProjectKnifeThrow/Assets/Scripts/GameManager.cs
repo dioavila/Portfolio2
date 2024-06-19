@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
+//using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -26,6 +26,11 @@ public class GameManager : MonoBehaviour
     public GameObject exitMenu1;
     public GameObject exitMenu2;
     public GameObject playMenu;
+
+    [Header("Spawner Access")]
+    [SerializeField] public List<GameObject> sceneSpawners;
+    public int sceneBattleRoomIndex;
+
 
     [Header("PANELS")]
     [Tooltip("The UI Panel parenting all sub menus")]
@@ -87,6 +92,11 @@ public class GameManager : MonoBehaviour
     public GameObject keyRejection;
     public GameObject keyAcceptance;
     public KeyTurnIn keys;
+    [SerializeField] AudioSource ambientMusic;
+    [SerializeField] AudioSource battleMusic;
+    [SerializeField] TransitionMusic musicChanger;
+    public bool inBattle = false;
+    //public bool inBoss;
 
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
@@ -126,6 +136,23 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (inBattle)
+        {
+            if (battleMusic != null)
+            {
+                musicChanger.musictochange = battleMusic;
+                musicChanger.ChangeSong();    
+            }
+        }
+        else
+        {
+            if (ambientMusic != null)
+            {
+                musicChanger.musictochange = ambientMusic;
+                musicChanger.ChangeSong();
+            }
+        }
+
         if (Input.GetButtonDown("Cancel") && SceneManager.GetActiveScene().name != "Main Menu")
         {
             if (menuActive == null)
@@ -436,4 +463,5 @@ public class GameManager : MonoBehaviour
         Knifecount = amount;
         KnifeCountText.text = Knifecount.ToString("F0");
     }
+
 }

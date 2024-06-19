@@ -16,8 +16,11 @@ public class LaserWallMovement : MonoBehaviour
         {
             GameManager.instance.bossManager.activeLasers++;
         }
-        lerpDistance1 = transform.position - readyPoint.position;
-        lerpDistance2 = transform.position - endPoint.position;
+        if(readyPoint != null && endPoint != null)
+        {
+            lerpDistance1 = transform.position - readyPoint.position;
+            lerpDistance2 = transform.position - endPoint.position;
+        }
     }
 
     // Update is called once per frame

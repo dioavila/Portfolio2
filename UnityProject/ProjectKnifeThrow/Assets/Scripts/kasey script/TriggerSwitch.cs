@@ -65,7 +65,7 @@ public class TriggerSwitch : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Enemy") && gameObject.CompareTag("Pressure Plate"))
+        if ((other.CompareTag("Player") || other.CompareTag("Enemy")) && gameObject.CompareTag("Pressure Plate"))
         {
             Active = true;
             obj.transform.position = Vector3.Lerp(obj.transform.position, new Vector3(Position.position.x, Position.position.y, Position.position.z), Time.deltaTime * extendRate);

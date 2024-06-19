@@ -7,7 +7,7 @@ public class cameraController : MonoBehaviour
 {
     [SerializeField] int lockVertMin = -45, lockVertMax = 45;
     [SerializeField] bool invertY = false;
-    //[SerializeField] int sensitivityComp = 2;
+    [SerializeField] int sensitivityComp;
     [SerializeField] float sliderValue;
 
     float rotX;
@@ -43,7 +43,7 @@ public class cameraController : MonoBehaviour
         //    mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
         //    mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
         //}
-        
+
         if (invertY)
         {
             rotX += mouseY;

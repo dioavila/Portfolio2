@@ -15,9 +15,12 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] public int startingHP;
     [SerializeField] public int HP;
     [SerializeField] int Force;
+    [SerializeField] float ShakeTime;
+    [SerializeField] float ShakeStrength;
     int gravityStorage;
     public bool isDead = false;
     Rigidbody rb;
+    public CameraShake ShakeCamera;
     
     [Header("Shooting")]
     [SerializeField] public Transform playerShootPos;
@@ -219,6 +222,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (Input.GetButton("Fire1") && !isShooting && knifeList[selectedKnife])
         {
             StartCoroutine(shoot(knifeList[selectedKnife].Knife, shootRate));
+            //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         }
 
         if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
@@ -354,7 +358,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
         }
-        else if (bulletType.name == "Standard Knife")
+        else if (bulletType.name == "Standard Knife" || bulletType.name == "Ice Knife 1.0")
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
@@ -362,7 +366,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
         }
-        else if (knifeList[selectedKnife].CurrentKinfeCount > 0)
+        else if (bulletType.name == "Fire Knife 1.0" && knifeList[selectedKnife].CurrentKinfeCount > 0)
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
@@ -532,6 +536,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     /// </summary>
     public void TakeDamage(int amount)
     {
+        StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
