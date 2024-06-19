@@ -14,6 +14,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     float angleToPlayer;
     [SerializeField] float viewAngle;
     [SerializeField] AudioSource takeDamageSound;
+    [SerializeField] Renderer modelDEMO;
 
     //enemyAITest enemyScript;
 
@@ -29,7 +30,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward *100, Color.green);
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 100, Color.green);
         jointMovement();
     }
 
@@ -41,7 +42,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         if (angleToPlayer < viewAngle)
         {
             Quaternion rotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation,  limbTurnRate *Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, limbTurnRate * Time.deltaTime);
         }
     }
 
@@ -49,7 +50,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     {
         jointHP -= damage;
         StartCoroutine(flashred());
-        if ( jointHP <= 0 ) 
+        if (jointHP <= 0)
         {
             Instantiate(takeDamageSound, transform.position, Quaternion.identity, transform);
             Destroy(gameObject);
@@ -57,10 +58,20 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     }
     IEnumerator flashred()
     {
-        Color temp = jointModel.material.color;
-        jointModel.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        jointModel.material.color = temp;
+        if (modelDEMO == null)
+        {
+            Color temp = jointModel.material.color;
+            jointModel.material.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            jointModel.material.color = temp;
+        }
+        else
+        {
+            Color temp = modelDEMO.material.color;
+            modelDEMO.material.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            modelDEMO.material.color = temp;
+        }
     }
 
     public void FireDamage(int amount, int time)
