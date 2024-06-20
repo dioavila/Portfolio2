@@ -84,6 +84,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void toMain()
     {
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Main Menu"));
         SceneManager.LoadScene("Main Menu");
         GameManager.instance.InitializeSettings();
     }
@@ -100,6 +101,7 @@ public class buttonFunctions : MonoBehaviour
     public void level1()
     {
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level1"));
+        GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -108,6 +110,7 @@ public class buttonFunctions : MonoBehaviour
     public void level2()
     {
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level2"));
+        GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -116,6 +119,7 @@ public class buttonFunctions : MonoBehaviour
     public void level3()
     {
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level3"));
+        GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

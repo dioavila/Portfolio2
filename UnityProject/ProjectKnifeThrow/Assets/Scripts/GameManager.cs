@@ -308,7 +308,7 @@ public class GameManager : MonoBehaviour
 
         playerHPBarBack.enabled = false;
 
-        float duration = 1f;
+        float duration = 1.5f;
         float timer = 0f;
 
         //Fade to red over 1 second
@@ -381,6 +381,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator EndLoading()
     {
+        loadScreen.SetActive(true);
+
         float duration = 1f;
         float timer = 0f;
 
