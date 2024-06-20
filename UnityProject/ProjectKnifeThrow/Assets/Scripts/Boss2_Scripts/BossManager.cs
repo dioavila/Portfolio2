@@ -318,11 +318,11 @@ public class BossManager : MonoBehaviour
     IEnumerator spawnLasers()
     {
         laserOn = true;
-        int patternIndex = UnityEngine.Random.Range(0, 2);
+        int patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
         Instantiate(laserList[patternIndex], lSpawn1.transform.position, lSpawn1.transform.rotation);
         --lasersToSpawn;
         yield return new WaitForSeconds(laserSpawnDelay);
-        patternIndex = UnityEngine.Random.Range(0, 2);
+        patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
         Instantiate(laserList[patternIndex], lSpawn2.transform.position, lSpawn2.transform.rotation);
         --lasersToSpawn;
         yield return new WaitForSeconds(laserSpawnDelay);

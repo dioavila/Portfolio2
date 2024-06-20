@@ -1141,6 +1141,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1495113124676349805, guid: 9f983743c6034a144ab4efe800374a03, type: 3}
+      propertyPath: laserList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2287951755822635059, guid: 9f983743c6034a144ab4efe800374a03, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
