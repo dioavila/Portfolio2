@@ -1501,7 +1501,7 @@ PrefabInstance:
     - target: {fileID: 4735972513725504101, guid: b80e69b28ed4353429a178fabdfac892, type: 3}
       propertyPath: enemyToSpawn
       value: 
-      objectReference: {fileID: 256887638187867142, guid: 9d1c64fbdf081be42b6f61b955ff9d94, type: 3}
+      objectReference: {fileID: 2336932430221318097, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
     - target: {fileID: 4735972513725504101, guid: b80e69b28ed4353429a178fabdfac892, type: 3}
       propertyPath: triggersDoor
       value: 0
@@ -10457,7 +10457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762380492481631229, guid: 52c51744944b30b4395badb88a68a18b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.4
+      value: 65.59
       objectReference: {fileID: 0}
     - target: {fileID: 762380492481631229, guid: 52c51744944b30b4395badb88a68a18b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13913,7 +13913,7 @@ PrefabInstance:
     - target: {fileID: 2256723019098337927, guid: 12ccb4bce1f2a2d4c9da0e191f964b55, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 23800000, guid: ee145b109a2eca24cae7cdcc99392589, type: 2}
     - target: {fileID: 4372125018122967863, guid: 12ccb4bce1f2a2d4c9da0e191f964b55, type: 3}
       propertyPath: m_Name
       value: AI - NavMesh Surface
@@ -19267,6 +19267,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnRoomFinal (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6562063952519522077, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7.4239745
+      objectReference: {fileID: 0}
+    - target: {fileID: 6562063952519522077, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6562063952519522077, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210931564931354524, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210931564931354524, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210931564931354524, guid: 808f3cb8004ce7244a601a29f6ec0d7d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.64
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20287,7 +20311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5274507026191901861, guid: 725564bae3f68e847ad41c0da4390174, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 101.5
+      value: 99.689995
       objectReference: {fileID: 0}
     - target: {fileID: 5274507026191901861, guid: 725564bae3f68e847ad41c0da4390174, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25473,7 +25497,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5230347
+      value: 0.80362004
       objectReference: {fileID: 0}
     - target: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
       propertyPath: m_LocalScale.y
@@ -26288,7 +26312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5274507026191901861, guid: 725564bae3f68e847ad41c0da4390174, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 97.01
+      value: 95.2
       objectReference: {fileID: 0}
     - target: {fileID: 5274507026191901861, guid: 725564bae3f68e847ad41c0da4390174, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30655,7 +30679,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5230347
+      value: 0.7974094
       objectReference: {fileID: 0}
     - target: {fileID: 1554161176115921225, guid: f9e1a0158e9f7a545a16fa7c2aa7be4e, type: 3}
       propertyPath: m_LocalScale.y
