@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:UnityProject/ProjectKnifeThrow/Assets/PrefabNew/Game UI.prefab.meta
 guid: 9082cfcc1486b9e48ab3b574c5d07698
 PrefabImporter:
+========
+guid: cce308b0e3c8e0a4daca78331ab8219a
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> Stashed changes:UnityProject/ProjectKnifeThrow/Assets/Stylized Lava Texture.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

@@ -174,33 +174,34 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             if (currentDashCharges <= 0 && !isCoolDownActive)
             {
                 isCoolDownActive = true;
-                dashCoolDownTimer = 0f;
+                dashCoolDownTimer = 0f; // Start the cooldown
             }
-            if (!isCoolDownActive)
+
+            if (isCoolDownActive)
             {
                 dashCoolDownTimer += Time.deltaTime;
                 if (dashCoolDownTimer >= dashCooldown)
                 {
-                    currentDashCharges++;
+                    currentDashCharges = dashCharges;
                     dashCoolDownTimer = 0f;
                     updateDashUI();
 
-                    if (currentDashCharges >= dashCharges)
-                    {
-                        isCoolDownActive = false;
-                    }
+                    isCoolDownActive = false; // Stop the cooldown when fully recharged
+                    
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0)
+
+            if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0 && !isCoolDownActive)
             {
                 StartCoroutine(Dash());
                 currentDashCharges--;
                 updateDashUI();
-            }
-            if (currentDashCharges <= 0)
-            {
-                isCoolDownActive = true;
+
+                if (currentDashCharges <= 0)
+                {
+                    isCoolDownActive = true; // Start the cooldown if no charges are left
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
@@ -622,6 +623,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     IEnumerator Dash()
     {
         isDashing = true;
+
         // Determine the slide direction
         if (moveDir == Vector3.zero)
         {

@@ -76,6 +76,8 @@ MonoBehaviour:
   rb: {fileID: -5862811180011239692}
   speed: 50
   time: 5
+  MaxCount: 0
+  CurrCount: 0
   destroytime: 5
 --- !u!1001 &8582668140544020876
 PrefabInstance:
@@ -129,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ice child
       objectReference: {fileID: 0}
+    - target: {fileID: 7872545580378097990, guid: 1175941f716054547bb77d024ce0cf3c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6d38711520119c4e89ddf1ea6adc007, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
