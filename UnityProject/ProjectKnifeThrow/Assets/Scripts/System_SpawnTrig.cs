@@ -56,6 +56,8 @@ public class SpawnTrig : MonoBehaviour
                 if (triggersDoor)
                 {
                     doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
+                    GameManager.instance.sceneBattleRoomIndex++;
+                    triggersDoor = false;
                 }
             }
         }
