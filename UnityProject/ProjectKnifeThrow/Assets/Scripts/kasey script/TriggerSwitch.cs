@@ -18,7 +18,9 @@ public class TriggerSwitch : MonoBehaviour
     [SerializeField] float coolDownTimer;
     [SerializeField] Transform startPos;
     Renderer Model;
-    
+
+    [SerializeField] bool triggerDoor = false;
+    [SerializeField] GameObject door;
     public bool Active;
 
     // Start is called before the first frame update
@@ -40,7 +42,12 @@ public class TriggerSwitch : MonoBehaviour
             }
             else
             {
-            MoveObj(Active);
+                MoveObj(Active);
+            }
+
+            if(triggerDoor)
+            {
+                door.GetComponent<DoorControl>().clearToOpen = true;
             }
         }
         if (!Active) 

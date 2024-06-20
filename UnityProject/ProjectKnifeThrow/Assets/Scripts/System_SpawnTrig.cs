@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class SpawnTrig : MonoBehaviour
 {
-    [SerializeField] GameObject enemyToSpawn;
+    [Header("Settings")]
+    [SerializeField] bool masterTrigger = true;
+    [SerializeField] bool goal = false;
+
+    [Header("Door Settings")]
+    [SerializeField] bool triggersDoor = true;
+    [SerializeField] GameObject doorsToOpen;
     [SerializeField] int spawnTimer;
+
+    [Header("Enemy Settings")]
+    [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int numberToSpawn;
     [SerializeField] List<Transform> spawnLocationList = new List<Transform>();
-    [SerializeField] bool goal = false;
+
+    [Header("Camera Shake Settings")]
     [SerializeField] float time;
     [SerializeField] float strength;
-    bool isSpawning = false, spawnStart = false;
+    
+    bool isSpawning = false, spawnStart = false, spawnDone = false;
     int numberSpawned = 0;
+    public int enemiesAlive = 0;
     CameraShake Shake;
 
 
@@ -23,7 +35,7 @@ public class SpawnTrig : MonoBehaviour
         {
             GameManager.instance.updateGameGoal(numberToSpawn);
         }
-        Shake = FindAnyObjectByType<CameraShake>();
+            Shake = FindAnyObjectByType<CameraShake>();
     }
 
     // Update is called once per frame
@@ -32,6 +44,22 @@ public class SpawnTrig : MonoBehaviour
         if (spawnStart && !isSpawning && numberSpawned < numberToSpawn)
         {
             StartCoroutine(Spawn());
+        }
+        else if (spawnStart && !isSpawning && numberSpawned >= numberToSpawn)
+        {
+            spawnDone = true;
+        }
+        if (masterTrigger)
+        {
+            if (spawnDone && enemiesAlive <= 0 && spawnStart)
+            {
+                if (triggersDoor)
+                {
+                    doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
+                    GameManager.instance.sceneBattleRoomIndex++;
+                    triggersDoor = false;
+                }
+            }
         }
     }
 
@@ -56,6 +84,14 @@ public class SpawnTrig : MonoBehaviour
             else
             {
                 Instantiate(enemyToSpawn, spawnLocationList[spawnLocIter].position, spawnLocationList[spawnLocIter].rotation);
+            }
+            if (masterTrigger)
+            {
+                enemiesAlive++;
+            }
+            else
+            {
+                GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive++;
             }
         }
         numberSpawned++;

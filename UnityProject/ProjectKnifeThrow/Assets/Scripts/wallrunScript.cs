@@ -119,7 +119,8 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     // Start is called before the first frame update
     void Start()
     {
-       // knifeModel = knifeList[0].Knife;
+        StartCoroutine(GameManager.instance.EndLoading());
+        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -540,7 +541,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     /// </summary>
     public void TakeDamage(int amount)
     {
-        StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
+        //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
