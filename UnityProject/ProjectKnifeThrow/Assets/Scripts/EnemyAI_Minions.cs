@@ -45,6 +45,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     bool isShooting;
     bool playerInRange;
     bool canshoot;
+    bool canTurn;
     float angleToPlayer;
     bool destChosen;
     float stoppingDistOrig;
@@ -59,7 +60,6 @@ public class enemyAI : MonoBehaviour, IFreeze
             GameManager.instance.bossManager.enemiesAlive += 1;
         }
         stoppingDistOrig = agent.stoppingDistance;
-        canshoot = true;
     }
 
     // Update is called once per frame
@@ -71,11 +71,13 @@ public class enemyAI : MonoBehaviour, IFreeze
             {
                 agent.isStopped = true;
                 canshoot = false;
+                canTurn = false;
             }
             else
             {
                 agent.isStopped = false;
                 canshoot = true;
+                canTurn = true;
             }
 
             if (!finishedStartup)
@@ -84,7 +86,7 @@ public class enemyAI : MonoBehaviour, IFreeze
             }
             else if (finishedStartup)
             {
-                if (playerInRange && !canSeePlayer())
+                if (playerInRange && !canSeePlayer() && canTurn)
                 {
                     faceTarget();
                 }
@@ -156,7 +158,7 @@ public class enemyAI : MonoBehaviour, IFreeze
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
             { 
                 agent.stoppingDistance = stoppingDistOrig;
-                if (!isShooting && canshoot)
+                if (!isShooting && canshoot && angleToPlayer <= viewAngle)
                 {
                     StartCoroutine(shoot());
                 }
@@ -205,7 +207,7 @@ public class enemyAI : MonoBehaviour, IFreeze
         {
             muzzleFlash.Play();
             gunSound.Play();
-            createBullet(shootPos1);
+            createBullet(shootPos);
         }
         yield return new WaitForSeconds(shootRate);
         isShooting = false;

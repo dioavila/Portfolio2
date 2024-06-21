@@ -41,6 +41,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     bool isShooting;
     bool playerInRange;
     bool canShoot;
+    bool canTurn;
     float angleToPlayer;
     bool destChosen;
     float stoppingDistOrig;
@@ -51,7 +52,6 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     void Start()
     {
         stoppingDistOrig = agent.stoppingDistance;
-        canShoot = true;
     }
 
     // Update is called once per frame
@@ -63,11 +63,13 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             {
                 agent.isStopped = true;
                 canShoot = false;
+                canTurn = false;
             }
             else
             {
                 agent.isStopped = false;
                 canShoot = true;
+                canTurn = true;
             }
 
             if (!finishedStartup)
@@ -76,7 +78,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             }
             else if (finishedStartup)
             {
-                if (playerInRange && !canSeePlayer())
+                if (playerInRange && !canSeePlayer() && canTurn)
                 {
                     faceTarget();
                 }
@@ -86,9 +88,9 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                 }
                 if (critPoints[0] == null && critPoints[1] == null && critPoints[2] == null)
                 {
-                    critPoints.Remove(critPoints[0]);
-                    critPoints.Remove(critPoints[1]);
                     critPoints.Remove(critPoints[2]);
+                    critPoints.Remove(critPoints[1]);
+                    critPoints.Remove(critPoints[0]);
                 }
                 if (critPoints.Count == 0)
                 {
@@ -151,7 +153,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
             {
                 agent.stoppingDistance = stoppingDistOrig;
-                if (!isShooting)
+                if (!isShooting && canShoot && angleToPlayer <= viewAngle)
                 {
                     StartCoroutine(shoot());
                 }
@@ -199,7 +201,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
         {
             muzzleFlash.Play();
             gunSound.Play();
-            createBullet(shootPos1);
+            createBullet(shootPos);
         }
         yield return new WaitForSeconds(shootRate);
         isShooting = false;

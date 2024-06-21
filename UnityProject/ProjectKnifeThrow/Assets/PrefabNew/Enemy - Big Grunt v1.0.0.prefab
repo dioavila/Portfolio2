@@ -831,12 +831,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2744700056141883684}
   model: {fileID: 6488092423811348249}
-  shootPos1: {fileID: 5513494644690484005}
+  shootPos: {fileID: 5513494644690484005}
   eyeball: {fileID: 6511556264483757749}
   headPos: {fileID: 709726534881418885}
-  spawnMoveTime: 0
-  turnRate: 0.5
-  viewAngle: 90
+  spawnMoveTime: 3
+  turnRate: 2
+  viewAngle: 15
   faceTargetSpeed: 2
   roamDistance: 20
   roamTimer: 3
@@ -1132,12 +1132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 1
-  player: {fileID: 0}
-  limbTurnRate: 3
   body: {fileID: 2336932430221318097}
+  jointHP: 1
   viewAngle: 90
-  takeDamageSound: {fileID: 0}
+  limbTurnRate: 3
   modelDEMO: {fileID: 0}
 --- !u!136 &263005770415253806
 CapsuleCollider:

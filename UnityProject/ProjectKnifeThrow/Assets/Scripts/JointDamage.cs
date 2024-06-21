@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class JointDamage : MonoBehaviour, IDamage, IFire
 {
+    [Header("Eyeball")]
+    [SerializeField] GameObject body;
     [SerializeField] int jointHP;
-    [SerializeField] GameObject player;
+    [SerializeField] float viewAngle;
     [SerializeField] public float limbTurnRate;
+    float angleToPlayer;
+    [SerializeField] Renderer modelDEMO;
+    Renderer jointModel;
+
     Quaternion currRot;
     int origHP;
-    Renderer jointModel;
-    [SerializeField] GameObject body;
-    float angleToPlayer;
-    [SerializeField] float viewAngle;
-    [SerializeField] AudioSource takeDamageSound;
-    [SerializeField] Renderer modelDEMO;
+    GameObject player;
 
     //enemyAITest enemyScript;
 
@@ -25,6 +26,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         origHP = jointHP;
         jointModel = gameObject.GetComponent<Renderer>();
         player = GameManager.instance.player;
+
     }
 
     // Update is called once per frame
@@ -52,10 +54,11 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         StartCoroutine(flashred());
         if (jointHP <= 0)
         {
-            Instantiate(takeDamageSound, transform.position, Quaternion.identity, transform);
             Destroy(gameObject);
         }
     }
+
+
     IEnumerator flashred()
     {
         if (modelDEMO == null)
@@ -83,7 +86,6 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
         for (int i = 0; i <= time; i++)
         {
             jointHP -= amount;
-            takeDamageSound.Play();
             jointModel.material.color = Color.red;
             yield return new WaitForSeconds(0.1f);
             jointModel.material.color = Color.white;
