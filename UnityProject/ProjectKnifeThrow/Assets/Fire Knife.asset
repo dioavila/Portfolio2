@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1fdadee3af37e479bd9cfcd0aa1149, type: 3}
   m_Name: Fire Knife
   m_EditorClassIdentifier: 
-  Knife: {fileID: 6032512300283566940, guid: 567ba3c6abdbcac4d98666b493b7a5d0, type: 3}
+  Knife: {fileID: 3243578565138730391, guid: 61707ac734d98e240a8bd9ff09c49d5a, type: 3}
   Damage: 1
   freeze: 0
   speed: 50
