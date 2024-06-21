@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class enemyAITest : MonoBehaviour
 {
-    [Header("Destroy")]
+    [Header("Destroyer")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] float spawnMoveTime;
@@ -99,9 +99,18 @@ public class enemyAITest : MonoBehaviour
 
     IEnumerator spawnMove()
     {
-        agent.SetDestination(transform.forward);
+        agent.Move(transform.forward * Time.deltaTime * agent.speed);
         yield return new WaitForSeconds(spawnMoveTime);
         finishedStartup = true;
+    }
+
+    IEnumerator deathAnimation()
+    {
+        deadEffect.Play();
+        deadEffectAudio.Play();
+        yield return new WaitForSeconds(deathTimer);
+        Destroy(gameObject);
+        animStarted = true;
     }
 
     private void checkWeakPointDestroy()
@@ -174,15 +183,6 @@ public class enemyAITest : MonoBehaviour
         }
         if (topGone && leftGone && rightGone && bottomGone)
             allWeakPointsDestroyed = true;
-    }
-
-    IEnumerator deathAnimation()
-    {
-        deadEffect.Play();
-        deadEffectAudio.Play();
-        yield return new WaitForSeconds(deathTimer);
-        Destroy(gameObject);
-        animStarted = true;
     }
 
     private void OnTriggerEnter(Collider other)

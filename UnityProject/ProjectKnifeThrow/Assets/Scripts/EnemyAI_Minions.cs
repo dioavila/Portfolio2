@@ -11,53 +11,45 @@ public class enemyAI : MonoBehaviour, IFreeze
     [Header("Boss Toggle")]
     [SerializeField] bool belongsToGORE = false;
 
-    [Header("Standard Setting")]
+    [Header("Grunt")]
+    public NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] Transform shootPos1;
-    [SerializeField] Transform shootPos2;
-    [SerializeField] Transform shootPos3;
-    [SerializeField] Transform shootPos4;
+    [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
-
-    [SerializeField] GameObject critPoint;
-    [SerializeField] ParticleSystem eyeBlood;
-    [SerializeField] ParticleSystem robotExplosion;
-    [SerializeField] ParticleSystem muzzleFlash;
-    [SerializeField] GameObject dropOnDeath;
-
+    [SerializeField] float spawnMoveTime;
+    [SerializeField] float turnRate;
     [SerializeField] int viewAngle;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
-    [SerializeField] int deathTimer;
 
+    [Header("Weak Point")]
+    [SerializeField] GameObject critPoint;
+
+    [Header("Gun")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-
-    [SerializeField] Transform spawnPath;
-    private Transform startingSpawn;
-
-    [Header("Sounds")]
+    [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] AudioSource gunSound;
+
+
+    [Header("Dead")]
+    [SerializeField] float deathTimer;
+    [SerializeField] GameObject dropOnDeath;
+    [SerializeField] ParticleSystem robotExplosion;
     [SerializeField] AudioSource deathSound;
-
-    public NavMeshAgent agent;
-
-    bool isShooting;
-    bool playerInRange;
-    bool destChosen;
-    bool finishedStartup = false;
-    bool canshoot = true;
 
     Vector3 playerDir;
     Vector3 startingPos;
-
+    bool finishedStartup;
+    bool isShooting;
+    bool playerInRange;
+    bool canshoot;
     float angleToPlayer;
+    bool destChosen;
     float stoppingDistOrig;
-
-    bool isDead = false;
-    bool lookPlayer = false;
-    public int turnRate;
+    bool lookPlayer;
+    bool isDead;
 
     // Start is called before the first frame update
     void Start()
@@ -66,8 +58,8 @@ public class enemyAI : MonoBehaviour, IFreeze
         {
             GameManager.instance.bossManager.enemiesAlive += 1;
         }
-        startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
+        canshoot = true;
     }
 
     // Update is called once per frame
@@ -85,18 +77,16 @@ public class enemyAI : MonoBehaviour, IFreeze
                 agent.isStopped = false;
                 canshoot = true;
             }
-            if (finishedStartup)
+
+            if (!finishedStartup)
             {
-                startingPos = transform.position;
-                if (lookPlayer)
-                {
-                    faceTarget();
-                }
+                StartCoroutine(spawnMove());
+            }
+            else if (finishedStartup)
+            {
                 if (playerInRange && !canSeePlayer())
                 {
-                    if (!lookPlayer)
-                        lookPlayer = true;
-                    //StartCoroutine(roam());
+                    faceTarget();
                 }
                 else if (!playerInRange)
                 {
@@ -104,7 +94,6 @@ public class enemyAI : MonoBehaviour, IFreeze
                 }
                 if (critPoint == null)
                 {
-                    eyeBlood.Play();
                     agent.SetDestination(agent.transform.position);
                     gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -115,18 +104,18 @@ public class enemyAI : MonoBehaviour, IFreeze
                     deathSound.Play();
                 }
             }
-            else
-            {
-                agent.stoppingDistance = 1;
-                agent.destination = startingSpawn.position;
-                if (agent.remainingDistance <= stoppingDistOrig)
-                    finishedStartup = true;
-            }
         }
         else if (isDead)
         {
             StartCoroutine(deathAnimation());
         }
+    }
+
+    IEnumerator spawnMove()
+    {
+        agent.Move(transform.forward * Time.deltaTime * agent.speed);
+        yield return new WaitForSeconds(spawnMoveTime);
+        finishedStartup = true;
     }
 
     IEnumerator deathAnimation()
@@ -161,8 +150,6 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
-        //Debug.Log(angleToPlayer);
-        //Debug.DrawRay(headPos.position, playerDir);
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
@@ -175,7 +162,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                 }
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    lookPlayer = true;
+                    faceTarget();
                 }
                 return true;
             }
@@ -196,6 +183,8 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
+            agent.SetDestination(agent.transform.position);
+            destChosen = true;
             playerInRange = true;
         }
     }
@@ -204,7 +193,6 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
-            lookPlayer = false;
             playerInRange = false;
             agent.stoppingDistance = 0;
         }
@@ -213,29 +201,11 @@ public class enemyAI : MonoBehaviour, IFreeze
     IEnumerator shoot()
     {
         isShooting = true;
-        if (shootPos1 != null)
+        if (shootPos != null)
         {
             muzzleFlash.Play();
             gunSound.Play();
             createBullet(shootPos1);
-        }
-        if (shootPos2 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos2);
-        }
-        if (shootPos3 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos3);
-        }
-        if (shootPos4 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos4);
         }
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
