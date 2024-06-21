@@ -111,7 +111,14 @@ public class enemyAI : MonoBehaviour, IFreeze
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
-                    GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+                    if (!belongsToGORE)
+                    {
+                        GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+                    }
+                    else
+                    {
+                        GameManager.instance.bossManager.enemiesAlive -= 1;
+                    }
                     robotExplosion.Play();
                     deathSound.Play();
                 }
@@ -134,10 +141,6 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         yield return new WaitForSeconds(deathTimer);
         Destroy(agent.gameObject);
-        if (belongsToGORE)
-        {
-            GameManager.instance.bossManager.enemiesAlive -= 1;
-        }
     }
 
     IEnumerator roam()

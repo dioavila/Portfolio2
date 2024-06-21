@@ -16,7 +16,8 @@ public class BossManager : MonoBehaviour
     bool canGun = false, canSpawn = false, canLaser = false;
     //bool startLaser = false;
     public bool startSpawn = false;
-    bool Death = false;
+    public bool Death = false;
+    bool nextPhase = false;
     [SerializeField] List<GameObject> listEyes;
     [SerializeField] ParticleSystem deathEye;
 
@@ -44,6 +45,8 @@ public class BossManager : MonoBehaviour
     [SerializeField] List<GameObject> laserList;
     [SerializeField] int lasersToSpawn = 3;
     [SerializeField] float laserSpawnDelay = 1.5f;
+    [SerializeField] int laserMultiplierP2 = 2;
+    [SerializeField] int laserMultiplierP3 = 2;
     int laserToSpawnOrig;
     bool laserOn = false, laserTransition = false;
     bool laserFirst = false;
@@ -67,6 +70,11 @@ public class BossManager : MonoBehaviour
         vulTimerOrig = vulTimer;
         patternTimerOrig = patternTimer;
     }
+
+    [Header("Audio")]
+    [SerializeField] List<AudioClip> clipList; //0 - Explosion Eyes, 1 - Open Barrier
+    [SerializeField] List<AudioSource> barrierSound;
+    [SerializeField] AudioSource eyeSound;
 
     // Update is called once per frame
     void Update()
@@ -130,11 +138,13 @@ public class BossManager : MonoBehaviour
                 {
                     if (laserTransition)
                     {
-                        if (activeLasers == 0)
+                        if (activeLasers <= 0)
+                        {
                             if (!laserFirst)
                                 StartCoroutine(patternWaitLaserToSpawn());
                             else
                                 StartCoroutine(patternWaitLaserToVul());
+                        }
                     }
                 }
                 //Disable Lasers
@@ -221,7 +231,14 @@ public class BossManager : MonoBehaviour
         for (int i = 0; i < barrierList.Count; ++i)
         {
             if (barrierList[i] != null)
+            {
+                barrierSound[i].clip = clipList[1];
+                barrierSound[i].pitch = 0.5f;
+                barrierSound[i].Play();
                 barrierList[i].SetActive(false);
+            }
+                
+
         }
         if (pattern1)
         {
@@ -247,7 +264,12 @@ public class BossManager : MonoBehaviour
             for (int i = 0; i < barrierList.Count; ++i)
             {
                 if (barrierList[i] != null)
+                {
                     barrierList[i].SetActive(true);
+                    barrierSound[i].clip = clipList[1];
+                    barrierSound[i].pitch = 0.8f;
+                    barrierSound[i].Play();
+                }
             }
             PatternTransitionTimer();
             if (patternTrans)
@@ -256,22 +278,27 @@ public class BossManager : MonoBehaviour
                 vulExpose = false;
                 if (weakspotList.Count == weakPointCount)
                 {
+                    //nextPhase = false;
                     PatternLoopReset();
                     switch (weakPointCount)
                     {
                         case 3:
-                            canGun = true; 
+                            canGun = true;
+                            lasersToSpawn = laserToSpawnOrig;
                             break;
                         case 2:
                             canLaser = true;
+                            lasersToSpawn = laserToSpawnOrig;
                             break;
                         case 1:
                             canSpawn = true;
+                            lasersToSpawn = laserToSpawnOrig;
                             break;
                     }
                 }
                 else
                 {
+                    //nextPhase = true;
                     PatternLoopReset();
                     switch (weakPointCount)
                     {
@@ -280,11 +307,15 @@ public class BossManager : MonoBehaviour
                             canLaser = true;
                             pattern2 = true;
                             numberToSpawn *= 2;
+                            laserToSpawnOrig *= laserMultiplierP2;
+                            lasersToSpawn = laserToSpawnOrig;
                             break;
                         case 2:
                             pattern2 = false;
                             canSpawn = true;
                             pattern3 = true;
+                            laserToSpawnOrig *= laserMultiplierP3;
+                            lasersToSpawn = laserToSpawnOrig;
                             numberToSpawn *= 2;
                             break;
                         case 1:
@@ -308,21 +339,21 @@ public class BossManager : MonoBehaviour
         {
             StartCoroutine(spawnLasers());
         }
-        else if (lasersToSpawn == 0)
+        else if (lasersToSpawn <= 0)
         {
             laserTransition = true;
             canLaser = false;
+            lasersToSpawn = laserToSpawnOrig;
         }
     }
 
     IEnumerator spawnLasers()
     {
         laserOn = true;
-        int patternIndex = UnityEngine.Random.Range(0, 2);
+        int patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
         Instantiate(laserList[patternIndex], lSpawn1.transform.position, lSpawn1.transform.rotation);
-        --lasersToSpawn;
         yield return new WaitForSeconds(laserSpawnDelay);
-        patternIndex = UnityEngine.Random.Range(0, 2);
+        patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
         Instantiate(laserList[patternIndex], lSpawn2.transform.position, lSpawn2.transform.rotation);
         --lasersToSpawn;
         yield return new WaitForSeconds(laserSpawnDelay);
@@ -404,10 +435,10 @@ public class BossManager : MonoBehaviour
 
     IEnumerator patternWaitSpawnNGunsToLaser()
     {
-        yield return new WaitForSeconds(4);
-        lasersToSpawn = 2;
-        canLaser = true;
         spawnTransition = false;
+        yield return new WaitForSeconds(4);
+        //lasersToSpawn = laserToSpawnOrig;
+        canLaser = true;
     }
 
     void PatternTransitionTimer()
@@ -432,7 +463,15 @@ public class BossManager : MonoBehaviour
         spawnTransition = false;
         laserTransition = false;
         laserFirst = false;
-        lasersToSpawn = laserToSpawnOrig*2;
+        //if (pattern2 && nextPhase)
+        //{
+        //    laserToSpawnOrig *= laserMultiplierP2;
+        //}
+        //else if (pattern3 && nextPhase)
+        //{
+        //    laserToSpawnOrig *= laserMultiplierP3;
+        //}
+        //lasersToSpawn = laserToSpawnOrig;
         patternTimer = patternTimerOrig;
     }
 
@@ -444,6 +483,7 @@ public class BossManager : MonoBehaviour
             GameObject eyeDestroy = listEyes[index];
             listEyes.Remove(listEyes[index]);
             Instantiate(deathEye, eyeDestroy.transform.position, Quaternion.identity);
+            eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
             Destroy(eyeDestroy);
             yield return new WaitForSeconds(4);
         }
@@ -452,6 +492,8 @@ public class BossManager : MonoBehaviour
         listEyes.Clear();
         Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
         Destroy(lastEye);
+        eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
+        yield return new WaitForSeconds(4);
         GameManager.instance.updateGameGoal(-1);
     }
 }

@@ -17,6 +17,7 @@ public class KBullet : MonoBehaviour
     bool hitConfirmed = false;
     bool hitBlocked = false;
 
+    [Header("Audio System")]
     [SerializeField] List<AudioClip> collisionAudio;
     [SerializeField] AudioSource source;
     // Start is called before the first frame update

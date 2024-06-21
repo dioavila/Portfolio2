@@ -170,7 +170,7 @@ namespace Controller
             hitController = GetComponentInChildren<IHitParticlesController>();
             if (hitController == null)
             {
-                Debug.Log("No hit controller found in children. On laser hit no particles will play.");
+                //Debug.Log("No hit controller found in children. On laser hit no particles will play.");
                 hitController = EmptyParticles.Instance;
             }
         }

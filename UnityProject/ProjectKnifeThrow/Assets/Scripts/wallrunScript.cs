@@ -363,7 +363,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
         }
-        else if (bulletType.name == "Standard Knife" || bulletType.name == "Ice Knife 1.0")
+        else if (bulletType.name == "Standard Knife" || bulletType.name == "IceKnife 2.0")
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
@@ -371,7 +371,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
         }
-        else if (bulletType.name == "Fire Knife 1.0" && knifeList[selectedKnife].CurrentKinfeCount > 0)
+        else if (bulletType.name == "Fire Knife 2.0" && knifeList[selectedKnife].CurrentKinfeCount > 0)
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
