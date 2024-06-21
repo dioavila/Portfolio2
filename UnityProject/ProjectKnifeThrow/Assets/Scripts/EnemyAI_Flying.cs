@@ -13,6 +13,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
 
     [SerializeField] GameObject eyeball;
     [SerializeField] ParticleSystem robotExplosion;
+    [SerializeField] GameObject icecpasule;
 
     [SerializeField] GameObject bomb;
     [SerializeField] float bombReload;
@@ -103,7 +104,9 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     {
         modelTop.material.color = Color.blue;
         modelBottom.material.color = Color.blue;
+        icecpasule.SetActive(true);
         yield return new WaitForSeconds(time);
+        icecpasule.SetActive(false);
         modelTop.material.color = Color.white;
         modelBottom.material.color = Color.white;
     }

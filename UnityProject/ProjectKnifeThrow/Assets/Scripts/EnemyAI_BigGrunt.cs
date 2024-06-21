@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 {
     [SerializeField] Renderer model;
+    [SerializeField] Renderer Childmodel;
     [SerializeField] Transform shootPos1;
     [SerializeField] Transform shootPos2;
     [SerializeField] Transform shootPos3;
@@ -20,6 +21,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     [SerializeField] ParticleSystem robotExplosion;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject dropOnDeath;
+    [SerializeField] GameObject icecapsule;
 
     [SerializeField] int viewAngle;
     [SerializeField] float faceTargetSpeed;
@@ -68,18 +70,21 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     {
         if (!isDead)
         {
-            if (model.material.color == Color.blue)
-            {
-                agent.isStopped = true;
-                canShoot = false;
-            }
-            else
-            {
-                agent.isStopped = false;
-                canShoot = true;
-            }
+
             if (finishedStartup)
             {
+                if (model.material.color == Color.blue && Childmodel.material.color == Color.blue)
+                {
+                    agent.isStopped = true;
+                    canShoot = false;
+                    StopCoroutine(shoot());
+                    return;
+                }
+                else
+                {
+                    agent.isStopped = false;
+                    canShoot = true;
+                }
                 startingPos = transform.position;
                 if (lookPlayer)
                 {
@@ -251,7 +256,11 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     IEnumerator FlashBlue(int time)
     {
         model.material.color = Color.blue;
+        Childmodel.material.color = Color.blue;
+        icecapsule.SetActive(true);
         yield return new WaitForSeconds(time);
+        icecapsule.SetActive(false);
+        Childmodel.material.color = Color.white;
         model.material.color = Color.white;
     }
 }
