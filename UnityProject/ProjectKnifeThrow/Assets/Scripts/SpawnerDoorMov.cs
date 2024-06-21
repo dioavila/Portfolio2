@@ -59,6 +59,18 @@ public class SpawnerDoorMov : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        {
+            if (other.isTrigger)
+            {
+                return;
+            }
+            charIn = true;
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
             charIn = false;

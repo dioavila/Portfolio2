@@ -92,6 +92,7 @@ public class RailTurrets : MonoBehaviour
         isShooting = true;
         //StartCoroutine(flashMuzzle(muzzleFlash));
         muzzleFlash.Play();
+        gameObject.GetComponent<AudioSource>().Play();
         Instantiate(bullet, shootPos.position, transform.rotation, shootPos);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;

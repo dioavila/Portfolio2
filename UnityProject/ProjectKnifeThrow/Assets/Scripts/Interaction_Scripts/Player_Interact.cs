@@ -18,7 +18,7 @@ public class Player_Interact_Button : MonoBehaviour
     [SerializeField] List<GameObject> laserSet;
     bool playerInRange = false;
 
-    float moveRate = 1.0f;
+    //float moveRate = 1.0f;
     // Update is called once per frame
     void Update()
     {
