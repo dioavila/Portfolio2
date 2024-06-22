@@ -7,61 +7,50 @@ using UnityEngine.AI;
 
 public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 {
+    [Header("Big Grunt")]
+    public NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] Renderer Childmodel;
-    [SerializeField] Transform shootPos1;
-    [SerializeField] Transform shootPos2;
-    [SerializeField] Transform shootPos3;
-    [SerializeField] Transform shootPos4;
-    [SerializeField] Transform headPos;
-
-    [SerializeField] List<GameObject> critPoints = new List<GameObject>();
+    [SerializeField] Transform shootPos;
     [SerializeField] GameObject eyeball;
-    [SerializeField] ParticleSystem eyeBlood;
-    [SerializeField] ParticleSystem robotExplosion;
-    [SerializeField] ParticleSystem muzzleFlash;
-    [SerializeField] GameObject dropOnDeath;
-    [SerializeField] GameObject icecapsule;
-
+    [SerializeField] Transform headPos;
+    [SerializeField] float spawnMoveTime;
+    [SerializeField] float turnRate;
     [SerializeField] int viewAngle;
-    [SerializeField] float faceTargetSpeed;
+    [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
-    [SerializeField] int deathTimer;
 
+    [Header("Weak Points")]
+    [SerializeField] List<GameObject> critPoints = new List<GameObject>();
+
+    [Header("Gun")]
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-
-    [SerializeField] public Transform spawnPath;
-    private Transform startingSpawn;
-
-    [Header("Sounds")]
+    [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] AudioSource gunSound;
+
+    [Header("Dead")]
+    [SerializeField] float deathTimer;
+    [SerializeField] GameObject dropOnDeath;
+    [SerializeField] ParticleSystem robotExplosion;
     [SerializeField] AudioSource deathSound;
-
-    public NavMeshAgent agent;
-
-    bool isShooting;
-    bool playerInRange;
-    bool destChosen;
-    bool finishedStartup = false;
-    bool canShoot = true;
 
     Vector3 playerDir;
     Vector3 startingPos;
-
+    bool finishedStartup;
+    bool isShooting;
+    bool playerInRange;
+    bool canShoot;
+    bool canTurn;
     float angleToPlayer;
+    bool destChosen;
     float stoppingDistOrig;
-
-    bool isDead = false;
-    bool lookPlayer = false;
-    public float turnRate;
+    bool isDead;
+    bool lookPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        canShoot = true;
-        startingSpawn = spawnPath;
         stoppingDistOrig = agent.stoppingDistance;
     }
 
@@ -70,48 +59,42 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     {
         if (!isDead)
         {
-
-            if (finishedStartup)
+            if (model.material.color == Color.blue)
             {
-                if (model.material.color == Color.blue && Childmodel.material.color == Color.blue)
-                {
-                    agent.isStopped = true;
-                    canShoot = false;
-                    StopCoroutine(shoot());
-                    return;
-                }
-                else
-                {
-                    agent.isStopped = false;
-                    canShoot = true;
-                }
-                startingPos = transform.position;
-                if (lookPlayer)
+                agent.isStopped = true;
+                canShoot = false;
+                canTurn = false;
+            }
+            else
+            {
+                agent.isStopped = false;
+                canShoot = true;
+                canTurn = true;
+            }
+
+            if (!finishedStartup)
+            {
+                StartCoroutine(spawnMove());
+            }
+            else if (finishedStartup)
+            {
+                if (playerInRange && !canSeePlayer() && canTurn)
                 {
                     faceTarget();
-                }
-                if (playerInRange && !canSeePlayer())
-                {
-                    if (!lookPlayer)
-                        lookPlayer = false;
-                    StartCoroutine(roam());
                 }
                 else if (!playerInRange)
                 {
                     StartCoroutine(roam());
                 }
-                if (critPoints.Count != 0)
+                if (critPoints[0] == null && critPoints[1] == null && critPoints[2] == null)
                 {
-                    for (int i = 0; i < critPoints.Count; i++)
-                    {
-                        if (critPoints[i] == null)
-                            critPoints.Remove(critPoints[i]);
-                    }
+                    critPoints.Remove(critPoints[2]);
+                    critPoints.Remove(critPoints[1]);
+                    critPoints.Remove(critPoints[0]);
                 }
                 if (critPoints.Count == 0)
                 {
                     Destroy(eyeball);
-                    eyeBlood.Play();
                     agent.SetDestination(agent.transform.position);
                     gameObject.GetComponent<Rigidbody>().isKinematic = false;
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -122,18 +105,18 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                     deathSound.Play();
                 }
             }
-            else
-            {
-                agent.stoppingDistance = 1;
-                agent.destination = startingSpawn.position;
-                if (agent.remainingDistance <= stoppingDistOrig)
-                    finishedStartup = true;
-            }
         }
         else if (isDead)
         {
             StartCoroutine(deathAnimation());
         }
+    }
+
+    IEnumerator spawnMove()
+    {
+        agent.Move(transform.forward * Time.deltaTime * agent.speed);
+        yield return new WaitForSeconds(spawnMoveTime);
+        finishedStartup = true;
     }
 
     IEnumerator deathAnimation()
@@ -164,21 +147,19 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
-        //Debug.Log(angleToPlayer);
-        //Debug.DrawRay(headPos.position, playerDir);
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDir, out hit))
         {
             if (hit.collider.CompareTag("Player") && angleToPlayer < viewAngle)
             {
                 agent.stoppingDistance = stoppingDistOrig;
-                if (!isShooting)
+                if (!isShooting && canShoot && angleToPlayer <= viewAngle)
                 {
                     StartCoroutine(shoot());
                 }
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    lookPlayer = true;
+                    faceTarget();
                 }
                 return true;
             }
@@ -198,6 +179,8 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
+            agent.SetDestination(agent.transform.position);
+            destChosen = true;
             playerInRange = true;
         }
     }
@@ -206,7 +189,6 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
-            lookPlayer = false;
             playerInRange = false;
             agent.stoppingDistance = 0;
         }
@@ -215,29 +197,11 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     IEnumerator shoot()
     {
         isShooting = true;
-        if (shootPos1 != null)
+        if (shootPos != null)
         {
             muzzleFlash.Play();
             gunSound.Play();
-            createBullet(shootPos1);
-        }
-        if (shootPos2 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos2);
-        }
-        if (shootPos3 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos3);
-        }
-        if (shootPos4 != null)
-        {
-            muzzleFlash.Play();
-            gunSound.Play();
-            createBullet(shootPos4);
+            createBullet(shootPos);
         }
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
@@ -256,11 +220,7 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     IEnumerator FlashBlue(int time)
     {
         model.material.color = Color.blue;
-        Childmodel.material.color = Color.blue;
-        icecapsule.SetActive(true);
         yield return new WaitForSeconds(time);
-        icecapsule.SetActive(false);
-        Childmodel.material.color = Color.white;
         model.material.color = Color.white;
     }
 }

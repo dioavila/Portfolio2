@@ -288,24 +288,28 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (playerCanMove) {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
-       sprint();
+        if(!onAir)
+        {
+            sprint();
+        }
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            //anim.SetTrigger("JumpAnim");
-            canSprint = false;
-            if(jumpCount < 1)
-            {
-                anim.SetTrigger("JumpAnim");
-            }
-            else 
-            {
-                //anim.SetBool("JumpBool1", false);
-                anim.SetTrigger("JumpAnim2");
-            }
-            ++jumpCount;
-            playerVel.y = jumpSpeed;
-            onAir = true;
+            ////anim.SetTrigger("JumpAnim");
+            //canSprint = false;
+            //if(jumpCount < 1)
+            //{
+            //    anim.SetTrigger("JumpAnim");
+            //}
+            //else 
+            //{
+            //    //anim.SetBool("JumpBool1", false);
+            //    anim.SetTrigger("JumpAnim2");
+            //}
+            //++jumpCount;
+            //playerVel.y = jumpSpeed;
+            //onAir = true;
+            jump();
         }
 
         if (!isWallRunning && !isGrinding)
@@ -315,14 +319,32 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         }
     }
 
+    void jump()
+    {
+        //anim.SetTrigger("JumpAnim");
+        canSprint = false;
+        if (jumpCount < 1)
+        {
+            anim.SetTrigger("JumpAnim");
+        }
+        else
+        {
+            //anim.SetBool("JumpBool1", false);
+            anim.SetTrigger("JumpAnim2");
+        }
+        ++jumpCount;
+        playerVel.y = jumpSpeed;
+        onAir = true;
+    }
+
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero)
+        if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero && !isWallRunning)
         {
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed *= sprintMod;
         }
-        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero)
+        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero || isWallRunning)
         {
             anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
@@ -466,10 +488,10 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     {
         Vector3 wallTouchChecker;
 
-        if(jumpCount == 2)
-        {
-            jumpCount = 1;
-        }
+        //if(jumpCount == 2)
+        //{
+            jumpCount = 0;
+        //}
         if (wallRunSide == 1)
         {
             wallTouchChecker = playerObj.transform.right * 10;
@@ -490,12 +512,13 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             //anim.SetBool("Jump1Bool", false);
             //anim.SetBool("Jump2Bool", false);
             canSprint = false;
+            anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerCanMove = false;
         }
 
         if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides)
         {
-            //anim.SetBool("Jump1Bool", true);
+            jump();
             ValuesReset();
         }
 
@@ -624,7 +647,6 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     IEnumerator Dash()
     {
         isDashing = true;
-
         // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
@@ -639,24 +661,28 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (Vector3.Dot(dashDirection, transform.forward) > 0.5f)
         {
             // Forward dash
+            anim.SetBool("isDashing", true);
             fovController.IncreaseFovForSlide();
         }
         else if (Vector3.Dot(dashDirection, -transform.forward) > 0.5f)
         {
             // Backward dash
+            anim.SetBool("isDashing", true);
             fovController.DecreaseFovForBackwardSlide();
         }
         else if (Vector3.Dot(dashDirection, -transform.right) > 0.5f)
         {
             // Left dash
+            anim.SetBool("isDashingL", true);
             fovController.TiltCameraLeft();
         }
         else if (Vector3.Dot(dashDirection, transform.right) > 0.5f)
         {
             // Right dash
+            anim.SetBool("isDashingR", true);
             fovController.TiltCameraRight();
         }
-        GameManager.instance.audioScript.PlayDash();
+        //GameManager.instance.audioScript.PlayDash();
         float elapsedTime = 0f;
         while (elapsedTime < dashDuration)
         {
@@ -669,6 +695,9 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         }
 
         isDashing = false;
+        anim.SetBool("isDashing", false);
+        anim.SetBool("isDashingL", false);
+        anim.SetBool("isDashingR", false);
         fovController.ResetFov();
     }
 

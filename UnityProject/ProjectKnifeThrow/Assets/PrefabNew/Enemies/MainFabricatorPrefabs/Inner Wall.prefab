@@ -1430,7 +1430,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7773155662781055955}
   serializedVersion: 2
-  m_LocalRotation: {x: 1.110223e-17, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.18066, y: 0.000015258789, z: -28.408371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1530,11 +1530,16 @@ MonoBehaviour:
   bottomEyeEleven: {fileID: 8983215874111759704}
   bottomEyeTwelve: {fileID: 8732775863056444990}
   eyeExplosionEffect: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
+  eyeExplosionSound: {fileID: 5141448411783814763, guid: 09f6346adc594374981de053f0c87c1a, type: 3}
   enemyToSpawn: {fileID: 256887638187867142, guid: 9d1c64fbdf081be42b6f61b955ff9d94, type: 3}
+  floor2RoomEnemy: {fileID: 2336932430221318097, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
   spawnTimer: 3
   numberToSpawn: 2
   spawnLocationList:
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawn2ndFloorLocs:
   - {fileID: 0}
   - {fileID: 0}
   goal: 0
@@ -2068,7 +2073,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3793
+  m_VersionIndex: 3802
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3811,7 +3816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4981184018972447225, guid: 77aa5323934d8294d8f16cf50ffb6475, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.48
+      value: -36.05
       objectReference: {fileID: 0}
     - target: {fileID: 4981184018972447225, guid: 77aa5323934d8294d8f16cf50ffb6475, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3819,7 +3824,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4981184018972447225, guid: 77aa5323934d8294d8f16cf50ffb6475, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.21
+      value: 15.05
       objectReference: {fileID: 0}
     - target: {fileID: 4981184018972447225, guid: 77aa5323934d8294d8f16cf50ffb6475, type: 3}
       propertyPath: m_LocalRotation.w

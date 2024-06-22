@@ -13,7 +13,6 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
 
     [SerializeField] GameObject eyeball;
     [SerializeField] ParticleSystem robotExplosion;
-    [SerializeField] GameObject icecpasule;
 
     [SerializeField] GameObject bomb;
     [SerializeField] float bombReload;
@@ -24,6 +23,8 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
 
     public NavMeshAgent agent;
 
+    private Color tempTopColor;
+    private Color tempBottomColor;
     bool hasBomb;
     bool canShoot;
     bool isDead = false;
@@ -32,6 +33,8 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     void Start()
     {
         hasBomb = true;
+        tempTopColor = modelTop.material.color;
+        tempBottomColor = modelBottom.material.color;
     }
 
     // Update is called once per frame
@@ -104,10 +107,8 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     {
         modelTop.material.color = Color.blue;
         modelBottom.material.color = Color.blue;
-        icecpasule.SetActive(true);
         yield return new WaitForSeconds(time);
-        icecpasule.SetActive(false);
-        modelTop.material.color = Color.white;
-        modelBottom.material.color = Color.white;
+        modelTop.material.color = tempTopColor;
+        modelBottom.material.color = tempBottomColor;
     }
 }

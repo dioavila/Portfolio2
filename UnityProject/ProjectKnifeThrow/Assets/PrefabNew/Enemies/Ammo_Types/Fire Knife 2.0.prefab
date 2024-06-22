@@ -9713,7 +9713,7 @@ MonoBehaviour:
   hitMiss: {fileID: 2105733940952760029, guid: fc1b36f32202e8d45ad78be1e089aefb, type: 3}
   collisionAudio:
   - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
-  - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
+  - {fileID: 8300000, guid: d9c3d57e9bff44f42b938e2ccb4dfc8d, type: 3}
   source: {fileID: 1824080472257436500}
 --- !u!54 &8861783749111213343
 Rigidbody:
@@ -9723,9 +9723,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3243578565138730391}
   serializedVersion: 4
-  m_Mass: 1000
+  m_Mass: 5
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -9754,7 +9754,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.34
   m_Pitch: 1
   Loop: 0
   Mute: 0
