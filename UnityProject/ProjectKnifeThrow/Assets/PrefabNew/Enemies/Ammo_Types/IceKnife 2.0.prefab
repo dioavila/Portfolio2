@@ -24263,9 +24263,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5538990448050556408}
   serializedVersion: 4
-  m_Mass: 1000
+  m_Mass: 5
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -24295,7 +24295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8750465884146275618}
-  speed: 50
+  speed: 60
   time: 5
   MaxCount: 0
   CurrCount: 0
@@ -24305,7 +24305,7 @@ MonoBehaviour:
   hitMiss: {fileID: 2105733940952760029, guid: fc1b36f32202e8d45ad78be1e089aefb, type: 3}
   collisionAudio:
   - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
-  - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
+  - {fileID: 8300000, guid: d9c3d57e9bff44f42b938e2ccb4dfc8d, type: 3}
   source: {fileID: 7811684081956451446}
 --- !u!82 &7811684081956451446
 AudioSource:
@@ -24319,7 +24319,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.34
   m_Pitch: 0.7055844
   Loop: 0
   Mute: 0
@@ -24363,7 +24363,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
