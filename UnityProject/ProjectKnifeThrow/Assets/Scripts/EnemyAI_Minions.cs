@@ -24,6 +24,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] ParticleSystem robotExplosion;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject dropOnDeath;
+    [SerializeField] GameObject IceCap;
 
     [SerializeField] int viewAngle;
     [SerializeField] int faceTargetSpeed;
@@ -258,7 +259,9 @@ public class enemyAI : MonoBehaviour, IFreeze
     IEnumerator FlashBlue(int time)
     {
         model.material.color = Color.blue;
+        IceCap.SetActive(true);
         yield return new WaitForSeconds(time);
+        IceCap.SetActive(false);
         model.material.color = Color.white;
     }
 }
