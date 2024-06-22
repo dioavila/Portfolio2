@@ -83,15 +83,15 @@ public class enemyAITest : MonoBehaviour
 
                 if (allWeakPointsDestroyed)
                 {
-                    gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    //gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    //gameObject.GetComponent<Rigidbody>().useGravity = true;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
                 }
             }
         }
-        else if (isDead && animStarted)
+        else if (isDead && !animStarted)
         {
             StartCoroutine(deathAnimation());
         }
@@ -106,11 +106,11 @@ public class enemyAITest : MonoBehaviour
 
     IEnumerator deathAnimation()
     {
+        animStarted = true;
         deadEffect.Play();
         deadEffectAudio.Play();
         yield return new WaitForSeconds(deathTimer);
         Destroy(gameObject);
-        animStarted = true;
     }
 
     private void checkWeakPointDestroy()

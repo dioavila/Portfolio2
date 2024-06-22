@@ -692,12 +692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 10
-  player: {fileID: 0}
-  limbTurnRate: 2
   body: {fileID: 7652027725428645852}
+  jointHP: 10
   viewAngle: 90
-  takeDamageSound: {fileID: 8899307623620791153}
+  limbTurnRate: 2
   modelDEMO: {fileID: 0}
 --- !u!136 &1259109719436807714
 CapsuleCollider:
@@ -865,12 +863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 10
-  player: {fileID: 0}
-  limbTurnRate: 2
   body: {fileID: 7652027725428645852}
+  jointHP: 10
   viewAngle: 90
-  takeDamageSound: {fileID: 6515355469255232851}
+  limbTurnRate: 2
   modelDEMO: {fileID: 0}
 --- !u!136 &7966451126801792322
 CapsuleCollider:
@@ -1227,12 +1223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 10
-  player: {fileID: 0}
-  limbTurnRate: 2
   body: {fileID: 7652027725428645852}
+  jointHP: 10
   viewAngle: 90
-  takeDamageSound: {fileID: 3013577189941251491}
+  limbTurnRate: 2
   modelDEMO: {fileID: 0}
 --- !u!136 &8661982459324449675
 CapsuleCollider:
@@ -2031,12 +2025,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 10
-  player: {fileID: 0}
-  limbTurnRate: 2
   body: {fileID: 7652027725428645852}
+  jointHP: 10
   viewAngle: 90
-  takeDamageSound: {fileID: 1313629259813734789}
+  limbTurnRate: 2
   modelDEMO: {fileID: 0}
 --- !u!136 &1874588921156852469
 CapsuleCollider:
@@ -2695,7 +2687,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7652027725428645852}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.4, y: 12, z: 49.3}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
@@ -2746,13 +2738,13 @@ MonoBehaviour:
   - {fileID: 8022547735612318954}
   - {fileID: 7639144880648911986}
   bullet: {fileID: 2097555871284643747, guid: 1ed63234cccb49b479fef94d1c031ac3, type: 3}
-  shootRate: 0.25
+  shootRate: 0.2
   muzzleSound: {fileID: 2808806780789535177}
   knockbackForce: 0
   activationRadius: 0
   knockbackAudio: {fileID: 0}
-  deathTimer: 3
-  dropOnDeath: {fileID: 4381402757193416671, guid: bf7aa5f0cb43a8144a01ede6c53c7ba6, type: 3}
+  deathTimer: 1.5
+  dropOnDeath: {fileID: 0}
   deadEffect: {fileID: 1268393486608244927, guid: 63cf11dd1b6ebf645a93d3c882862f63, type: 3}
   deadEffectAudio: {fileID: 1952105133521846444}
 --- !u!195 &2478735406385304304
@@ -3116,12 +3108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18dc314b7e1f3d458d8bb0fcabb75b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jointHP: 100
-  player: {fileID: 0}
-  limbTurnRate: 5
   body: {fileID: 7652027725428645852}
+  jointHP: 100
   viewAngle: 90
-  takeDamageSound: {fileID: 0}
+  limbTurnRate: 5
   modelDEMO: {fileID: 0}
 --- !u!33 &4506178996731176050
 MeshFilter:
@@ -3912,6 +3902,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4127995492125969002}
     m_Modifications:
+    - target: {fileID: 109605824409616448, guid: 065d666457ede1b419098fa1c0903029, type: 3}
+      propertyPath: weakpointSound
+      value: 
+      objectReference: {fileID: 5141448411783814763, guid: 09f6346adc594374981de053f0c87c1a, type: 3}
     - target: {fileID: 3953614467455912795, guid: 065d666457ede1b419098fa1c0903029, type: 3}
       propertyPath: m_UseGravity
       value: 0
@@ -3976,7 +3970,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2558789411985200602, guid: 065d666457ede1b419098fa1c0903029, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
