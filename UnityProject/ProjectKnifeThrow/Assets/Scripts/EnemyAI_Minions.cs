@@ -22,6 +22,7 @@ public class enemyAI : MonoBehaviour, IFreeze
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int roamDistance;
     [SerializeField] int roamTimer;
+    [SerializeField] GameObject IceCap;
 
     [Header("Weak Point")]
     [SerializeField] GameObject critPoint;
@@ -230,7 +231,9 @@ public class enemyAI : MonoBehaviour, IFreeze
     IEnumerator FlashBlue(int time)
     {
         model.material.color = Color.blue;
+        IceCap.SetActive(true);
         yield return new WaitForSeconds(time);
+        IceCap.SetActive(false);
         model.material.color = Color.white;
     }
 }
