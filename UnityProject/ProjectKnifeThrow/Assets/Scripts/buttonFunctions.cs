@@ -81,6 +81,12 @@ public class buttonFunctions : MonoBehaviour
             GameManager.instance.exitMenu2.SetActive(false);
         }
     }
+    public void toCredits()
+    {
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Credits"));
+        SceneManager.LoadScene("Credits");
+        GameManager.instance.InitializeSettings();
+    }
 
     public void toMain()
     {
