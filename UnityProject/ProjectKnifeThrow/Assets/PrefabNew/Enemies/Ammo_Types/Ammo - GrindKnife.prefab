@@ -53,9 +53,9 @@ MonoBehaviour:
   particles: {fileID: 4157149643825629376, guid: 2bf7d92b63a45b248affb04aa8700427, type: 3}
   particlesB: {fileID: 4157149643825629376, guid: 2bf7d92b63a45b248affb04aa8700427, type: 3}
   baseSource: {fileID: 8409062494182140493}
-  baseClip: {fileID: 8300000, guid: 656cc3d7a3b6a4043ab73979113ff57c, type: 3}
+  baseClip: {fileID: 8300000, guid: 8ed9419c62566064cbe01b6251070a92, type: 3}
   pointSource: {fileID: 8183433755355921532}
-  pointClip: {fileID: 8300000, guid: f48e423c01365964ea91655e9f8777f5, type: 3}
+  pointClip: {fileID: 8300000, guid: d70b25e100b629347aee88a06933922a, type: 3}
 --- !u!54 &1755532986681074904
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -95,13 +95,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.424
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 199
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -358,12 +358,12 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 59
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -401,7 +401,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

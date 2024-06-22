@@ -84,7 +84,7 @@ MonoBehaviour:
   hitMiss: {fileID: 2105733940952760029, guid: fc1b36f32202e8d45ad78be1e089aefb, type: 3}
   collisionAudio:
   - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
-  - {fileID: 8300000, guid: a606ed62087476b47832348039de4c0e, type: 3}
+  - {fileID: 8300000, guid: d9c3d57e9bff44f42b938e2ccb4dfc8d, type: 3}
   source: {fileID: 693502965699549300}
 --- !u!135 &1316987216742237884
 SphereCollider:
@@ -119,7 +119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.341
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -163,7 +163,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

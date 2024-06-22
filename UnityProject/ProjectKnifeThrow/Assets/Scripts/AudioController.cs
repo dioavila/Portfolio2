@@ -17,6 +17,7 @@ public class AudioController : MonoBehaviour
     [SerializeField] AudioClip playerDeathSound;
 
     [SerializeField] AudioSource audioPlayer;
+    [SerializeField] AudioSource audioPlayerAction;
     [SerializeField] AudioSource audioLeftArm;
     [SerializeField] AudioSource audioRightArm;
 
@@ -28,9 +29,9 @@ public class AudioController : MonoBehaviour
         {
             audioPlayer.clip = runningList[Random.Range(0, runningList.Count)];
             audioPlayer.pitch = Random.Range(0.2f, 0.5f);
-            audioPlayer.volume = 0.5f;
+            audioPlayer.volume = 0.35f;
             audioPlayer.Play();
-            audioPlayer.volume = 1f;
+            //audioPlayer.volume = 1f;
 
         }
     }
@@ -59,6 +60,7 @@ public class AudioController : MonoBehaviour
     {
         audioRightArm.clip = rightThrow[Random.Range(0, rightThrow.Count)];
         audioRightArm.pitch = Random.Range(0.50f, 0.80f);
+        audioPlayer.volume = 0.4f;
         audioRightArm.Play();
     }
     public void PlayThrowG()
@@ -70,9 +72,9 @@ public class AudioController : MonoBehaviour
 
     public void PlayDash()
     {
-        audioPlayer.clip = dashingList[Random.Range(0, dashingList.Count)];
-        audioPlayer.pitch = Random.Range(0.5f, 1f);
-        audioPlayer.Play();
+        audioPlayerAction.clip = dashingList[Random.Range(0, dashingList.Count - 1)];
+        audioPlayerAction.pitch = Random.Range(0.5f, 1f);
+        audioPlayerAction.Play();
     }
 
     public void PlayGrind()
