@@ -114,6 +114,9 @@ public class GameManager : MonoBehaviour
     public JointDamage jointCS;
     [SerializeField] TMP_Text KnifeCountText;
 
+    [Header("Credits")]
+    public CreditsManager creditsManager;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -286,6 +289,7 @@ public class GameManager : MonoBehaviour
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
+        //creditsManager.ShowCredits();
     }
 
 
