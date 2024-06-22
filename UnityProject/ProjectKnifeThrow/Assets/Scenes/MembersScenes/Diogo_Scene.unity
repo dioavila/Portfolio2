@@ -819,26 +819,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 429965149437782548, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
-      propertyPath: leftThrow.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: bee04855fd543bb488bd99361485ddb9, type: 3}
-    - target: {fileID: 429965149437782548, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
-      propertyPath: knifeReady.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: a1a5836109965574bab485b3a4a49af0, type: 3}
-    - target: {fileID: 429965149437782548, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
-      propertyPath: rightThrow.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 577fe224131be2b43ae108cc6b427cea, type: 3}
-    - target: {fileID: 429965149437782548, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
-      propertyPath: dashingList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 95008552806b1ca44abe2213807f85b5, type: 3}
-    - target: {fileID: 429965149437782548, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
-      propertyPath: rechargeList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 86edf953316d89c47b85d04ba9a907d7, type: 3}
     - target: {fileID: 4983666290991502284, guid: 3c2aa82f546b5594d97d244a63652e7d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.59

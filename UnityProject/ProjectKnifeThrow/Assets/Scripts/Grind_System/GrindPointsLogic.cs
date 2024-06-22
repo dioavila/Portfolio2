@@ -32,6 +32,10 @@ public class GrindPointsLogic : MonoBehaviour
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
         currParticle = Instantiate(particles, gPoint.position, Quaternion.identity);
         baseParticle = Instantiate(particlesB, transform.position, Quaternion.identity);
+        //if(GameManager.instance.grindScript.grindPoints.IndexOf(gPoint) == GameManager.instance.grindScript.grindPoints.Count - 1)
+        //{
+        //    currParticle.
+        //}
         //destructionTimerCurr = destructionTimerMax;
     }
 
