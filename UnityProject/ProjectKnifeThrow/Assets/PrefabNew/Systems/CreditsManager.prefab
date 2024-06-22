@@ -46,4 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   creditsCanvas: {fileID: 0}
   creditsText: {fileID: 0}
-  scrollSpeed: 20
+  creditsImageCompany: {fileID: 0}
+  creditsImageGame: {fileID: 0}
+  scrollSpeed: 50
+  fadeInDuration: 2

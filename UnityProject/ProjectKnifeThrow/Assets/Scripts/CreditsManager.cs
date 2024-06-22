@@ -22,12 +22,14 @@ public class CreditsManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1;
         // Initialize references to components
         canvasGroup = creditsCanvas.GetComponent<CanvasGroup>();
         creditsRectTransform = creditsText.GetComponent<RectTransform>();
         imageRectTransform1 = creditsImageCompany.GetComponent<RectTransform>();
         imageRectTransform2 = creditsImageGame.GetComponent<RectTransform>();
-        creditsCanvas.SetActive(false); // Hide the credits canvas at the start
+        //creditsCanvas.SetActive(false); // Hide the credits canvas at the start
+        ShowCredits();
     }
 
     void Update()
@@ -42,10 +44,10 @@ public class CreditsManager : MonoBehaviour
     public void ShowCredits()
     {
         // Prevent showing credits if they are already active
-        if (creditsActive)
-        {
-            return;
-        }
+        //if (creditsActive)
+        //{
+        //    return;
+        //}
 
         // Stop the existing scrolling coroutine if it's running
         if (scrollingCoroutine != null)
@@ -56,7 +58,7 @@ public class CreditsManager : MonoBehaviour
         // Activate the credits canvas and set the creditsActive flag
         creditsCanvas.SetActive(true);
         creditsActive = true;
-        ResetPositions(); 
+        ResetPositions();
         StartCoroutine(FadeInAndScrollCredits()); // Start the fade-in and scrolling coroutine
     }
 
@@ -124,8 +126,8 @@ public class CreditsManager : MonoBehaviour
             scrollingCoroutine = null;
         }
 
-        // Hide the credits canvas and reset the creditsActive flag
-        creditsCanvas.SetActive(false);
+        //// Hide the credits canvas and reset the creditsActive flag
+        //creditsCanvas.SetActive(false);
         creditsActive = false;
         Debug.Log("Credits canvas hidden. Returning to main menu.");
 
@@ -137,5 +139,8 @@ public class CreditsManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene("Main Menu"); 
+        Time.timeScale = 1;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 }
