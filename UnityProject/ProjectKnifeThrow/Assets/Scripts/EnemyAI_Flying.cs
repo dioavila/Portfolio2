@@ -17,6 +17,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     [SerializeField] GameObject bomb;
     [SerializeField] float bombReload;
     [SerializeField] int deathTimer;
+    [SerializeField] GameObject IceCap;
 
     [Header("Sounds")]
     [SerializeField] AudioSource deathSound;
@@ -107,7 +108,9 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     {
         modelTop.material.color = Color.blue;
         modelBottom.material.color = Color.blue;
+        IceCap.SetActive(true);
         yield return new WaitForSeconds(time);
+        IceCap.SetActive(false);
         modelTop.material.color = tempTopColor;
         modelBottom.material.color = tempBottomColor;
     }
