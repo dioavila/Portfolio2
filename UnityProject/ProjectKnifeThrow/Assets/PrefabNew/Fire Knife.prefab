@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire Child
       objectReference: {fileID: 0}
+    - target: {fileID: 6711654148179597947, guid: a1f8b326ee2404747959a189534b6a26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3b3ab2ec86ef45c48b01abe26983a811, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,18 +1,21 @@
+// Ignore Spelling: anim
+
 using System.Collections;
 using System.Collections.Generic;
 //using System.Diagnostics;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 //using static UnityEditor.Progress;
 
 public class wallRun : MonoBehaviour, IDamage, IPushback
 {
     [Header("General Settings")]
     [SerializeField] public CharacterController controller;
-    [SerializeField] int gravity;
-    [SerializeField] public int startingHP;
-    [SerializeField] public int HP;
+    [SerializeField] int gravity = 27;
+    [SerializeField] public int startingHP = 15;
+    [SerializeField] public int HP = 15;
     [SerializeField] int Force;
     [SerializeField] float ShakeTime;
     [SerializeField] float ShakeStrength;
@@ -51,28 +54,30 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] public int UpWardForce;
 
     [Header("Movement")]
-    [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] public int playerSpeed;
-    [SerializeField] int sprintMod;
+    [SerializeField] int jumpSpeed = 12;
+    [SerializeField] int jumpMax = 2;
+    [SerializeField] public float playerSpeed = 10;
+    [SerializeField] float sprintMod = 1.7f;
     public bool isGrinding = false;
     public Vector3 moveDir;
-    int playerSpeedStorage;
+    float playerSpeedStorage;
     Vector3 playerVel;
     int jumpCount;
     Vector3 PushBack;
 
     //sliding 
     [Header("Dashing")]
-    [SerializeField] float dashSpeed = 10f;
-    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashSpeed = 60f;
+    [SerializeField] float dashDuration = .2f;
     PlayerFovController fovController;
 
-    [SerializeField] int dashCharges = 2;
+    [SerializeField] int dashCharges = 3;
     [SerializeField] float dashCooldown = 3f;
+
     private int currentDashCharges;
     private float dashCoolDownTimer;
     public bool isDashing = false;
+    public bool isCoolDownActive = false;
     Vector3 dashDirection;
 
     //Wallrun Variables
@@ -114,7 +119,8 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     // Start is called before the first frame update
     void Start()
     {
-       // knifeModel = knifeList[0].Knife;
+        StartCoroutine(GameManager.instance.EndLoading());
+        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -123,9 +129,12 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         spawnPlayer();
         updateBPUI();
 
+        ShakeCamera = FindObjectOfType<CameraShake>();
         fovController = GetComponent<PlayerFovController>();
         rb = GetComponent<Rigidbody>();
-        ShakeCamera = FindObjectOfType<CameraShake>();
+
+        currentDashCharges = dashCharges;
+        updateDashUI();
     }
 
     // Update is called once per frame
@@ -162,21 +171,38 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
                 }
             }
 
-            // Slide cooldown logic
-            if (currentDashCharges < dashCharges)
+            // Dash cooldown logic
+            if (currentDashCharges <= 0 && !isCoolDownActive)
+            {
+                isCoolDownActive = true;
+                dashCoolDownTimer = 0f; // Start the cooldown
+            }
+
+            if (isCoolDownActive)
             {
                 dashCoolDownTimer += Time.deltaTime;
                 if (dashCoolDownTimer >= dashCooldown)
                 {
-                    currentDashCharges++;
+                    currentDashCharges = dashCharges;
                     dashCoolDownTimer = 0f;
+                    updateDashUI();
+
+                    isCoolDownActive = false; // Stop the cooldown when fully recharged
+                    
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0)
+
+            if (Input.GetKeyDown(KeyCode.C) && !isDashing && currentDashCharges > 0 && !isCoolDownActive)
             {
-                StartCoroutine(Slide());
+                StartCoroutine(Dash());
                 currentDashCharges--;
+                updateDashUI();
+
+                if (currentDashCharges <= 0)
+                {
+                    isCoolDownActive = true; // Start the cooldown if no charges are left
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.R) && !isGrinding && gThrowCount > 0)
@@ -204,7 +230,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         }
 
-        if (Input.GetButtonDown("Grind Throw") && !isShooting && gThrowCount < gThrowCountMax)
+        if (Input.GetButtonDown("Fire2") && !isShooting && gThrowCount < gThrowCountMax)
         {
             if(gThrowCount >= 0 && gThrowCount < 4)
             {
@@ -214,7 +240,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             }
         }
 
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Grind Throw"))
         {
             if (Time.timeScale == 1f)
             {
@@ -337,7 +363,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             yield return new WaitForSeconds(shootRateType);
             isShooting = false;
         }
-        else if (bulletType.name == "Standard Knife" || bulletType.name == "Ice Knife 1.0")
+        else if (bulletType.name == "Standard Knife" || bulletType.name == "IceKnife 2.0")
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
@@ -345,7 +371,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             isShooting = false;
             knifeModelLoc.gameObject.SetActive(true);
         }
-        else if (bulletType.name == "Fire Knife 1.0" && knifeList[selectedKnife].CurrentKinfeCount > 0)
+        else if (bulletType.name == "Fire Knife 2.0" && knifeList[selectedKnife].CurrentKinfeCount > 0)
         {
             isShooting = true;
             anim.SetTrigger("Shoot");
@@ -515,7 +541,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     /// </summary>
     public void TakeDamage(int amount)
     {
-        StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
+        //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         HP -= amount;
         updatePlayerUI();
         StartCoroutine(flashScreenRed());
@@ -595,9 +621,10 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         controller.enabled = true;
     }
 
-    IEnumerator Slide()
+    IEnumerator Dash()
     {
         isDashing = true;
+
         // Determine the slide direction
         if (moveDir == Vector3.zero)
         {
@@ -643,6 +670,11 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         isDashing = false;
         fovController.ResetFov();
+    }
+
+    void updateDashUI()
+    {
+        GameManager.instance.playerDashBar.fillAmount = (float)currentDashCharges / dashCharges;
     }
 
     public void Pushback(Vector3 dir)

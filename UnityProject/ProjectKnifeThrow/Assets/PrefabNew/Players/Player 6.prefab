@@ -1853,11 +1853,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 69000411992144870}
-  gravity: 25
-  startingHP: 1000
+  gravity: 27
+  startingHP: 15
   HP: 0
   Force: 0
+  ShakeTime: 0
+  ShakeStrength: 0
   isDead: 0
+  ShakeCamera: {fileID: 0}
   playerShootPos: {fileID: 8373682491851246608}
   knifeModelLoc: {fileID: 2682171571688388462}
   playerBullet: {fileID: 4651478977562499471, guid: 1fe5437af90beb4449f34718a868c4d3, type: 3}
@@ -1888,17 +1891,18 @@ MonoBehaviour:
   knifeModel: {fileID: 0}
   freezeTime: 0
   UpWardForce: 0
-  jumpSpeed: 10
+  jumpSpeed: 12
   jumpMax: 2
-  playerSpeed: 8
-  sprintMod: 2
+  playerSpeed: 10
+  sprintMod: 1.7
   isGrinding: 0
   moveDir: {x: 0, y: 0, z: 0}
-  slideSpeed: 30
-  slideDuration: 0.2
-  slideCharges: 2
-  slideCooldown: 3
-  isSliding: 0
+  dashSpeed: 60
+  dashDuration: 0.2
+  dashCharges: 3
+  dashCooldown: 3
+  isDashing: 0
+  isCoolDownActive: 0
   wallDist: 10
   charPitch: 0
   onAir: 0
@@ -1931,10 +1935,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fovChangeDuration: 0.1
   normalFov: 60
-  forwardFov: 50
-  backwardFov: 70
+  forwardFov: 45
+  backwardFov: 75
   tiltAngle: 15
-  tiltSmoothDuration: 0.2
+  tiltSmoothDuration: 0.5
+  bodyCamera: {fileID: 3178415389891459938}
+  mainCamera: {fileID: 6258327481894225830}
 --- !u!114 &2991291343225634875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,7 +1978,7 @@ CharacterController:
   serializedVersion: 3
   m_Height: 3
   m_Radius: 0.75
-  m_SlopeLimit: 45
+  m_SlopeLimit: 90
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001

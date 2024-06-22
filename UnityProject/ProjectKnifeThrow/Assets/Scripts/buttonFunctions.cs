@@ -68,8 +68,14 @@ public class buttonFunctions : MonoBehaviour
 
     public void onExitnotSureClick()
     {
-        GameManager.instance.exitMenu.SetActive(false);
-        GameManager.instance.exitMenu1.SetActive(false);
+        if (GameManager.instance.exitMenu != null)
+        {
+            GameManager.instance.exitMenu.SetActive(false);
+        }
+        if (GameManager.instance.exitMenu1 != null)
+        {
+            GameManager.instance.exitMenu1.SetActive(false);
+        }
         if (GameManager.instance.exitMenu2 != null)
         {
             GameManager.instance.exitMenu2.SetActive(false);
@@ -78,29 +84,45 @@ public class buttonFunctions : MonoBehaviour
 
     public void toMain()
     {
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Main Menu"));
         SceneManager.LoadScene("Main Menu");
         GameManager.instance.InitializeSettings();
     }
 
     public void tutorialLevel()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Tutorial"));
         GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level1()
     {
-        SceneManager.LoadScene("Level1");
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level1"));
+        GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level2()
     {
-        SceneManager.LoadScene("Level2");
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level2"));
+        GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void level3()
     {
-        SceneManager.LoadScene("Level3");
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level3"));
+        GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void quit()

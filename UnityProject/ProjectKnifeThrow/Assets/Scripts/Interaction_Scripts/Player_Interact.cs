@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class Player_Interact_Button : MonoBehaviour
 {
-    bool playerInRange = false;
-    [SerializeField] GameObject objectToMove;
-    [SerializeField] Transform moveTo;
+    [Header("Object Settings")]
+    [SerializeField] bool movesObject = true;
+    [SerializeField] bool startStopLaser = false;
+    [SerializeField] bool isConsole = false;
+
+    [Header("Movement Settings")]
+    [SerializeField] GameObject doorToOpen;
+    //[SerializeField] Transform moveTo;
     public bool openSesame = false;
 
-    float moveRate = 1.0f;
+    [Header("Laser Settings")]
+    [SerializeField] List<GameObject> laserSet;
+    bool playerInRange = false;
+
+    //float moveRate = 1.0f;
     // Update is called once per frame
     void Update()
     {
@@ -20,16 +29,36 @@ public class Player_Interact_Button : MonoBehaviour
 
         if (openSesame)
         {
-            objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, new Vector3(objectToMove.transform.position.x, 
-                moveTo.transform.position.y, objectToMove.transform.position.z), Time.deltaTime* moveRate);
+            //objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, new Vector3(objectToMove.transform.position.x, 
+            //    moveTo.transform.position.y, objectToMove.transform.position.z), Time.deltaTime* moveRate);
+            doorToOpen.GetComponent<DoorControl>().clearToOpen = true;
         }
     }
 
     void PerformAction()
     {
         Renderer rend = gameObject.GetComponent<Renderer>();
-        rend.material.SetColor("_Color", Color.blue);
-        openSesame = true;
+        if (!isConsole)
+        {
+            rend.material.SetColor("_Color", Color.blue);
+        }
+        else
+        {
+            rend.material.SetColor("_EmissionColor", Color.black);
+        }
+
+        if(movesObject) 
+        { 
+            openSesame = true;
+        }
+
+        if (startStopLaser)
+        {
+            for(int laserListiter = 0; laserListiter < laserSet.Count; ++laserListiter)
+            {
+                laserSet[laserListiter].SetActive(false);
+            }
+        }
     }
 
     void OnTriggerEnter(Collider other)

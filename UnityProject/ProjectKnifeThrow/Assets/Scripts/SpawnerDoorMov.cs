@@ -11,7 +11,7 @@ public class SpawnerDoorMov : MonoBehaviour
     [SerializeField] Transform startingPosition;
     [SerializeField] Transform finalPosition;
     public bool charIn = false;
-    bool doorOpen = false;
+    //bool doorOpen = false;
     bool doorClosed = true;
 
     // Start is called before the first frame update
@@ -48,6 +48,18 @@ public class SpawnerDoorMov : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") || other.CompareTag("Enemy"))
+        {
+            if (other.isTrigger)
+            {
+                return;
+            }
+            charIn = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") || other.CompareTag("Enemy"))
         {
