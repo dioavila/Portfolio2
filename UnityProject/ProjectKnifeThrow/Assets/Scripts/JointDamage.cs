@@ -17,12 +17,9 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     int origHP;
     GameObject player;
 
-    //enemyAITest enemyScript;
-
     // Start is called before the first frame update
     void Start()
     {
-        //enemyScript = gameObject.GetComponentInParent<enemyAITest>();
         origHP = jointHP;
         jointModel = gameObject.GetComponent<Renderer>();
         player = GameManager.instance.player;
@@ -57,7 +54,6 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
             Destroy(gameObject);
         }
     }
-
 
     IEnumerator flashred()
     {

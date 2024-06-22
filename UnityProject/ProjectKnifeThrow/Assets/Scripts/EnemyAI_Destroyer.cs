@@ -10,6 +10,8 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] float spawnMoveTime;
+    [SerializeField] float turnRate;
+    [SerializeField] float focusFireTime;
 
     [Header("Weak Points")]
     [SerializeField] List<List<GameObject>> allWeakPoints = new List<List<GameObject>>();
@@ -27,8 +29,8 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] AudioSource muzzleSound;
 
     [Header("Knock Back")]
+    [SerializeField] float knockbackJumpTime;
     [SerializeField] float knockbackForce;
-    [SerializeField] float activationRadius;
     [SerializeField] AudioSource knockbackAudio;
 
     [Header("Dead")]
@@ -37,14 +39,10 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] ParticleSystem deadEffect;
     [SerializeField] AudioSource deadEffectAudio;
 
-    float turnspeed;
-
-    Vector3 startMoveLoc;
     bool finishedStartup;
     bool isShooting;
-    bool knockbackReady;
-    bool playerInRange;
     bool allWeakPointsDestroyed;
+    bool jointDestroyed;
     bool topGone;
     bool leftGone;
     bool rightGone;
@@ -59,7 +57,6 @@ public class enemyAITest : MonoBehaviour
         allWeakPoints.Add(weakPointsLeft);
         allWeakPoints.Add(weakPointsRight);
         allWeakPoints.Add(weakPointsBottom);
-        //turnspeed = GameManager.instance.jointCS.limbTurnRate;
     }
 
     // Update is called once per frame
@@ -73,18 +70,17 @@ public class enemyAITest : MonoBehaviour
             }
             else if (finishedStartup)
             {
+                if (jointDestroyed)
+                    StartCoroutine(focusFire());
+                faceTarget();
                 if (!isShooting)
                 {
                     StartCoroutine(shoot());
                 }
-                
-                if(!allWeakPointsDestroyed)
+                if (!allWeakPointsDestroyed)
                     checkWeakPointDestroy();
-
                 if (allWeakPointsDestroyed)
                 {
-                    //gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    //gameObject.GetComponent<Rigidbody>().useGravity = true;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
@@ -95,6 +91,17 @@ public class enemyAITest : MonoBehaviour
         {
             StartCoroutine(deathAnimation());
         }
+    }
+
+    IEnumerator focusFire()
+    {
+        jointDestroyed = false;
+        shootRate = shootRate / 2;
+        turnRate = turnRate * 2;
+        yield return new WaitForSeconds(focusFireTime);
+        shootRate = shootRate * 2;
+        turnRate = turnRate / 2;
+
     }
 
     IEnumerator spawnMove()
@@ -113,6 +120,13 @@ public class enemyAITest : MonoBehaviour
         Destroy(gameObject);
     }
 
+    void faceTarget()
+    {
+        Vector3 direction = GameManager.instance.player.transform.position - transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, turnRate * Time.deltaTime);
+    }
+
     private void checkWeakPointDestroy()
     {
         for (int theWeakPoint = 0; theWeakPoint < allWeakPoints.Count; theWeakPoint++)
@@ -129,6 +143,7 @@ public class enemyAITest : MonoBehaviour
                     {
                         Destroy(turretJoint[0]);
                         topGone = true;
+                        jointDestroyed = true;
                     }
                 }
             }
@@ -145,6 +160,7 @@ public class enemyAITest : MonoBehaviour
                     {
                         Destroy(turretJoint[1]);
                         leftGone = true;
+                        jointDestroyed = true;
                     }
                 }
             }
@@ -161,6 +177,7 @@ public class enemyAITest : MonoBehaviour
                     {
                         Destroy(turretJoint[2]);
                         rightGone = true;
+                        jointDestroyed = true;
                     }
                 }
             }
@@ -177,6 +194,7 @@ public class enemyAITest : MonoBehaviour
                     {
                         Destroy(turretJoint[3]);
                         bottomGone = true;
+                        jointDestroyed = true;
                     }
                 }
             }
@@ -185,21 +203,6 @@ public class enemyAITest : MonoBehaviour
             allWeakPointsDestroyed = true;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-
-        }
-    }
     IEnumerator shoot()
     {
         isShooting = true;
@@ -214,88 +217,5 @@ public class enemyAITest : MonoBehaviour
             }
         }
         isShooting = false;
-
-        //if (shootPos[0] == null)
-        //{
-        //    shootRate -= 0.2f;
-        //    turnspeed = turnspeed / 2;
-        //    FocusFire.Play();
-        //    //FocusFire[1].Play();
-        //    //FocusFire[2].Play();
-        //    //FocusFire[3].Play();
-        //}
-        //if (shootPos[1] == null)
-        //{
-        //    shootRate -= 0.2f;
-        //    turnspeed = turnspeed / 2;
-        //    FocusFire.Play();
-        //    //FocusFire[0].Play();
-        //    //FocusFire[2].Play();
-        //    //FocusFire[3].Play();
-        //}
-        //if (shootPos[2] == null)
-        //{
-        //    shootRate -= 0.2f;
-        //    turnspeed = turnspeed / 2;
-        //    FocusFire.Play();
-        //    //FocusFire[1].Play();
-        //    //FocusFire[0].Play();
-        //    //FocusFire[3].Play();
-        //}
-        //if (shootPos[3] == null)
-        //{
-        //    shootRate -= 0.2f;
-        //    turnspeed = turnspeed / 2;
-        //    FocusFire.Play();
-        //    //FocusFire[1].Play();
-        //    //FocusFire[2].Play();
-        //    //FocusFire[0].Play();
-        //}
-        //if (shootPos[0] == null && shootPos[1] == null)
-        //{
-        //    FocusFire[2].Play();
-        //    FocusFire[3].Play();
-        //}
-        //if (shootPos[0] == null && shootPos[2] == null)
-        //{
-        //    FocusFire[1].Play();
-        //    FocusFire[3].Play();
-        //}
-        //if (shootPos[0] == null && shootPos[3] == null)
-        //{
-        //    FocusFire[2].Play();
-        //    FocusFire[1].Play();
-        //}
-        //if (shootPos[1] == null && shootPos[2] == null)
-        //{
-        //    FocusFire[0].Play();
-        //    FocusFire[3].Play();
-        //}
-        //if (shootPos[1] == null && shootPos[3] == null)
-        //{
-        //    FocusFire[0].Play();
-        //    FocusFire[2].Play();
-        //}
-        //if (shootPos[2] == null && shootPos[3] == null)
-        //{
-        //    FocusFire[0].Play();
-        //    FocusFire[1].Play();
-        //}
-        //isShooting = false;
     }
-
-    IEnumerator pushflash()
-    {
-        GameManager.instance.playerPushBack.SetActive(true);
-        yield return new WaitForSeconds(.1f);
-        GameManager.instance.playerPushBack.SetActive(false);
-    }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    IPushback player = collision.collider.GetComponent<IPushback>();
-    //    if (player != null)
-    //    {
-    //        player.Pushback((transform.position - collision.transform.position) * PushbackAmount);
-    //    }
-    //}
 }
