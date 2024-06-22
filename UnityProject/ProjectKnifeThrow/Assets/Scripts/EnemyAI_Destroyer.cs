@@ -6,60 +6,190 @@ using UnityEngine.AI;
 
 public class enemyAITest : MonoBehaviour
 {
+    [Header("Destroyer")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
-    [SerializeField] Transform[] shootPos = new Transform[4];
-    [SerializeField] int HP;
+    [SerializeField] float spawnMoveTime;
 
+    [Header("Weak Points")]
+    [SerializeField] List<List<GameObject>> allWeakPoints = new List<List<GameObject>>();
+    [SerializeField] List<GameObject> weakPointsTop = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsLeft = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsRight = new List<GameObject>();
+    [SerializeField] List<GameObject> weakPointsBottom = new List<GameObject>();
+
+    [Header("Guns")]
+    [SerializeField] List<GameObject> turretJoint = new List<GameObject>();
+    [SerializeField] Transform[] shootPos = new Transform[4];
+    [SerializeField] List<ParticleSystem> muzzleFlash = new List<ParticleSystem>();
     [SerializeField] GameObject bullet;
     [SerializeField] float shootRate;
-    [SerializeField] int PushbackAmount;
-    [SerializeField] ParticleSystem FocusFire;
-    [SerializeField] AudioSource pushAudio;
-    [SerializeField] AudioClip pushAudioClip;
-    float range;
+    [SerializeField] AudioSource muzzleSound;
+
+    [Header("Knock Back")]
+    [SerializeField] float knockbackForce;
+    [SerializeField] float activationRadius;
+    [SerializeField] AudioSource knockbackAudio;
+
+    [Header("Dead")]
+    [SerializeField] float deathTimer;
+    [SerializeField] GameObject dropOnDeath;
+    [SerializeField] ParticleSystem deadEffect;
+    [SerializeField] AudioSource deadEffectAudio;
+
     float turnspeed;
+
+    Vector3 startMoveLoc;
+    bool finishedStartup;
     bool isShooting;
-    public bool playerInRange;
-    public Transform playerLocation;
-    CapsuleCollider colid;
-    SphereCollider sphereCollider;
-    Vector3 dir;
-    [SerializeField] List<GameObject> muzzleFlash = new List<GameObject>();
+    bool knockbackReady;
+    bool playerInRange;
+    bool allWeakPointsDestroyed;
+    bool topGone;
+    bool leftGone;
+    bool rightGone;
+    bool bottomGone;
+    bool animStarted;
+    bool isDead;
 
     // Start is called before the first frame update
     void Start()
     {
-        colid = GetComponent<CapsuleCollider>();
-        sphereCollider = GetComponent<SphereCollider>();
-        range = colid.radius;
-        turnspeed = GameManager.instance.jointCS.limbTurnRate;
+        allWeakPoints.Add(weakPointsTop);
+        allWeakPoints.Add(weakPointsLeft);
+        allWeakPoints.Add(weakPointsRight);
+        allWeakPoints.Add(weakPointsBottom);
+        //turnspeed = GameManager.instance.jointCS.limbTurnRate;
     }
 
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination(GameManager.instance.player.transform.position);
-
-        if (!isShooting)
+        if (!isDead)
         {
-            StartCoroutine(shoot());
-        }
+            if (!finishedStartup)
+            {
+                StartCoroutine(spawnMove());
+            }
+            else if (finishedStartup)
+            {
+                if (!isShooting)
+                {
+                    StartCoroutine(shoot());
+                }
+                
+                if(!allWeakPointsDestroyed)
+                    checkWeakPointDestroy();
 
-        if (shootPos[0] == null && shootPos[1] == null && shootPos[2] == null && shootPos[3] == null)
-        {
-            muzzleFlash.Clear();
-            Destroy(gameObject);
+                if (allWeakPointsDestroyed)
+                {
+                    //gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    //gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    if (dropOnDeath != null)
+                        Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+                    isDead = true;
+                }
+            }
         }
+        else if (isDead && !animStarted)
+        {
+            StartCoroutine(deathAnimation());
+        }
+    }
+
+    IEnumerator spawnMove()
+    {
+        agent.Move(transform.forward * Time.deltaTime * agent.speed);
+        yield return new WaitForSeconds(spawnMoveTime);
+        finishedStartup = true;
+    }
+
+    IEnumerator deathAnimation()
+    {
+        animStarted = true;
+        deadEffect.Play();
+        deadEffectAudio.Play();
+        yield return new WaitForSeconds(deathTimer);
+        Destroy(gameObject);
+    }
+
+    private void checkWeakPointDestroy()
+    {
+        for (int theWeakPoint = 0; theWeakPoint < allWeakPoints.Count; theWeakPoint++)
+        {
+            if (theWeakPoint == 0 && !topGone)
+            {
+                for (int j = 0; j < weakPointsTop.Count; j++)
+                {
+                    if (weakPointsTop[j] == null)
+                    {
+                        weakPointsTop.RemoveAt(j);
+                    }
+                    if (weakPointsTop.Count == 0)
+                    {
+                        Destroy(turretJoint[0]);
+                        topGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 1 && !leftGone)
+            {
+                for (int j = 0; j < weakPointsLeft.Count; j++)
+                {
+                    if (weakPointsLeft[j] == null)
+                    {
+                        weakPointsLeft.RemoveAt(j);
+                    }
+                    if (weakPointsLeft.Count == 0)
+                    {
+                        Destroy(turretJoint[1]);
+                        leftGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 2 && !rightGone)
+            {
+                for (int j = 0; j < weakPointsRight.Count; j++)
+                {
+                    if (weakPointsRight[j] == null)
+                    {
+                        weakPointsRight.RemoveAt(j);
+                    }
+                    if (weakPointsRight.Count == 0)
+                    {
+                        Destroy(turretJoint[2]);
+                        rightGone = true;
+                    }
+                }
+            }
+
+            if (theWeakPoint == 3 && !bottomGone)
+            {
+                for (int j = 0; j < weakPointsBottom.Count; j++)
+                {
+                    if (weakPointsBottom[j] == null)
+                    {
+                        weakPointsBottom.RemoveAt(j);
+                    }
+                    if (weakPointsBottom.Count == 0)
+                    {
+                        Destroy(turretJoint[3]);
+                        bottomGone = true;
+                    }
+                }
+            }
+        }
+        if (topGone && leftGone && rightGone && bottomGone)
+            allWeakPointsDestroyed = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-           //colid.radius = sphereCollider.radius;
-           // pushAudio.PlayOneShot(pushAudioClip);
-           // StartCoroutine(pushflash());
+
         }
     }
 
@@ -67,73 +197,60 @@ public class enemyAITest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //colid.radius = range;
+
         }
     }
     IEnumerator shoot()
     {
         isShooting = true;
-        if (shootPos[0] != null)
+        for (int i = 0; i < shootPos.Length; i++)
         {
-            StartCoroutine(flashMuzzle(muzzleFlash[0]));
-            Instantiate(bullet, shootPos[0].position, transform.rotation, shootPos[0]);
-            yield return new WaitForSeconds(shootRate);
+            if (shootPos[i] != null)
+            {
+                muzzleFlash[i].Play();
+                muzzleSound.Play();
+                Instantiate(bullet, shootPos[i].position, transform.rotation, shootPos[i]);
+                yield return new WaitForSeconds(shootRate);
+            }
         }
-        if (shootPos[1] != null)
-        {
-            StartCoroutine(flashMuzzle(muzzleFlash[1]));
-            Instantiate(bullet, shootPos[1].position, transform.rotation, shootPos[1]);
-            yield return new WaitForSeconds(shootRate);
+        isShooting = false;
 
-        }
-        if (shootPos[2] != null)
-        {
-            StartCoroutine(flashMuzzle(muzzleFlash[2]));
-            Instantiate(bullet, shootPos[2].position, transform.rotation, shootPos[2]);
-            yield return new WaitForSeconds(shootRate);
-        }
-        if (shootPos[3] != null)
-        {
-            StartCoroutine(flashMuzzle(muzzleFlash[3]));
-            Instantiate(bullet, shootPos[3].position, transform.rotation, shootPos[3]);
-            yield return new WaitForSeconds(shootRate);
-        }
-        if (shootPos[0] == null)
-        {
-            shootRate -= 0.2f;
-            turnspeed = turnspeed / 2;
-            FocusFire.Play();
-            //FocusFire[1].Play();
-            //FocusFire[2].Play();
-            //FocusFire[3].Play();
-        }
-        if (shootPos[1] == null)
-        {
-            shootRate -= 0.2f;
-            turnspeed = turnspeed / 2;
-            FocusFire.Play();
-            //FocusFire[0].Play();
-            //FocusFire[2].Play();
-            //FocusFire[3].Play();
-        }
-        if (shootPos[2] == null)
-        {
-            shootRate -= 0.2f;
-            turnspeed = turnspeed / 2;
-            FocusFire.Play();
-            //FocusFire[1].Play();
-            //FocusFire[0].Play();
-            //FocusFire[3].Play();
-        }
-        if (shootPos[3] == null)
-        {
-            shootRate -= 0.2f;
-            turnspeed = turnspeed / 2;
-            FocusFire.Play();
-            //FocusFire[1].Play();
-            //FocusFire[2].Play();
-            //FocusFire[0].Play();
-        }
+        //if (shootPos[0] == null)
+        //{
+        //    shootRate -= 0.2f;
+        //    turnspeed = turnspeed / 2;
+        //    FocusFire.Play();
+        //    //FocusFire[1].Play();
+        //    //FocusFire[2].Play();
+        //    //FocusFire[3].Play();
+        //}
+        //if (shootPos[1] == null)
+        //{
+        //    shootRate -= 0.2f;
+        //    turnspeed = turnspeed / 2;
+        //    FocusFire.Play();
+        //    //FocusFire[0].Play();
+        //    //FocusFire[2].Play();
+        //    //FocusFire[3].Play();
+        //}
+        //if (shootPos[2] == null)
+        //{
+        //    shootRate -= 0.2f;
+        //    turnspeed = turnspeed / 2;
+        //    FocusFire.Play();
+        //    //FocusFire[1].Play();
+        //    //FocusFire[0].Play();
+        //    //FocusFire[3].Play();
+        //}
+        //if (shootPos[3] == null)
+        //{
+        //    shootRate -= 0.2f;
+        //    turnspeed = turnspeed / 2;
+        //    FocusFire.Play();
+        //    //FocusFire[1].Play();
+        //    //FocusFire[2].Play();
+        //    //FocusFire[0].Play();
+        //}
         //if (shootPos[0] == null && shootPos[1] == null)
         //{
         //    FocusFire[2].Play();
@@ -164,21 +281,9 @@ public class enemyAITest : MonoBehaviour
         //    FocusFire[0].Play();
         //    FocusFire[1].Play();
         //}
-        isShooting = false;
+        //isShooting = false;
     }
 
-    IEnumerator flashMuzzle(GameObject muzzleFlash)
-    {
-        if (muzzleFlash != null)
-        {
-            muzzleFlash.SetActive(true);
-            yield return new WaitForSeconds(.1f);
-            if (muzzleFlash != null)
-            {
-                muzzleFlash.SetActive(false);
-            }
-        }
-    }
     IEnumerator pushflash()
     {
         GameManager.instance.playerPushBack.SetActive(true);

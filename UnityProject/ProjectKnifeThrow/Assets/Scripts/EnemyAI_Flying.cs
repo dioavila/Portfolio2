@@ -23,6 +23,8 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
 
     public NavMeshAgent agent;
 
+    private Color tempTopColor;
+    private Color tempBottomColor;
     bool hasBomb;
     bool canShoot;
     bool isDead = false;
@@ -31,6 +33,8 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
     void Start()
     {
         hasBomb = true;
+        tempTopColor = modelTop.material.color;
+        tempBottomColor = modelBottom.material.color;
     }
 
     // Update is called once per frame
@@ -104,7 +108,7 @@ public class EnemyAI_Flying : MonoBehaviour, IFreeze
         modelTop.material.color = Color.blue;
         modelBottom.material.color = Color.blue;
         yield return new WaitForSeconds(time);
-        modelTop.material.color = Color.white;
-        modelBottom.material.color = Color.white;
+        modelTop.material.color = tempTopColor;
+        modelBottom.material.color = tempBottomColor;
     }
 }

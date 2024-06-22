@@ -112,6 +112,7 @@ public class MainFabricator : MonoBehaviour
 
     [Header("Eye Explosion Effect")]
     public ParticleSystem eyeExplosionEffect;
+    public AudioSource eyeExplosionSound;
 
     //Bool for if the eye has exploded
     bool eyeF1Explode1 = false;
@@ -237,18 +238,29 @@ public class MainFabricator : MonoBehaviour
         destroyF2Laser();
     }
 
+    IEnumerator waitDestroyTime(ParticleSystem PS, AudioSource AS)
+    {
+        yield return new WaitForSeconds(1.0f);
+        Destroy(PS.gameObject);
+        Destroy(AS.gameObject);
+    }
+
     private void destroyF1WallLaser()
     {
 
         if (eyeF1One == null && !eyeF1Explode1)
         {
-            Instantiate(eyeExplosionEffect, eyeF1OneLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, eyeF1OneLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, eyeF1OneLoc, Quaternion.identity);
             eyeF1Explode1 = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1Two == null && !eyeF1Explode2)
         {
-            Instantiate(eyeExplosionEffect, eyeF1TwoLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, eyeF1TwoLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, eyeF1TwoLoc, Quaternion.identity);
             eyeF1Explode2 = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1One == null && eyeF1Two == null)
             Destroy(laserF1Wall);
@@ -258,18 +270,24 @@ public class MainFabricator : MonoBehaviour
     {
         if (eyeF1Three == null && !eyeF1Explode3)
         {
-            Instantiate(eyeExplosionEffect, eyeF1ThreeLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, eyeF1ThreeLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, eyeF1ThreeLoc, Quaternion.identity);
             eyeF1Explode3 = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1Four == null && !eyeF1Explode4)
         {
-            Instantiate(eyeExplosionEffect, eyeF1FourLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, eyeF1FourLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, eyeF1FourLoc, Quaternion.identity);
             eyeF1Explode4 = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1Five == null && !eyeF1Explode5)
         {
-            Instantiate(eyeExplosionEffect, eyeF1FiveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, eyeF1FiveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, eyeF1FiveLoc, Quaternion.identity);
             eyeF1Explode5 = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1Three == null && eyeF1Four == null && eyeF1Five == null)
             Destroy(laserF1Door);
@@ -289,39 +307,51 @@ public class MainFabricator : MonoBehaviour
     {
         if (glassEyeOne == null && !glassEyeOneExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeOneLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeOneLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeOneLoc, Quaternion.identity);
             glassSet.Remove(glassEyeOne);
             glassEyeOneExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassEyeTwo == null && !glassEyeTwoExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeTwoLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeTwoLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeTwoLoc, Quaternion.identity);
             glassSet.Remove(glassEyeTwo);
             glassEyeTwoExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassEyeThree == null && !glassEyeThreeExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeThreeLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeThreeLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeThreeLoc, Quaternion.identity);
             glassSet.Remove(glassEyeThree);
             glassEyeThreeExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassEyeFour == null && !glassEyeFourExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeFourLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeFourLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeFourLoc, Quaternion.identity);
             glassSet.Remove(glassEyeFour);
             glassEyeFourExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassEyeFive == null && !glassEyeFiveExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeFiveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeFiveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeFiveLoc, Quaternion.identity);
             glassSet.Remove(glassEyeFive);
             glassEyeFiveExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassEyeSix == null && !glassEyeSixExplode)
         {
-            Instantiate(eyeExplosionEffect, glassEyeSixLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, glassEyeSixLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, glassEyeSixLoc, Quaternion.identity);
             glassSet.Remove(glassEyeSix);
             glassEyeSixExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (glassSet.Count == 0 && !glassSpawn)
         {
@@ -335,75 +365,99 @@ public class MainFabricator : MonoBehaviour
     {
         if (topEyeOne == null && !topEyeOneExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeOneLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeOneLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeOneLoc, Quaternion.identity);
             topSet.Remove(topEyeOne);
             topEyeOneExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeTwo == null && !topEyeTwoExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeTwoLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeTwoLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeTwoLoc, Quaternion.identity);
             topSet.Remove(topEyeTwo);
             topEyeTwoExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeThree == null && !topEyeThreeExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeThreeLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeThreeLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeThreeLoc, Quaternion.identity);
             topSet.Remove(topEyeThree);
             topEyeThreeExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeFour == null && !topEyeFourExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeFourLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeFourLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeFourLoc, Quaternion.identity);
             topSet.Remove(topEyeFour);
             topEyeFourExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeFive == null && !topEyeFiveExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeFiveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeFiveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeFiveLoc, Quaternion.identity);
             topSet.Remove(topEyeFive);
             topEyeFiveExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeSix == null && !topEyeSixExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeSixLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeSixLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeSixLoc, Quaternion.identity);
             topSet.Remove(topEyeSix);
             topEyeSixExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeSeven == null && !topEyeSevenExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeSevenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeSevenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeSevenLoc, Quaternion.identity);
             topSet.Remove(topEyeSeven);
             topEyeSevenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeEight == null && !topEyeEightExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeEightLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeEightLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeEightLoc, Quaternion.identity);
             topSet.Remove(topEyeEight);
             topEyeEightExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeNine == null && !topEyeNineExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeNineLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeNineLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeNineLoc, Quaternion.identity);
             topSet.Remove(topEyeNine);
             topEyeNineExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeTen == null && !topEyeTenExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeTenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeTenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeTenLoc, Quaternion.identity);
             topSet.Remove(topEyeTen);
             topEyeTenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeEleven == null && !topEyeElevenExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeElevenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeElevenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeElevenLoc, Quaternion.identity);
             topSet.Remove(topEyeEleven);
             topEyeElevenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topEyeTwelve == null && !topEyeTwelveExplode)
         {
-            Instantiate(eyeExplosionEffect, topEyeTwelveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, topEyeTwelveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, topEyeTwelveLoc, Quaternion.identity);
             topSet.Remove(topEyeTwelve);
             topEyeTwelveExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (topSet.Count == 0 && !topSpawn)
         {
@@ -417,75 +471,99 @@ public class MainFabricator : MonoBehaviour
     {
         if (bottomEyeOne == null && !bottomEyeOneExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeOneLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeOneLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeOneLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeOne);
             bottomEyeOneExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeTwo == null && !bottomEyeTwoExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeTwoLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeTwoLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeTwoLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeTwo);
             bottomEyeTwoExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeThree == null && !bottomEyeThreeExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeThreeLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeThreeLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeThreeLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeThree);
             bottomEyeThreeExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeFour == null && !bottomEyeFourExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeFourLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeFourLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeFourLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeFour);
             bottomEyeFourExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeFive == null && !bottomEyeFiveExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeFiveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeFiveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeFiveLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeFive);
             bottomEyeFiveExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeSix == null && !bottomEyeSixExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeSixLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeSixLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeSixLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeSix);
             bottomEyeSixExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeSeven == null && !bottomEyeSevenExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeSevenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeSevenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeSevenLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeSeven);
             bottomEyeSevenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeEight == null && !bottomEyeEightExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeEightLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeEightLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeEightLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeEight);
             bottomEyeEightExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeNine == null && !bottomEyeNineExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeNineLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeNineLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeNineLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeNine);
             bottomEyeNineExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeTen == null && !bottomEyeTenExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeTenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeTenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeTenLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeTen);
             bottomEyeTenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeEleven == null && !bottomEyeElevenExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeElevenLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeElevenLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeElevenLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeEleven);
             bottomEyeElevenExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomEyeTwelve == null && !bottomEyeTwelveExplode)
         {
-            Instantiate(eyeExplosionEffect, bottomEyeTwelveLoc, Quaternion.identity);
+            ParticleSystem tempPS = Instantiate(eyeExplosionEffect, bottomEyeTwelveLoc, Quaternion.identity);
+            AudioSource tempAS = Instantiate(eyeExplosionSound, bottomEyeTwelveLoc, Quaternion.identity);
             bottomSet.Remove(bottomEyeTwelve);
             bottomEyeTwelveExplode = true;
+            StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (bottomSet.Count == 0 && !bottomSpawn)
         {
