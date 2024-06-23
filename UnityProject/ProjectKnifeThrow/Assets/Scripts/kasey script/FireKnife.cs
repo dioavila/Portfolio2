@@ -15,7 +15,7 @@ public class FireKnife : MonoBehaviour
     [SerializeField] ParticleSystem hitConfirm;
     [SerializeField] ParticleSystem hitBlock;
     [SerializeField] ParticleSystem hitMiss;
-    bool hitConfirmed = false;
+    //bool hitConfirmed = false;
     bool hitBlocked = false;
 
     [Header("Audio System")]
@@ -48,7 +48,7 @@ public class FireKnife : MonoBehaviour
             {
                 fmg.FireDamage(Damage, Time);
                 Instantiate(hitConfirm, transform.position, Quaternion.identity);
-                hitConfirmed = true;
+                //hitConfirmed = true;
                 Destroy(gameObject);
                 return;
 

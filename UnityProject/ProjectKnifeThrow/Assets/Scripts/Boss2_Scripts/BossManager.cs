@@ -17,7 +17,7 @@ public class BossManager : MonoBehaviour
     //bool startLaser = false;
     public bool startSpawn = false;
     public bool Death = false;
-    bool nextPhase = false;
+    //bool nextPhase = false;
     [SerializeField] List<GameObject> listEyes;
     [SerializeField] ParticleSystem deathEye;
 
