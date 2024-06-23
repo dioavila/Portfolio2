@@ -488,10 +488,10 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     {
         Vector3 wallTouchChecker;
 
-        //if(jumpCount == 2)
-        //{
-            jumpCount = 0;
-        //}
+        if(jumpCount == 2)
+        {
+            jumpCount = 1;
+        }
         if (wallRunSide == 1)
         {
             wallTouchChecker = playerObj.transform.right * 10;
@@ -518,7 +518,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides)
         {
-            jump();
+            //jump();
             ValuesReset();
         }
 
