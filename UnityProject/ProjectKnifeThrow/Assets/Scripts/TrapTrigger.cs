@@ -6,7 +6,7 @@ public class TrapTrigger : MonoBehaviour
 {
     [SerializeField] GameObject laserTrapList;
     [SerializeField] Transform location;
-    bool started = false;
+    //bool started = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class TrapTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Instantiate(laserTrapList, location.transform.position, location.rotation);
-            started = true;
+            //started = true;
         }
     }
 }
