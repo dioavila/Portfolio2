@@ -8,12 +8,11 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage, IFire
 {
     [SerializeField] int HP;
     [SerializeField] bool partOfList;
-    //[SerializeField] int listElementNum;
     [SerializeField] ParticleSystem particle;
     [SerializeField] AudioSource takeDamageSound;
-    [SerializeField] AudioSource weakpointSound;
+    [SerializeField] AudioSource deathSound;
     Renderer model;
-    //Add code to remove weakspot from the list;
+    //[SerializeField] int listElementNum;
 
     private void Start()
     {
@@ -33,7 +32,7 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage, IFire
                 GameManager.instance.bossManager.weakspotList.Remove(GameManager.instance.bossManager.weakspotList[currIndex]);
             }
             Instantiate(particle, transform.position, Quaternion.identity);
-            Instantiate(weakpointSound, transform.position, Quaternion.identity);
+            deathSound.Play();
             Destroy(gameObject);
         }
     }
@@ -65,7 +64,7 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage, IFire
             if (HP <= 0)
             {
                 Instantiate(particle, transform.position, Quaternion.identity);
-                Instantiate(weakpointSound, transform.position, Quaternion.identity);
+                weakpointSound.Play();
                 Destroy(gameObject);
             }
         }
