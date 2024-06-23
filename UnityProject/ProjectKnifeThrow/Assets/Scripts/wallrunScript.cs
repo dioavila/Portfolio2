@@ -57,7 +57,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     [SerializeField] int jumpSpeed = 12;
     [SerializeField] int jumpMax = 2;
     [SerializeField] public float playerSpeed = 10;
-    [SerializeField] float sprintMod = 1.7f;
+    [SerializeField] float sprintSpeed = 20f;
     public bool isGrinding = false;
     public Vector3 moveDir;
     float playerSpeedStorage;
@@ -342,7 +342,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero && !isWallRunning)
         {
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
-            playerSpeed *= sprintMod;
+            playerSpeed = sprintSpeed;
         }
         else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero || isWallRunning)
         {
@@ -504,7 +504,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, (wallTouchChecker + -playerObj.transform.forward), out wallTouch, 3);
         
-        controller.Move(wallDirection * (playerSpeed *sprintMod) * Time.deltaTime);
+        controller.Move(wallDirection * (sprintSpeed) * Time.deltaTime);
         isWallRunning = true;
 
         if(playerCanMove)
