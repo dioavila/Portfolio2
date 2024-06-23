@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject invertON;
     [SerializeField] public GameObject invertOFF;
     public bool isInverted = false;
-    [SerializeField] public Slider sensSlider;
+    [SerializeField] public Slider sensSlider, musicSlider, volumeSlider;
     [Tooltip("The Menu for when the EXIT button is clicked")]
     public GameObject exitMenu;
     public GameObject exitMenu1;
@@ -186,6 +186,10 @@ public class GameManager : MonoBehaviour
             sensSlider.onValueChanged.AddListener(SetSensitivity);
             sensSlider.value = sensitivity;
         }
+        if (musicSlider != null)
+        {
+            musicSlider.onValueChanged.AddListener(delegate { MusicVolume(); });
+        }
     }
 
     public void LoadSettings()
@@ -300,6 +304,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void MusicVolume()
+    {
+        AudioManager.instance.MusicVolume(musicSlider.value);
+    }
 
 
     public void TriggerRedToBlackScreen()

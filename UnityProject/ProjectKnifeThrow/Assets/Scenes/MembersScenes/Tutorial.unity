@@ -3199,11 +3199,6 @@ Transform:
   - {fileID: 1991770899}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &668178245 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1919939064297599028, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-  m_PrefabInstance: {fileID: 5152864143541412496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &677110975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10925,10 +10920,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: menuLose
-      value: 
-      objectReference: {fileID: 668178245}
     - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
       propertyPath: playerSpawnPos
       value: 
