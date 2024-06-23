@@ -80,7 +80,6 @@ public class GameManager : MonoBehaviour
     [Header("Pop Ups")]
     [SerializeField] public GameObject dashMes;
     [SerializeField] public GameObject grindMes;
-    [SerializeField] public GameObject BTMessage;
     [SerializeField] public GameObject WallRunMessage;
     [SerializeField] public GameObject movementMessage;
     [SerializeField] public GameObject Tutorial1Message;
