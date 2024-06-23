@@ -54,7 +54,7 @@ MonoBehaviour:
   partOfList: 0
   particle: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
   takeDamageSound: {fileID: 2098378582686597148}
-  weakpointSound: {fileID: -2558789411985200602}
+  deathSound: {fileID: -2558789411985200602}
 --- !u!33 &5423127223072861860
 MeshFilter:
   m_ObjectHideFlags: 0
