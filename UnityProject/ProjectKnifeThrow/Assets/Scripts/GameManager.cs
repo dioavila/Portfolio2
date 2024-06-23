@@ -335,7 +335,7 @@ public class GameManager : MonoBehaviour
         playerBTBar.enabled = false;
         playerDashBar.enabled = false;
 
-        float duration = 1.5f;
+        float duration = 2f;
         float timer = 0f;
 
         //Fade to red over 1 second

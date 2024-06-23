@@ -1407,7 +1407,7 @@ GameObject:
   - component: {fileID: 4617944344242745189}
   m_Layer: 3
   m_Name: DeathCam
-  m_TagString: Untagged
+  m_TagString: deathCam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1895,7 +1895,7 @@ MonoBehaviour:
   jumpSpeed: 12
   jumpMax: 2
   playerSpeed: 10
-  sprintMod: 1.7
+  sprintSpeed: 20
   isGrinding: 0
   moveDir: {x: 0, y: 0, z: 0}
   dashSpeed: 60
