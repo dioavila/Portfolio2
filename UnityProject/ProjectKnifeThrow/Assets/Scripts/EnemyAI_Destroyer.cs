@@ -28,11 +28,6 @@ public class enemyAITest : MonoBehaviour
     [SerializeField] float shootRate;
     [SerializeField] AudioSource muzzleSound;
 
-    [Header("Knock Back")]
-    [SerializeField] float knockbackJumpTime;
-    [SerializeField] float knockbackForce;
-    [SerializeField] AudioSource knockbackAudio;
-
     [Header("Dead")]
     [SerializeField] float deathTimer;
     [SerializeField] GameObject dropOnDeath;
