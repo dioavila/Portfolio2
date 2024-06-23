@@ -76,10 +76,18 @@ public class GameManager : MonoBehaviour
     public Image redScreenImage;
     public bool isTransitioning = false;
     Color startColor;
+
+    [Header("Pop Ups")]
     [SerializeField] public GameObject dashMes;
     [SerializeField] public GameObject grindMes;
     [SerializeField] public GameObject BTMessage;
+    [SerializeField] public GameObject WallRunMessage;
     [SerializeField] public GameObject movementMessage;
+    [SerializeField] public GameObject Tutorial1Message;
+    [SerializeField] public GameObject Tutorial2Message;
+    [SerializeField] public GameObject Tutorial3Message;
+    [SerializeField] public GameObject Tutorial4Message;
+
     public Image loadScreenImage;
     public TMP_Text loadScreenText;
     public GameObject loadScreen;
