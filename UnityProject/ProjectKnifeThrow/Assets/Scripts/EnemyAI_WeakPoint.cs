@@ -64,7 +64,7 @@ public class EnemyAI_WeakPoint : MonoBehaviour, IDamage, IFire
             if (HP <= 0)
             {
                 Instantiate(particle, transform.position, Quaternion.identity);
-                weakpointSound.Play();
+                deathSound.Play();
                 Destroy(gameObject);
             }
         }
