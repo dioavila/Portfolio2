@@ -644,6 +644,11 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         transform.rotation = GameManager.instance.playerSpawnPos.transform.rotation;
         if(isDead)
             isDead = false;
+        GameManager.instance.playerHPBarBack.enabled = true;
+        GameManager.instance.playerBTBarBack.enabled = true;
+        GameManager.instance.playerDashBarBack.enabled = true;
+        GameManager.instance.playerBTBar.enabled = true;
+        GameManager.instance.playerDashBar.enabled = true;
         controller.enabled = true;
     }
 

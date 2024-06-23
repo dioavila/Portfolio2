@@ -372,6 +372,7 @@ public class GameManager : MonoBehaviour
 
         isTransitioning = false;
 
+        redScreenImage.color = new Color(1f, 0f, 0f, 0f);
         youLose();
     }
 
