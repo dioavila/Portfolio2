@@ -263,7 +263,8 @@ public class MainFabricator : MonoBehaviour
             StartCoroutine(waitDestroyTime(tempPS, tempAS));
         }
         if (eyeF1One == null && eyeF1Two == null)
-            Destroy(laserF1Wall);
+                laserF1Wall.SetActive(false);
+                //Destroy(laserF1Wall);
     }
 
     private void destroyF1DoorLaser()
