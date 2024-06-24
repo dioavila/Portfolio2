@@ -7,6 +7,9 @@ using UnityEngine.AI;
 
 public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 {
+    [Header("Boss Toggle")]
+    [SerializeField] bool belongsToGORE = false;
+
     [Header("Big Grunt")]
     public NavMeshAgent agent;
     [SerializeField] Renderer model;
@@ -101,7 +104,15 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
-                    isDead = true;
+                    if (!belongsToGORE)
+                    {
+                        GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+                    }
+                    else
+                    {
+                        GameManager.instance.bossManager.enemiesAlive -= 1;
+                    }
+                        isDead = true;
                     robotExplosion.Play();
                     deathSound.Play();
                 }
@@ -146,7 +157,10 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
 
     bool canSeePlayer()
     {
-        faceTarget();
+        if (canTurn)
+        {
+            faceTarget();
+        }
         agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
@@ -168,7 +182,6 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
         return false;
     }
 
