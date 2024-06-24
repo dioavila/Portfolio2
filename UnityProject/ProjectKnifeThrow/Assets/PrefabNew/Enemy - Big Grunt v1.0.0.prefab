@@ -547,12 +547,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21211e4c65ab3eb4ab2259298570107a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 2
+  HP: 1
   partOfList: 0
   particle: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
   takeDamageSound: {fileID: 5204806281880697248}
-  weakpointSound: {fileID: 3193832400777215870}
-  deathTimer: 0
+  deathSound: {fileID: 3193832400777215870}
 --- !u!65 &8825428551798276576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1560,12 +1559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21211e4c65ab3eb4ab2259298570107a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 2
+  HP: 1
   partOfList: 0
   particle: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
   takeDamageSound: {fileID: 6317056217784678587}
-  weakpointSound: {fileID: 9021358633189950589}
-  deathTimer: 0
+  deathSound: {fileID: 9021358633189950589}
 --- !u!65 &317107000928800691
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1904,12 +1902,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21211e4c65ab3eb4ab2259298570107a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 2
+  HP: 1
   partOfList: 0
   particle: {fileID: 2064103751425100148, guid: c211b7eee044e054a8c6d9be0d2003d0, type: 3}
   takeDamageSound: {fileID: 4357580088554482751}
-  weakpointSound: {fileID: 8842021382828115325}
-  deathTimer: 0
+  deathSound: {fileID: 8842021382828115325}
 --- !u!65 &7117383877436355900
 BoxCollider:
   m_ObjectHideFlags: 0

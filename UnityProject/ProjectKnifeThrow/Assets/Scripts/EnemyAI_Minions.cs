@@ -155,6 +155,8 @@ public class enemyAI : MonoBehaviour, IFreeze
 
     bool canSeePlayer()
     {
+        faceTarget();
+        agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
         RaycastHit hit;
@@ -165,6 +167,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                 agent.stoppingDistance = stoppingDistOrig;
                 if (!isShooting && canshoot && angleToPlayer <= viewAngle)
                 {
+                    faceTarget();
                     StartCoroutine(shoot());
                 }
                 if (agent.remainingDistance <= agent.stoppingDistance)
@@ -174,7 +177,7 @@ public class enemyAI : MonoBehaviour, IFreeze
                 return true;
             }
         }
-        agent.stoppingDistance = 0;
+        //agent.stoppingDistance = 0;
         return false;
     }
 
@@ -190,20 +193,21 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
-            agent.SetDestination(agent.transform.position);
+            //agent.SetDestination(GameManager.instance.player.transform.position);
+            //agent.stoppingDistance = 6;
             destChosen = true;
             playerInRange = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            agent.stoppingDistance = 0;
-        }
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        playerInRange = false;
+    //        agent.stoppingDistance = 0;
+    //    }
+    //}
 
     IEnumerator shoot()
     {

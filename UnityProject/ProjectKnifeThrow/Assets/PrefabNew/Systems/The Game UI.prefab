@@ -7758,7 +7758,10 @@ MonoBehaviour:
   exitMenu1: {fileID: 8135109058259323976}
   exitMenu2: {fileID: 0}
   playMenu: {fileID: 0}
-  sceneSpawners: []
+  sceneSpawners:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   sceneBattleRoomIndex: 0
   mainCanvas: {fileID: 8081203567923179340}
   PanelControls: {fileID: 5860274521521213848}
@@ -7810,7 +7813,7 @@ MonoBehaviour:
   musicChanger: {fileID: 2998990368160730203}
   inBattle: 0
   playerSpawnPos: {fileID: 0}
-  checkpointPopup: {fileID: 0}
+  checkpointPopup: {fileID: 303494738655526615}
   sensitivity: 0.5
   boss2Scene: 0
   bossManager: {fileID: 0}

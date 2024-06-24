@@ -19,9 +19,9 @@ public class CameraReset : StateMachineBehaviour
     //OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Camera.main.enabled = true;
+        GameObject.FindWithTag("MainCamera").GetComponent<Camera>().enabled = true;
         GameObject bodyCam = GameObject.FindGameObjectWithTag("deathCam");
-        bodyCam.gameObject.SetActive(false);
+        //bodyCam.gameObject.SetActive(false);
         bodyCam.GetComponent<Camera>().enabled = false;
     }
 
