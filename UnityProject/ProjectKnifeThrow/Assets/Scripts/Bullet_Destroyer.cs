@@ -13,7 +13,7 @@ public class testDBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(transform.parent != null)
+        if (transform.parent != null)
             transform.rotation = transform.parent.rotation;
         rb.velocity = transform.forward * speed;
         Destroy(gameObject, timeToDestroy);

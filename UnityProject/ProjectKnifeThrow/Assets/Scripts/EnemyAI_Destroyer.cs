@@ -9,6 +9,7 @@ public class enemyAITest : MonoBehaviour
     [Header("Destroyer")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
+    [SerializeField] bool canMove;
     [SerializeField] float spawnMoveTime;
     [SerializeField] float turnRate;
     [SerializeField] float focusFireTime;
@@ -65,6 +66,8 @@ public class enemyAITest : MonoBehaviour
             }
             else if (finishedStartup)
             {
+                if(canMove)
+                agent.SetDestination(GameManager.instance.playerScript.transform.position);
                 if (jointDestroyed)
                     StartCoroutine(focusFire());
                 faceTarget();
