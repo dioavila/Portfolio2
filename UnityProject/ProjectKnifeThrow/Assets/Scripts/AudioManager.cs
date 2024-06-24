@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        if (SceneManager.GetActiveScene().buildIndex == 0 || SceneManager.GetActiveScene().buildIndex == 5)
+        if (SceneManager.GetActiveScene().buildIndex == 0 )//|| SceneManager.GetActiveScene().buildIndex == 5)
         {
             PlayMusic("Main");
         }
