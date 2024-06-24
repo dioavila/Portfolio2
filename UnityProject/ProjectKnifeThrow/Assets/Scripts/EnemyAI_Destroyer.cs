@@ -76,6 +76,7 @@ public class enemyAITest : MonoBehaviour
                     checkWeakPointDestroy();
                 if (allWeakPointsDestroyed)
                 {
+                    GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
