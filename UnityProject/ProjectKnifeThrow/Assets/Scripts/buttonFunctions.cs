@@ -31,7 +31,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void respawn()
     {
-
+                                                                                                                                    
         GameManager.instance.playerScript.spawnPlayer();
         GameManager.instance.stateUnPause();
     }
@@ -148,5 +148,6 @@ public class buttonFunctions : MonoBehaviour
     public void OnSensitivityChanged(float value)
     {
         GameManager.instance.SetSensitivity(value);
+        //Debug.Log("Sensitivity Changed - New Value: " + value);
     }
 }

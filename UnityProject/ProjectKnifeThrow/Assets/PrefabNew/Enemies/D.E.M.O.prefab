@@ -2712,7 +2712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2478735406385304304}
   model: {fileID: 5185601877292714630}
-  spawnMoveTime: 3
+  spawnMoveTime: 0
   turnRate: 0.75
   focusFireTime: 3
   weakPointsTop:
@@ -2757,7 +2757,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7652027725428645852}
   m_Enabled: 1
   m_AgentTypeID: -902729914
-  m_Radius: 3.5
+  m_Radius: 3.8
   m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50

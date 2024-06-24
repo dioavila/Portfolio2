@@ -76,10 +76,17 @@ public class GameManager : MonoBehaviour
     public Image redScreenImage;
     public bool isTransitioning = false;
     Color startColor;
+
+    [Header("Pop Ups")]
     [SerializeField] public GameObject dashMes;
     [SerializeField] public GameObject grindMes;
-    [SerializeField] public GameObject BTMessage;
+    [SerializeField] public GameObject WallRunMessage;
     [SerializeField] public GameObject movementMessage;
+    [SerializeField] public GameObject Tutorial1Message;
+    [SerializeField] public GameObject Tutorial2Message;
+    [SerializeField] public GameObject Tutorial3Message;
+    [SerializeField] public GameObject Tutorial4Message;
+
     public Image loadScreenImage;
     public TMP_Text loadScreenText;
     public GameObject loadScreen;
@@ -129,7 +136,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //Debug.Log("GameManager Start called");
+       //Debug.Log("GameManager Start called");
 
         startColor = redScreenImage.color;
         startColor.a = 0f;
@@ -182,7 +189,7 @@ public class GameManager : MonoBehaviour
         LoadSettings();
         if (sensSlider != null)
         {
-           // Debug.Log("Setting up sensitivity slider listener");
+            //Debug.Log("Setting up sensitivity slider listener");
             sensSlider.onValueChanged.AddListener(SetSensitivity);
             sensSlider.value = sensitivity;
         }
@@ -197,7 +204,7 @@ public class GameManager : MonoBehaviour
         sensitivity = PlayerPrefs.GetFloat("Sensitivity");
         isInverted = PlayerPrefs.GetInt("InvertMouse", 0) == 1;
 
-       // Debug.Log("Loaded Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
+        //Debug.Log("Loaded Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
 
         if (invertON != null && invertOFF != null)
         {
@@ -214,11 +221,11 @@ public class GameManager : MonoBehaviour
     public void SaveSettings()
     {
 
-       // Debug.Log("Saved Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
+        //Debug.Log("Saved Settings - Sensitivity: " + sensitivity + ", Inverted: " + isInverted);
         PlayerPrefs.SetFloat("Sensitivity", sensitivity);
         PlayerPrefs.SetInt("InvertMouse", isInverted ? 1 : 0);
         PlayerPrefs.Save();
-       // Debug.Log("Settings Saved");
+        //Debug.Log("Settings Saved");
     }
 
 
@@ -232,9 +239,9 @@ public class GameManager : MonoBehaviour
 
     public void SetSensitivity(float value)
     {
-       // Debug.Log("Set Sensitivity - New Value: " + value);
+        //Debug.Log("Set Sensitivity - New Value: " + value);
         sensitivity = value;
-       // Debug.Log("Sensitivity after update: " + sensitivity);
+        //Debug.Log("Sensitivity after update: " + sensitivity);
         SaveSettings();
     }
 
@@ -328,7 +335,7 @@ public class GameManager : MonoBehaviour
         playerBTBar.enabled = false;
         playerDashBar.enabled = false;
 
-        float duration = 1.5f;
+        float duration = 2f;
         float timer = 0f;
 
         //Fade to red over 1 second
@@ -365,6 +372,7 @@ public class GameManager : MonoBehaviour
 
         isTransitioning = false;
 
+        redScreenImage.color = new Color(1f, 0f, 0f, 0f);
         youLose();
     }
 
