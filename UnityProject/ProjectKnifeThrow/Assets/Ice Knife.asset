@@ -18,3 +18,4 @@ MonoBehaviour:
   speed: 50
   MaxKinfeCount: 5
   CurrentKinfeCount: 0
+  KnifeParticleSystem: {fileID: 9089018385700543051, guid: e1af471d63f419c4d9b92af977acb349, type: 3}

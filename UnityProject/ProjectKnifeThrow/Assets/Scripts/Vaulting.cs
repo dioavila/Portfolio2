@@ -29,7 +29,6 @@ public class Vaulting : MonoBehaviour
         Vector3 rayOrigin = cam.transform.position;
         Vector3 rayDirection = cam.transform.forward;
 
-        Debug.DrawRay(rayOrigin, rayDirection * vaultDistance, Color.red, 1.0f);
 
         // Raycasting to detect vaultable objects in front of the player
         if (Physics.Raycast(rayOrigin, rayDirection, out firstHit, vaultDistance, vaultLayer))
@@ -46,12 +45,12 @@ public class Vaulting : MonoBehaviour
             }
             else
             {
-                //Debug.Log("No suitable landing spot found.");
+                
             }
         }
         else
         {
-            //Debug.Log("No vaultable object detected.");
+            
         }
     }
 

@@ -120,7 +120,6 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     void Start()
     {
         StartCoroutine(GameManager.instance.EndLoading());
-        // knifeModel = knifeList[0].Knife;
         Changegun();
         bTimeCurrent = bTimeTotal;
         playerSpeedStorage = playerSpeed;
@@ -145,7 +144,6 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             if (!GameManager.instance.isPaused)
             {
             
-               // Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
                 if(gThrowCount <0)
                 {
                     gThrowCount = 0;

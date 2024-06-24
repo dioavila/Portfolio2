@@ -21,7 +21,7 @@ public class KJointDamage : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward *100, Color.green);
+        
       //  if (enemyScript.playerInRange)
       //  {
             jointMovement();

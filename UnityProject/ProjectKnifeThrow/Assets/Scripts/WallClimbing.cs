@@ -105,16 +105,10 @@ public class PlayerClimbing : MonoBehaviour
         if (_wallInFront && _wallLookAngle < MaxWallLookAngle)
         {
          
-            Debug.Log("Wall Detected: " + _frontWallHit.collider.name);
 
             // Reset the climb timer and jumps
             _climbTimer = MaxClimbTime;
             _climbJumpsLeft = MaxClimbJumps;
-        }
-        else
-        {
-            
-            Debug.Log("No Climbable Wall Detected");
         }
     }
 
@@ -125,7 +119,6 @@ public class PlayerClimbing : MonoBehaviour
 
         wallRunScript.isClimbing = true;
 
-        Debug.Log("Started Climbing");
     }
 
     private void ClimbingMovement()
@@ -135,8 +128,6 @@ public class PlayerClimbing : MonoBehaviour
 
         // Move the character controller in the climb direction
         Controller.Move(climbDirection * Time.deltaTime);
-
-        Debug.Log("Climbing Movement - Move Vector: " + climbDirection);
     }
 
     private void StopClimbing()
@@ -145,21 +136,16 @@ public class PlayerClimbing : MonoBehaviour
 
         wallRunScript.isClimbing = false;
 
-        Debug.Log("Stopped Climbing");
     }
 
     private void ClimbJump()
     {
         StopClimbing();
 
-        Debug.Log("Jumped from Climbing Position");
-
         // Calculate the jump force based on the climb jump parameters
         Vector3 jumpForce = Camera.up * ClimbJumpUpForce + _frontWallHit.normal * ClimbJumpBackForce;
 
         // Apply the jump force to the character controller
         Controller.Move(jumpForce * Time.deltaTime);
-
-        Debug.Log("Climb Jump - Jump Force: " + jumpForce);
     }
 }

@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
 
         if (s == null)
         {
-            Debug.Log("Music not found");
+           
         }
         else
         {
