@@ -14,7 +14,7 @@ public class Grindtut : MonoBehaviour
                 dash.CloseDashMessage();
             }
             OpenGrindMessage("");
-            Invoke("CloseGrindMessage", 10);
+            Invoke("CloseGrindMessage", 20);
         }
     }
 

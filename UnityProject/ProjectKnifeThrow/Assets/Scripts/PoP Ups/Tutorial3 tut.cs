@@ -9,7 +9,7 @@ public class Tutorial3Tut : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             OpenTutorial3Message("");
-            Invoke("CloseTutorial3Message", 5);
+            Invoke("CloseTutorial3Message", 10);
         }
     }
 
