@@ -21,8 +21,8 @@ public class SpawnTrig : MonoBehaviour
     [Header("Camera Shake Settings")]
     [SerializeField] float time;
     [SerializeField] float strength;
-    
-    bool isSpawning = false, spawnStart = false, spawnDone = false;
+
+    bool isSpawning = false, spawnStart = false, spawnDone = false, battleStart = false;
     int numberSpawned = 0;
     public int enemiesAlive = 0;
     CameraShake Shake;
@@ -43,6 +43,11 @@ public class SpawnTrig : MonoBehaviour
     {
         if (spawnStart && !isSpawning && numberSpawned < numberToSpawn)
         {
+            if (!battleStart)
+            {
+                GameManager.instance.inBattle = true;
+                battleStart = true;
+            }
             StartCoroutine(Spawn());
         }
         else if (spawnStart && !isSpawning && numberSpawned >= numberToSpawn)
@@ -55,6 +60,7 @@ public class SpawnTrig : MonoBehaviour
             {
                 if (triggersDoor)
                 {
+                    GameManager.instance.inBattle = false;
                     doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
                     GameManager.instance.sceneBattleRoomIndex++;
                     triggersDoor = false;
