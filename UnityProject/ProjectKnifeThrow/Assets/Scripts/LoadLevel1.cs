@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadLevel1 : MonoBehaviour
 {
+    [SerializeField] string leveltoLoad;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -14,7 +15,7 @@ public class LoadLevel1 : MonoBehaviour
     }
     public void LoadScene()
     {
-        SceneManager.LoadScene("Level1");
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine(leveltoLoad));
     }
 }
 
