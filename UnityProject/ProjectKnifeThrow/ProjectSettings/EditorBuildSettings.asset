@@ -20,16 +20,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MembersScenes/Tutorial.unity
     guid: 612f21fab2739824b8d407eec3e5cd38
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MembersScenes/Voided.unity
     guid: 0812dc9dd4cbac14c867d72d7a927f85
+  - enabled: 0
+    path: Assets/Scenes/MembersScenes/Level3.unity
+    guid: 2eaead706fc764846bccf763be24e9c1
   - enabled: 1
     path: Assets/Scenes/MembersScenes/Level3.unity
-    guid: f1134c3d93075a146b7bdaffa328bd9b
-  - enabled: 1
-    path: Assets/Scenes/MembersScenes/Level4.unity
     guid: 2eaead706fc764846bccf763be24e9c1
   - enabled: 1
     path: Assets/Scenes/MembersScenes/Credits.unity
     guid: 9719fb2bcd1b6b740bfdea93497f3daf
+  - enabled: 1
+    path: Assets/Scenes/MembersScenes/Level1.unity
+    guid: bc030e4c2d112b4468038aa37e9d2bae
+  - enabled: 1
+    path: Assets/Scenes/MembersScenes/Level2.unity
+    guid: d6b92bd1735b8a14d866dab34ca3a6b9
   m_configObjects: {}

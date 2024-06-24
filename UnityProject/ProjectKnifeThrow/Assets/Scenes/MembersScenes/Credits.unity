@@ -312,7 +312,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 706eddb17e6d1764ba2b936c8ae2b902, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1081,19 +1081,52 @@ PrefabInstance:
     - target: {fileID: 444116890195474124, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 488828123242966274, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2865191383384144897}
+      objectReference: {fileID: 0}
+    - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_text
+      value: "Thank you for playing\n\nCredits\r\n\nGame Title: Cyber Breach\n\nDeveloped
+        By: Lazy Dev Studios\r\n\nCore Team:\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
+        Kasey Russell\r\n\n\u2022 Josh Brouillette\r\n\n\u2022 David Mereles\r\n\n\u2022
+        Daniel Bumbarger\r\n\nLevel Designers:\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
+        Josh Brouillette\r\n\n\u2022 Daniel Bumbarger\r\n\nProgrammers:\r\n\n\u2022
+        Diogo Vieira Avila\r\n\n\u2022 Kasey Russell\r\n\n\u2022 Josh Brouillette\r\n\n\u2022
+        David Mereles\r\n\n\u2022 Daniel Bumbarger\r\n\nEnemy AI:\r\n\n\u2022 Daniel
+        Bumbarger\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022 Kasey Russell\r\n\nUI/UX
+        Designers:\r\n\n\u2022 David Mereles\r\n\n\u2022 Josh Brouillette\r\n\nCharacter
+        Designers:\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022 Josh Brouillette\r\n\n\u2022
+        Kasey Russell\r\n\r\nPlatform/Asset Designers:\r\n\n\u2022 Kasey Russell\r\n\n\u2022
+        Diogo Vieira Avila\r\n\nSound Designer:\r\n\n\u2022 [Sound Designer's Name]\r\n\nLogo
+        Design:\r\n\n\u2022 Trinity Williams\r\n\nGameplay Mechanics Designers:\r\n\n\u2022
+        Diogo Vieira Avila\r\n\n\u2022 Daniel Bumbarger\r\n\nAnimation:\r\n\n\u2022
+        Diogo Vieira Avila\r\n\nVisual Effects:\r\n\n\u2022 Daniel Bumbarger\r\n\n\u2022
+        Kasey Russell\r\n\nPlaytesters:\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
+        Kasey Russell\r\n\n\u2022 Josh Brouillette\n\r\n\u2022 David Mereles\r\n\n\u2022
+        Daniel Bumbarger\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_margin.z
+      value: -99.51141
+      objectReference: {fileID: 0}
+    - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 957140751980451718, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 959146751690368259, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 998996049002068206, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4386134
@@ -1137,63 +1170,63 @@ PrefabInstance:
     - target: {fileID: 1330080595127920766, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: dashMes
       value: 
-      objectReference: {fileID: 8773367304972395615}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: grindMes
       value: 
-      objectReference: {fileID: 2629902885878473529}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: BTMessage
       value: 
-      objectReference: {fileID: 5324596729912619962}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerBPUI
       value: 
-      objectReference: {fileID: 5796255166371559362}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerBTBar
       value: 
-      objectReference: {fileID: 1314245969668360014}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerHPBar
       value: 
-      objectReference: {fileID: 3945663224107631235}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: keyRejection
       value: 
-      objectReference: {fileID: 7771252119419183345}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: messagePanel
       value: 
-      objectReference: {fileID: 4247762176495054749}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: keyAcceptance
       value: 
-      objectReference: {fileID: 3299695811462649052}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: redScreenImage
       value: 
-      objectReference: {fileID: 5469233812885943256}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: checkpointPopup
       value: 
-      objectReference: {fileID: 1820802943762790896}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerBTBarBack
       value: 
-      objectReference: {fileID: 2312541265443889704}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerHPBarBack
       value: 
-      objectReference: {fileID: 3087087654961020499}
+      objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: playerFlashDamage
       value: 
-      objectReference: {fileID: 8995655427050590150}
+      objectReference: {fileID: 0}
     - target: {fileID: 2938866889693917942, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_Name
       value: Credits
@@ -1201,23 +1234,27 @@ PrefabInstance:
     - target: {fileID: 3425149030643429224, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2865191383384144897}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031367115323318728, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -100
+      objectReference: {fileID: 0}
     - target: {fileID: 6789567710331581524, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2865191383384144897}
+      objectReference: {fileID: 0}
     - target: {fileID: 8456057814463884402, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 8941306044576199259, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     - target: {fileID: 9119454389927938307, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1661373494971714501}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2670,6 +2707,8 @@ MonoBehaviour:
   invertOFF: {fileID: 4243884337493524578}
   isInverted: 0
   sensSlider: {fileID: 7327719497812770417}
+  musicSlider: {fileID: 0}
+  volumeSlider: {fileID: 0}
   exitMenu: {fileID: 1680417204180460240}
   exitMenu1: {fileID: 7860305473858372933}
   exitMenu2: {fileID: 0}
@@ -2703,8 +2742,12 @@ MonoBehaviour:
   isTransitioning: 0
   dashMes: {fileID: 8773367304972395615}
   grindMes: {fileID: 2629902885878473529}
-  BTMessage: {fileID: 5324596729912619962}
+  WallRunMessage: {fileID: 0}
   movementMessage: {fileID: 0}
+  Tutorial1Message: {fileID: 0}
+  Tutorial2Message: {fileID: 0}
+  Tutorial3Message: {fileID: 0}
+  Tutorial4Message: {fileID: 0}
   loadScreenImage: {fileID: 0}
   loadScreenText: {fileID: 0}
   loadScreen: {fileID: 0}
