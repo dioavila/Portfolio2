@@ -31,6 +31,25 @@ public class AudioManager : MonoBehaviour
         GameManager.instance.InitializeSettings();
     }
 
+    //private void Update()
+    //{
+    //    if (GameManager.instance.inBattle)
+    //    {
+    //        if(GameManager.instance.swapSong)
+    //        PlayMusic("Battle");
+    //    }
+    //    else if (GameManager.instance.inBoss)
+    //    {
+
+    //        PlayMusic("Boss");
+    //    }
+    //    else
+    //    {
+    //        PlayMusic("Ambient");
+    //    }
+    //}
+
+
     public void PlayMusic(string name)
     {
         Sounds s = Array.Find(musicSounds, x => x.name == name);

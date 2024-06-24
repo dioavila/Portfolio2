@@ -21,7 +21,8 @@ public class SpawnTrig : MonoBehaviour
     [Header("Camera Shake Settings")]
     [SerializeField] float time;
     [SerializeField] float strength;
-    
+
+    bool musicStart = false;
     bool isSpawning = false, spawnStart = false, spawnDone = false;
     int numberSpawned = 0;
     public int enemiesAlive = 0;
@@ -55,6 +56,7 @@ public class SpawnTrig : MonoBehaviour
             {
                 if (triggersDoor)
                 {
+                    AudioManager.instance.PlayMusic("Ambient");
                     doorsToOpen.GetComponent<DoorControl>().clearToOpen = true;
                     GameManager.instance.sceneBattleRoomIndex++;
                     triggersDoor = false;
@@ -67,6 +69,10 @@ public class SpawnTrig : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (!musicStart)
+            {
+                AudioManager.instance.PlayMusic("Battle");
+            }
             spawnStart = true;
         }
     }

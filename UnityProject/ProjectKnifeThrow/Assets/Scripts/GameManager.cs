@@ -106,7 +106,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource battleMusic;
     [SerializeField] TransitionMusic musicChanger;
     public bool inBattle = false;
-    //public bool inBoss;
+    public bool inBoss = false;
+    public bool swapSong = false;
 
     public GameObject playerSpawnPos;
     public GameObject checkpointPopup;
@@ -146,22 +147,30 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inBattle)
-        {
-            if (battleMusic != null)
-            {
-                musicChanger.musictochange = battleMusic;
-                musicChanger.ChangeSong();
-            }
-        }
-        else
-        {
-            if (ambientMusic != null)
-            {
-                musicChanger.musictochange = ambientMusic;
-                musicChanger.ChangeSong();
-            }
-        }
+        //if (inBattle)
+        //{
+        //    if (battleMusic != null)
+        //    {
+        //        musicChanger.musictochange = battleMusic;
+        //        musicChanger.ChangeSong();
+        //    }
+        //}
+        //else if (inBoss)
+        //{
+        //    if(bossMusic != null)
+        //    {
+        //        musicChanger.musictochange = ambientMusic;
+        //        musicChanger.ChangeSong();
+        //    }
+        //}
+        //else
+        //{
+        //    if (ambientMusic != null)
+        //    {
+        //        musicChanger.musictochange = ambientMusic;
+        //        musicChanger.ChangeSong();
+        //    }
+        //}
 
         if (Input.GetButtonDown("Cancel"))
         {

@@ -6317,14 +6317,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: boss2Scene
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5019878917243118238, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: m_Volume
-      value: 0.43
-      objectReference: {fileID: 0}
     - target: {fileID: 6381429003454069150, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
       propertyPath: m_Name
       value: The Game UI

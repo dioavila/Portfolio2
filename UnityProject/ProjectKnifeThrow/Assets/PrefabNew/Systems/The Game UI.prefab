@@ -7507,10 +7507,12 @@ MonoBehaviour:
   battleMusic: {fileID: 5019878917243118238}
   musicChanger: {fileID: 2998990368160730203}
   inBattle: 0
+  inBoss: 0
+  swapSong: 0
   playerSpawnPos: {fileID: 0}
   checkpointPopup: {fileID: 303494738655526615}
   sensitivity: 0.5
-  boss2Scene: 0
+  boss2Scene: 1
   bossManager: {fileID: 0}
   audioScript: {fileID: 0}
   playerPushBack: {fileID: 7774287922920868663}
@@ -22926,7 +22928,11 @@ MonoBehaviour:
   - name: Main
     clip: {fileID: 8300000, guid: 706eddb17e6d1764ba2b936c8ae2b902, type: 3}
   - name: Ambient
-    clip: {fileID: 8300000, guid: 770e2ac521364714ba60264d6b55d20d, type: 3}
+    clip: {fileID: 8300000, guid: f86ce76f28d97a34a8c7fb510f24739a, type: 3}
+  - name: Battle
+    clip: {fileID: 8300000, guid: 0a7917f53de3fca498654522c3df5490, type: 3}
+  - name: Boss
+    clip: {fileID: 8300000, guid: d845e4ac2621a9348bca2aaf3c01a1bf, type: 3}
   musicSource: {fileID: 6004151980379178075}
 --- !u!1 &8590144089495407828
 GameObject:

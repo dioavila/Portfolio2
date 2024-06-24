@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 69000411992144870}
   gravity: 27
-  startingHP: 15
+  startingHP: 20
   HP: 0
   Force: 0
   ShakeTime: 0
@@ -1957,7 +1957,8 @@ MonoBehaviour:
   grindPoints: []
   destroyedCount: 0
   startPosLerpRate: 0.75
-  speedMod: 0.75
+  grindLerpRate: 20
+  speedMod: 1
 --- !u!143 &69000411992144870
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1980,7 +1981,7 @@ CharacterController:
   m_Height: 3
   m_Radius: 0.75
   m_SlopeLimit: 90
-  m_StepOffset: 0.3
+  m_StepOffset: 0.6
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}

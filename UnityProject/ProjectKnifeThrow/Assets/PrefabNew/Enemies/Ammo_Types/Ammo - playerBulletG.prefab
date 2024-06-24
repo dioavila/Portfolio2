@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5479240935376343145}
-  Speed: 90
+  Speed: 70
   DestroyTime: 2
   knifeModel: {fileID: 558128222696408114, guid: cbe172c4c63e15140a5a7483ab93becd, type: 3}
 --- !u!96 &387816907192373000
@@ -210,9 +210,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!1001 &2338414374236847884
 PrefabInstance:
   m_ObjectHideFlags: 0

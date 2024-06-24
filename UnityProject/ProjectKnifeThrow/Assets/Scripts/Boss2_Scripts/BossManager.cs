@@ -477,23 +477,26 @@ public class BossManager : MonoBehaviour
 
     IEnumerator DestroyEyes()
     {
-        while(listEyes.Count > 1) 
+        if (listEyes != null)
         {
-            int index = UnityEngine.Random.Range(1, listEyes.Count - 1);
-            GameObject eyeDestroy = listEyes[index];
-            listEyes.Remove(listEyes[index]);
-            Instantiate(deathEye, eyeDestroy.transform.position, Quaternion.identity);
-            eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
-            Destroy(eyeDestroy);
+            while (listEyes.Count > 1)
+            {
+                int index = UnityEngine.Random.Range(1, listEyes.Count - 1);
+                GameObject eyeDestroy = listEyes[index];
+                listEyes.Remove(listEyes[index]);
+                Instantiate(deathEye, eyeDestroy.transform.position, Quaternion.identity);
+                eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
+                Destroy(eyeDestroy);
+                yield return new WaitForSeconds(4);
+            }
             yield return new WaitForSeconds(4);
+            GameObject lastEye = listEyes[0];
+            listEyes.Clear();
+            Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
+            Destroy(lastEye);
+            eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
+            yield return new WaitForSeconds(4);
+            GameManager.instance.updateGameGoal(-1);
         }
-        yield return new WaitForSeconds(4);
-        GameObject lastEye = listEyes[0];
-        listEyes.Clear();
-        Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
-        Destroy(lastEye);
-        eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
-        yield return new WaitForSeconds(4);
-        GameManager.instance.updateGameGoal(-1);
     }
 }

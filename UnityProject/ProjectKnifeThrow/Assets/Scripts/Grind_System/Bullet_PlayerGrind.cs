@@ -38,9 +38,11 @@ public class GrindBullet : MonoBehaviour
                 //destroyedOnCollision = true;
                 Destroy(gameObject);
 
-                Vector3 opposite = -hit.normal;
+                //Vector3 opposite = -hit.normal;
+                Vector3 opposite = -other.contacts[0].normal;
                 Quaternion rotation = Quaternion.FromToRotation(knifeModel.transform.forward, opposite);
-                Instantiate(knifeModel, transform.position, rotation);
+                //Instantiate(knifeModel, transform.position, rotation );
+                Instantiate(knifeModel, other.contacts[0].point, rotation);
             }
         }
     }

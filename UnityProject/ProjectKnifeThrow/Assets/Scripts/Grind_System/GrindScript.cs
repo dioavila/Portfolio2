@@ -14,7 +14,7 @@ public class GrindScript : MonoBehaviour
 
     [Header("Grind Settings")]
     [SerializeField] [Range(0, 1)] float startPosLerpRate = 0.75f;
-    //[SerializeField] [Range(0, 1)] float grindLerpRate = 0.5f;
+    [SerializeField] [Range(0, 100)] int grindLerpRate = 1;
     [SerializeField] float speedMod;
     int pointNumber;
 
@@ -97,7 +97,7 @@ public class GrindScript : MonoBehaviour
             }
             //transform.position = Vector3.Lerp(transform.position, newPoint, grindLerpRate);
             Vector3 mov = newPoint - transform.position;
-            GameManager.instance.playerScript.controller.Move(mov * Time.deltaTime * 100);
+            GameManager.instance.playerScript.controller.Move(mov * Time.deltaTime * grindLerpRate);
 
             if (GameManager.instance.playerScript.controller.isGrounded || GameManager.instance.playerScript.controller.collisionFlags == CollisionFlags.Sides)
             {

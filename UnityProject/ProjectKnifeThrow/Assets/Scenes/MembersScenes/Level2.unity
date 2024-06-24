@@ -708,6 +708,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
+      propertyPath: boss2Scene
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
       propertyPath: volumeSlider
       value: 
       objectReference: {fileID: 0}
