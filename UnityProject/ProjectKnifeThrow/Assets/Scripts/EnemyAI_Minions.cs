@@ -155,7 +155,8 @@ public class enemyAI : MonoBehaviour, IFreeze
 
     bool canSeePlayer()
     {
-        faceTarget();
+        if(canTurn)
+            faceTarget();
         agent.SetDestination(GameManager.instance.player.transform.position);
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(new Vector3(playerDir.x, playerDir.y, playerDir.z), transform.forward);
