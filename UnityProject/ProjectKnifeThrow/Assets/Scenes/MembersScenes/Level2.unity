@@ -708,12 +708,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: sceneBattleRoomIndex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: sceneSpawners.Array.size
-      value: 2
+      propertyPath: volumeSlider
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 755639495763528930, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
       propertyPath: sceneSpawners.Array.data[0]

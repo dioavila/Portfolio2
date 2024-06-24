@@ -131,6 +131,15 @@ public class buttonFunctions : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void level4()
+    {
+        StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level4"));
+        GameManager.instance.InitializeSettings();
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void quit()
     {
 #if UNITY_EDITOR

@@ -2409,8 +2409,12 @@ MonoBehaviour:
   isTransitioning: 0
   dashMes: {fileID: 8773367304972395615}
   grindMes: {fileID: 2629902885878473529}
-  BTMessage: {fileID: 5324596729912619962}
+  WallRunMessage: {fileID: 0}
   movementMessage: {fileID: 0}
+  Tutorial1Message: {fileID: 0}
+  Tutorial2Message: {fileID: 0}
+  Tutorial3Message: {fileID: 0}
+  Tutorial4Message: {fileID: 0}
   loadScreenImage: {fileID: 0}
   loadScreenText: {fileID: 0}
   loadScreen: {fileID: 0}
@@ -3987,10 +3991,6 @@ PrefabInstance:
       propertyPath: grindMes
       value: 
       objectReference: {fileID: 2629902885878473529}
-    - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
-      propertyPath: BTMessage
-      value: 
-      objectReference: {fileID: 5324596729912619962}
     - target: {fileID: 7688108756389006699, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: playerBPUI
       value: 
