@@ -178,7 +178,6 @@ public class enemyAI : MonoBehaviour, IFreeze
                 return true;
             }
         }
-        //agent.stoppingDistance = 0;
         return false;
     }
 
@@ -194,21 +193,11 @@ public class enemyAI : MonoBehaviour, IFreeze
     {
         if (other.CompareTag("Player"))
         {
-            //agent.SetDestination(GameManager.instance.player.transform.position);
-            //agent.stoppingDistance = 6;
             destChosen = true;
             playerInRange = true;
         }
     }
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        playerInRange = false;
-    //        agent.stoppingDistance = 0;
-    //    }
-    //}
 
     IEnumerator shoot()
     {
