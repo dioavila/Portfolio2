@@ -46,9 +46,10 @@ public class DisappearingPlatform : MonoBehaviour
     {
         for (int i = 0; i < time; i++)
         {
+            Color temp = model.material.color;
             model.material.color = Color.yellow;
             yield return new WaitForSeconds(0.5f);
-            model.material.color = Color.white;
+            model.material.color = temp;
             yield return new WaitForSeconds(1f);
         }
         DisapperingFloor.SetActive(false);
