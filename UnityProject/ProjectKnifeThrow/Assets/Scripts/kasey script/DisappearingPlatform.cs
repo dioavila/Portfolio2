@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,11 +12,15 @@ public class DisappearingPlatform : MonoBehaviour
     [SerializeField] Transform platformPOS;
     [SerializeField] int time;
     Renderer model;
+    private Color temp;
+    bool colorChange;
+    bool isRespawning;
     bool Active = true;
     // Start is called before the first frame update
     void Start()
     {
         model = DisapperingFloor.GetComponent<Renderer>();
+        temp = model.material.color;
     }
 
     // Update is called once per frame
@@ -22,6 +28,9 @@ public class DisappearingPlatform : MonoBehaviour
     {
         if (!Active)
         {
+            if (colorChange)
+                model.material.color = temp;
+            if(isRespawning)
             StartCoroutine(Reappear());
         }
     }
@@ -35,24 +44,30 @@ public class DisappearingPlatform : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && Active)
+        {
+            StartCoroutine(Disappear());
+            return;
+        }
+    }
+
     IEnumerator Reappear()
     {
-        Active = true;
+        isRespawning = false;
         yield return new WaitForSeconds(time);
         DisapperingFloor.SetActive(true);
+        Active = true;
     }
 
     IEnumerator Disappear()
     {
-        for (int i = 0; i < time; i++)
-        {
-            Color temp = model.material.color;
-            model.material.color = Color.yellow;
-            yield return new WaitForSeconds(0.5f);
-            model.material.color = temp;
-            yield return new WaitForSeconds(1f);
-        }
+        model.material.color = Color.yellow;
+        yield return new WaitForSeconds(1f);
         DisapperingFloor.SetActive(false);
+        colorChange = true;
         Active = false;
+        isRespawning = true;
     }
 }
