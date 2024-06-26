@@ -230,7 +230,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             //StartCoroutine(ShakeCamera.Shake(ShakeTime, ShakeStrength));
         }
 
-        if (Input.GetButtonDown("Fire2") && !isShooting && gThrowCount < gThrowCountMax)
+        if (Input.GetButtonDown("Fire2") && !isShooting && gThrowCount < gThrowCountMax && !recoverOn)
         {
             if(gThrowCount >= 0 && gThrowCount < 4)
             {
