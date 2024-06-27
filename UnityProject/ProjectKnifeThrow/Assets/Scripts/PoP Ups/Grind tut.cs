@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class Grindtut : MonoBehaviour
 {
-    Dashtut dash;
+    private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (dash != null)
-            {
-                dash.CloseDashMessage();
-            }
+            isPlayerInTrigger = true;
             OpenGrindMessage("");
-            Invoke("CloseGrindMessage", 20);
+        }
+    }
+        
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInTrigger = false;
+            CloseGrindMessage();
         }
     }
 

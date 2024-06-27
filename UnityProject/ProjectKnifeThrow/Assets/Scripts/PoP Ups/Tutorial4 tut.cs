@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class Tutorial4Tut : MonoBehaviour
 {
+    private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            isPlayerInTrigger = true;
             OpenTutorial4Message("");
-            Invoke("CloseTutorial4Message", 5);
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInTrigger = false;
+            CloseTutorial4Message();
+        }
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))

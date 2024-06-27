@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Tutorial2Message;
     [SerializeField] public GameObject Tutorial3Message;
     [SerializeField] public GameObject Tutorial4Message;
+    [SerializeField] public GameObject Tutorial5Message;
 
     public Image loadScreenImage;
     public TMP_Text loadScreenText;

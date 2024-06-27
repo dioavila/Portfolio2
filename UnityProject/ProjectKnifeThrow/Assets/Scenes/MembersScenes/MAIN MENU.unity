@@ -1927,10 +1927,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'The grind knife ability lets you create a custom path for quick traversal.
-    You have 4 grind knives at your disposal. Press Q to throw a grind knife; the
-    first one you throw marks your destination point. Throw the next three knives
-    to form a visible grind rail between them. Once all four knives are placed, you
-    can press E on the rail to grind along the path created, ending at the first
+    You have 4 grind knives at your disposal. Press Right clcik to throw a grind
+    knife; the first one you throw marks your destination point. Throw the next three
+    knives to form a visible grind rail between them. Once all four knives are placed,
+    you can press E on the rail to grind along the path created, ending at the first
     knife thrown.
 
 
@@ -3910,6 +3910,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 177499405341143732, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
+      propertyPath: m_text
+      value: 'The grind knife ability lets you create a custom path for quick traversal.
+        You have 4 grind knives at your disposal. Press Right mouse button to throw
+        a grind knife; the first one you throw marks your destination point. Throw
+        the next three knives to form a visible grind rail between them. Once all
+        four knives are placed, you can press E on the rail to grind along the path
+        created, ending at the first knife thrown.
+
+
+        If you''re not satisfied
+        with the placement of your grind knives, press R to recall them. This will
+        remove the knives from the environment and restore them to your inventory,
+        allowing you to try again. Use this ability to navigate tricky terrain and
+        outmaneuver your opponents with style and precision.'
+      objectReference: {fileID: 0}
     - target: {fileID: 1186600206522685199, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: musicSounds.Array.size
       value: 2
@@ -4025,6 +4041,21 @@ PrefabInstance:
     - target: {fileID: 5404973783262599963, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443828322066344440, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
+      propertyPath: m_text
+      value: 'Bullet Time grants you the power to slow down time, giving you a strategic
+        advantage in movement and combat. To activate Bullet Time, press Q While
+        active, time will slow down, allowing you to make quick, precise, and accurate
+        decisions. Use this ability to dodge attacks, line up perfect shots, or navigate
+        through challenging areas with enhanced control and clarity.
+
+
+        Bullet
+        Time is limited and will gradually recharge when not in use. Be mindful that
+        using damaging abilities will cause the Bullet Time timer to deplete faster.
+        Strategically manage your Bullet Time to maximize its effectiveness in critical
+        moments.'
       objectReference: {fileID: 0}
     - target: {fileID: 5528348956992230707, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8227,17 +8258,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Bullet Time grants you the power to slow down time, giving you a strategic
-    advantage in movement and combat. To activate Bullet Time, press the right mouse
-    button. While active, time will slow down, allowing you to make quick, precise,
-    and accurate decisions. Use this ability to dodge attacks, line up perfect shots,
-    or navigate through challenging areas with enhanced control and clarity.
+    advantage in movement and combat. To activate Bullet Time, press Q. While active,
+    time will slow down, allowing you to make quick, precise, and accurate decisions.
+    Use this ability to dodge attacks, line up perfect shots, or navigate through
+    challenging areas with enhanced control and clarity.
 
 
-    Bullet
-    Time is limited and will gradually recharge when not in use. Be mindful that
-    using damaging abilities will cause the Bullet Time timer to deplete faster.
-    Strategically manage your Bullet Time to maximize its effectiveness in critical
-    moments. PRESS K TO CLOSE'
+    Bullet Time is limited
+    and will gradually recharge when not in use. Be mindful that using damaging abilities
+    will cause the Bullet Time timer to deplete faster. Strategically manage your
+    Bullet Time to maximize its effectiveness in critical moments. PRESS K TO CLOSE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f3900f288ecef2148b8a0de678d1afca, type: 2}
   m_sharedMaterial: {fileID: 1674420627393995904, guid: f3900f288ecef2148b8a0de678d1afca, type: 2}

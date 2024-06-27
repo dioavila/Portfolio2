@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class WallRunTut : MonoBehaviour
 {
+    private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            isPlayerInTrigger = true;
             OpenWallRunMessage("");
-            Invoke("CloseWallRunMessage", 8);
         }
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInTrigger = false;
+            CloseWallRunMessage();
+        }
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
