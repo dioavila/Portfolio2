@@ -83,6 +83,7 @@ public class buttonFunctions : MonoBehaviour
     }
     public void toCredits()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Credits"));
         SceneManager.LoadScene("Credits");
         GameManager.instance.InitializeSettings();
@@ -90,6 +91,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void toMain()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Main Menu"));
         SceneManager.LoadScene("Main Menu");
         GameManager.instance.InitializeSettings();
@@ -97,47 +99,57 @@ public class buttonFunctions : MonoBehaviour
 
     public void tutorialLevel()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Tutorial"));
         GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.instance.isLoading = false;
     }
 
     public void level1()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level1"));
         GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.instance.isLoading = false;
     }
 
     public void level2()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level2"));
         GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.instance.isLoading = false;
     }
 
     public void level3()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level3"));
         GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.instance.isLoading = false;
     }
 
     public void level4()
     {
+        GameManager.instance.isLoading = true;
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Level4"));
         GameManager.instance.InitializeSettings();
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        GameManager.instance.isLoading = false;
     }
 
     public void quit()

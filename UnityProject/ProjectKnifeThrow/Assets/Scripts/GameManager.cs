@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
     public Image loadScreenImage;
     public TMP_Text loadScreenText;
     public GameObject loadScreen;
+    public bool isLoading = false;
 
 
     [Header("Object Access")]
@@ -174,7 +175,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            if (SceneManager.GetActiveScene().name != "Main Menu")
+            if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 6 && !isLoading)
             {
                 if (menuActive == null)
                 {
@@ -418,6 +419,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator EndLoading()
     {
+        GameManager.instance.isLoading = true;
         loadScreen.SetActive(true);
 
         float duration = 1f;
@@ -439,6 +441,7 @@ public class GameManager : MonoBehaviour
         loadScreenImage.color = endColor;
         loadScreenText.color = endColor;
         loadScreen.SetActive(false);
+        GameManager.instance.isLoading = false;
     }
 
     public void OpenMessagePanel(string text)
