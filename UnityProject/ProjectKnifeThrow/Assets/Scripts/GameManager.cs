@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
     public Image redScreenImage;
     public bool isTransitioning = false;
     Color startColor;
-    public bool isLoading = false;
 
     [Header("Pop Ups")]
     [SerializeField] public GameObject dashMes;
@@ -175,7 +174,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 6 && !isLoading)
+            if (SceneManager.GetActiveScene().name != "Main Menu")
             {
                 if (menuActive == null)
                 {
@@ -190,11 +189,8 @@ public class GameManager : MonoBehaviour
                     menuSettings.SetActive(false);
                 }
             }
-            else
-            {
-                return;
-            }
         }
+
     }
 
     public void InitializeSettings()
@@ -391,7 +387,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartLoadingCoroutine(string sceneName)
     {
-        isLoading = true;
         loadScreen.SetActive(true);
 
         float duration = 1f;
@@ -444,7 +439,6 @@ public class GameManager : MonoBehaviour
         loadScreenImage.color = endColor;
         loadScreenText.color = endColor;
         loadScreen.SetActive(false);
-        isLoading = false;
     }
 
     public void OpenMessagePanel(string text)
