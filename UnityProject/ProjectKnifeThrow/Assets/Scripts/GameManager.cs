@@ -138,11 +138,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       //Debug.Log("GameManager Start called");
-
-        startColor = redScreenImage.color;
-        startColor.a = 0f;
-        redScreenImage.color = startColor;
+        //Debug.Log("GameManager Start called");
+        if (redScreenImage != null)
+        {
+            startColor = redScreenImage.color;
+            startColor.a = 0f;
+            redScreenImage.color = startColor;
+        }
     }
 
     // Update is called once per frame

@@ -87,6 +87,7 @@ public class buttonFunctions : MonoBehaviour
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Credits"));
         SceneManager.LoadScene("Credits");
         GameManager.instance.InitializeSettings();
+        GameManager.instance.isLoading = false;
     }
 
     public void toMain()
@@ -95,6 +96,7 @@ public class buttonFunctions : MonoBehaviour
         StartCoroutine(GameManager.instance.StartLoadingCoroutine("Main Menu"));
         SceneManager.LoadScene("Main Menu");
         GameManager.instance.InitializeSettings();
+        GameManager.instance.isLoading = false;
     }
 
     public void tutorialLevel()
