@@ -8,6 +8,7 @@ public class GrindBullet : MonoBehaviour
     [SerializeField] public int Speed;
     [SerializeField] int DestroyTime;
     [SerializeField] GameObject knifeModel;
+    bool knifeOn = false;
     //bool destroyedOnCollision = false;
     // Start is called before the first frame update
     void Start()
@@ -27,22 +28,25 @@ public class GrindBullet : MonoBehaviour
             }
             else
             {
-                RaycastHit hit;
+                //RaycastHit hit;
 
                 //rb.velocity *= 0;
-                rb.isKinematic = true;
-                //ContactPoint collisionPoint = other.GetContact(0);
+                //rb.isKinematic = true;
+                ////ContactPoint collisionPoint = other.GetContact(0);
 
-                Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit);
-                Debug.DrawRay(transform.position, hit.normal, Color.blue, 100);
-                //destroyedOnCollision = true;
-                Destroy(gameObject);
+                //Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit);
+                //Debug.DrawRay(transform.position, hit.normal, Color.blue, 100);
+                ////destroyedOnCollision = true;
 
                 //Vector3 opposite = -hit.normal;
+                if (!knifeOn) { 
                 Vector3 opposite = -other.contacts[0].normal;
                 Quaternion rotation = Quaternion.FromToRotation(knifeModel.transform.forward, opposite);
                 //Instantiate(knifeModel, transform.position, rotation );
                 Instantiate(knifeModel, other.contacts[0].point, rotation);
+                    knifeOn = true;
+                }
+                Destroy(gameObject);
             }
         }
     }

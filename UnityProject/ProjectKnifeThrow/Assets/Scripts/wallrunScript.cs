@@ -339,7 +339,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
     void sprint()
     {
-        if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero && !isWallRunning)
+        if (Input.GetButtonDown("Sprint") && canSprint && moveDir != Vector3.zero && !isWallRunning && !onAir)
         {
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed = sprintSpeed;
