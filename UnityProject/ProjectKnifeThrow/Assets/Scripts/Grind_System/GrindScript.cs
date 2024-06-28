@@ -99,7 +99,7 @@ public class GrindScript : MonoBehaviour
             Vector3 mov = newPoint - transform.position;
             GameManager.instance.playerScript.controller.Move(mov * Time.deltaTime * grindLerpRate);
 
-            if (GameManager.instance.playerScript.controller.isGrounded || GameManager.instance.playerScript.controller.collisionFlags == CollisionFlags.Sides)
+            if (GameManager.instance.playerScript.controller.isGrounded || GameManager.instance.playerScript.controller.collisionFlags == CollisionFlags.Sides || Input.GetButtonDown("Jump"))
             {
                 break;
             }
@@ -111,6 +111,7 @@ public class GrindScript : MonoBehaviour
         GameManager.instance.playerScript.playerCanMove = true;
         GameManager.instance.playerScript.isGrinding = false;
         GameManager.instance.playerScript.anim.SetBool("grindOn", false);
+        GameManager.instance.playerScript.jump();
     }
 
     Vector3 ReturnPointCubic(float timerSpot)
