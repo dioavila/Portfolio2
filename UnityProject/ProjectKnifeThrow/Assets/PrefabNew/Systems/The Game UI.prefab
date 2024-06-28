@@ -7457,6 +7457,7 @@ MonoBehaviour:
   sceneSpawners:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   sceneBattleRoomIndex: 0
   mainCanvas: {fileID: 8081203567923179340}
   PanelControls: {fileID: 5860274521521213848}
@@ -7491,6 +7492,7 @@ MonoBehaviour:
   Tutorial2Message: {fileID: 5150745928732721720}
   Tutorial3Message: {fileID: 8552594979254363868}
   Tutorial4Message: {fileID: 8901996231606990282}
+  Tutorial5Message: {fileID: 0}
   loadScreenImage: {fileID: 5787770013478237615}
   loadScreenText: {fileID: 7475137183073122944}
   loadScreen: {fileID: 1142880520159794240}
@@ -7513,7 +7515,7 @@ MonoBehaviour:
   playerSpawnPos: {fileID: 0}
   checkpointPopup: {fileID: 303494738655526615}
   sensitivity: 0.5
-  boss2Scene: 1
+  boss2Scene: 0
   bossManager: {fileID: 0}
   audioScript: {fileID: 0}
   playerPushBack: {fileID: 7774287922920868663}
@@ -20747,7 +20749,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

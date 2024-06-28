@@ -136,6 +136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 698092566878191029, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
+      propertyPath: enemyToSpawn
+      value: 
+      objectReference: {fileID: 2336932430221318097, guid: d38e62bd87e1965419f311664752eaa3, type: 3}
     - target: {fileID: 1168758061150229397, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -67.1
@@ -175,6 +179,22 @@ PrefabInstance:
     - target: {fileID: 1168758061150229397, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796588571487700019, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
+      propertyPath: m_Size.z
+      value: 14.977516
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796588571487700019, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
+      propertyPath: m_Center.z
+      value: 0.011241913
+      objectReference: {fileID: 0}
+    - target: {fileID: 6651556087506961545, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9.0124
+      objectReference: {fileID: 0}
+    - target: {fileID: 6651556087506961545, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 7579802453025771765, guid: e5dcfc7f08e0fcc43a84c79e96b885c9, type: 3}
       propertyPath: m_Name

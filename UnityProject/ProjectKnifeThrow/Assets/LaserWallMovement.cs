@@ -11,11 +11,17 @@ public class LaserWallMovement : MonoBehaviour
     Vector3 lerpDistance1, lerpDistance2;
     bool ready = false;
     [SerializeField] bool isBossMechanic;
+    [SerializeField] bool canDisable = false;
     void Start()
     {
         if (isBossMechanic)
         {
             GameManager.instance.bossManager.activeLasers++;
+        }
+        if (canDisable)
+        {
+            Player_Interact_Button script = GameObject.FindWithTag("Console1").GetComponent<Player_Interact_Button>();
+            script.laserSet.Add(gameObject);
         }
         //if (readyPoint != null && endPoint != null)
         //{

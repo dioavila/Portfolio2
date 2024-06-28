@@ -12,6 +12,8 @@ public class SpawnTrig : MonoBehaviour
     [SerializeField] bool triggersDoor = true;
     [SerializeField] GameObject doorsToOpen;
     [SerializeField] int spawnTimer;
+    [SerializeField] bool closeDoor = false;
+    [SerializeField] GameObject doorToClose;
 
     [Header("Enemy Settings")]
     [SerializeField] GameObject enemyToSpawn;
@@ -67,11 +69,22 @@ public class SpawnTrig : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (closeDoor)
+        {
+            if(doorToClose != null)
+            {
+                doorToClose.GetComponent<DoorControl>().clearToOpen = false;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
         if (other.CompareTag("Player"))
         {
             if (!musicStart)
             {
                 AudioManager.instance.PlayMusic("Battle");
+                musicStart = true;
             }
             spawnStart = true;
         }

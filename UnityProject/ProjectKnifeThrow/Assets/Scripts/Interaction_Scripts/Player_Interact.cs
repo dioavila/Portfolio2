@@ -15,7 +15,7 @@ public class Player_Interact_Button : MonoBehaviour
     public bool openSesame = false;
 
     [Header("Laser Settings")]
-    [SerializeField] List<GameObject> laserSet;
+    [SerializeField] public List<GameObject> laserSet;
     bool playerInRange = false;
 
     //float moveRate = 1.0f;
@@ -32,6 +32,7 @@ public class Player_Interact_Button : MonoBehaviour
             //objectToMove.transform.position = Vector3.Lerp(objectToMove.transform.position, new Vector3(objectToMove.transform.position.x, 
             //    moveTo.transform.position.y, objectToMove.transform.position.z), Time.deltaTime* moveRate);
             doorToOpen.GetComponent<DoorControl>().clearToOpen = true;
+            openSesame = false;
         }
     }
 
