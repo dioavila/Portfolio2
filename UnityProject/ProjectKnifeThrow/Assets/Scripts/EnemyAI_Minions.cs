@@ -84,6 +84,8 @@ public class enemyAI : MonoBehaviour, IFreeze
             if (!finishedStartup)
             {
                 StartCoroutine(spawnMove());
+                if (critPoint == null)
+                    deathStart();
             }
             else if (finishedStartup)
             {
@@ -151,6 +153,26 @@ public class enemyAI : MonoBehaviour, IFreeze
             gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, resetRot, 1);
             destChosen = false;
         }
+    }
+
+    private void deathStart()
+    {
+        agent.SetDestination(agent.transform.position);
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        if (dropOnDeath != null)
+            Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+        isDead = true;
+        if (!belongsToGORE)
+        {
+            GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+        }
+        else
+        {
+            GameManager.instance.bossManager.enemiesAlive -= 1;
+        }
+        robotExplosion.Play();
+        deathSound.Play();
     }
 
     bool canSeePlayer()
