@@ -17,6 +17,8 @@ public class GrindPointsLogic : MonoBehaviour
     [SerializeField] AudioSource pointSource;
     [SerializeField] AudioClip pointClip;
 
+    [SerializeField] Material rPMat;
+    [SerializeField] Material oMat;
     //[Header("Destruction Settings")]
     //[SerializeField] int destructionTimerMax;
     //[SerializeField] [Range(0,3)] int destructionSpeed;
@@ -32,20 +34,20 @@ public class GrindPointsLogic : MonoBehaviour
         GameManager.instance.grindScript.grindPoints.Add(gPoint);
         currParticle = Instantiate(particles, gPoint.position, Quaternion.identity);
         baseParticle = Instantiate(particlesB, transform.position, Quaternion.identity);
-        //if(GameManager.instance.grindScript.grindPoints.IndexOf(gPoint) == GameManager.instance.grindScript.grindPoints.Count - 1)
-        //{
-        //    currParticle.
-        //}
-        //destructionTimerCurr = destructionTimerMax;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if(GameManager.instance.grindScript.grindPoints.Count >= 4)
-        //{
-        //    DestroyStart();
-        //}
+        if(GameManager.instance.grindScript.grindPoints.IndexOf(gPoint) == GameManager.instance.grindScript.grindPoints.Count - 1)
+        {
+            currParticle.GetComponent<ParticleSystemRenderer>().material = rPMat;
+        }
+        else
+        {
+            currParticle.GetComponent<ParticleSystemRenderer>().material = oMat;
+        }
         if (GameManager.instance.playerScript.recoverOn)
         {
             DestroyStart();
@@ -54,19 +56,12 @@ public class GrindPointsLogic : MonoBehaviour
 
     void DestroyStart()
     {
-        //if (destructionTimerCurr > 0)
-        //{
-        //    destructionTimerCurr -= Time.deltaTime * destructionSpeed;
-        //}
-        //else if (destructionTimerCurr <= 0 && !GameManager.instance.playerScript.isGrinding)
-        //{
         GameManager.instance.playerScript.gThrowCount--;
         currParticle.Stop();
         baseParticle.Stop();
         currParticle.Clear();
         baseParticle.Clear();
         Destroy(gameObject);
-        //}
     }
 
     void OnTriggerEnter(Collider other)

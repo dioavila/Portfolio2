@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4735972513725504101, guid: b80e69b28ed4353429a178fabdfac892, type: 3}
       propertyPath: spawnTimer
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4735972513725504101, guid: b80e69b28ed4353429a178fabdfac892, type: 3}
       propertyPath: doorsToOpen
@@ -322,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6330266428521780598, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
       propertyPath: spawnTimer
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6330266428521780598, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
       propertyPath: numberToSpawn

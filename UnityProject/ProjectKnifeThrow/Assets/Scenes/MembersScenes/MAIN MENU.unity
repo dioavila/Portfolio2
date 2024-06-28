@@ -2415,6 +2415,7 @@ MonoBehaviour:
   Tutorial2Message: {fileID: 0}
   Tutorial3Message: {fileID: 0}
   Tutorial4Message: {fileID: 0}
+  Tutorial5Message: {fileID: 0}
   loadScreenImage: {fileID: 0}
   loadScreenText: {fileID: 0}
   loadScreen: {fileID: 0}
@@ -4061,6 +4062,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1661373494971714501}
+    - target: {fileID: 6443152913048516783, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7109415988511979163, guid: 215d8fbca9592f34a84243a6b9ecdd3e, type: 3}
       propertyPath: m_Name
       value: MainMenu

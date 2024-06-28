@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && !playerScript.isDead)
         {
             if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 6 && !isLoading)
             {

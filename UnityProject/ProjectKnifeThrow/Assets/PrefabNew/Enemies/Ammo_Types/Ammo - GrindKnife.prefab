@@ -56,6 +56,8 @@ MonoBehaviour:
   baseClip: {fileID: 8300000, guid: 8ed9419c62566064cbe01b6251070a92, type: 3}
   pointSource: {fileID: 8183433755355921532}
   pointClip: {fileID: 8300000, guid: d70b25e100b629347aee88a06933922a, type: 3}
+  rPMat: {fileID: 2100000, guid: b217533c4935adf44a90f1545b3574c8, type: 2}
+  oMat: {fileID: 2100000, guid: 31aa153343bf33049864fc4c69816a34, type: 2}
 --- !u!54 &1755532986681074904
 Rigidbody:
   m_ObjectHideFlags: 0
