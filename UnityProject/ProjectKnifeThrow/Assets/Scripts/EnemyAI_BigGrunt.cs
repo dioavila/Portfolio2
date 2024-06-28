@@ -79,6 +79,8 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             if (!finishedStartup)
             {
                 StartCoroutine(spawnMove());
+                if (critPoints.Count == 0)
+                    deathStart();
             }
             else if (finishedStartup)
             {
@@ -153,6 +155,27 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
             gameObject.transform.rotation = Quaternion.Lerp(gameObject.transform.rotation, resetRot, 1);
             destChosen = false;
         }
+    }
+
+    private void deathStart()
+    {
+        Destroy(eyeball);
+        agent.SetDestination(agent.transform.position);
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        if (dropOnDeath != null)
+            Instantiate(dropOnDeath, transform.position, Quaternion.identity);
+        if (!belongsToGORE)
+        {
+            GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+        }
+        else
+        {
+            GameManager.instance.bossManager.enemiesAlive -= 1;
+        }
+        isDead = true;
+        robotExplosion.Play();
+        deathSound.Play();
     }
 
     bool canSeePlayer()
