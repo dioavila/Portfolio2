@@ -264,9 +264,25 @@ PrefabInstance:
       propertyPath: laserSet.Array.data[4]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 513385436286947085, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 688159720984171591, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420606773455730317, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420606773455730317, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1420606773455730317, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2775783156496497933, guid: e7540946a7424e943b2aed203c663ab5, type: 3}
       propertyPath: m_Materials.Array.data[0]

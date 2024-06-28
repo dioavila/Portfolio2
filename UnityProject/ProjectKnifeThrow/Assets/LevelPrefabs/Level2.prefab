@@ -10758,6 +10758,7 @@ MonoBehaviour:
   movSpeed: 2
   timerToStart: 2
   isBossMechanic: 0
+  canDisable: 0
 --- !u!1 &2133664708791411837
 GameObject:
   m_ObjectHideFlags: 0
@@ -12293,6 +12294,7 @@ MonoBehaviour:
   movSpeed: 2
   timerToStart: 2
   isBossMechanic: 0
+  canDisable: 0
 --- !u!1 &3881518424259009908
 GameObject:
   m_ObjectHideFlags: 0
@@ -18361,6 +18363,7 @@ MonoBehaviour:
   movSpeed: 2
   timerToStart: 2
   isBossMechanic: 0
+  canDisable: 0
 --- !u!1 &5888254952704522253
 GameObject:
   m_ObjectHideFlags: 0
@@ -19218,6 +19221,7 @@ MonoBehaviour:
   movSpeed: 2
   timerToStart: 2
   isBossMechanic: 0
+  canDisable: 0
 --- !u!1 &6872031233235892222
 GameObject:
   m_ObjectHideFlags: 0
@@ -19541,6 +19545,7 @@ MonoBehaviour:
   movSpeed: 0.8
   timerToStart: 2
   isBossMechanic: 0
+  canDisable: 0
 --- !u!54 &5979122722952746683
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -58019,22 +58024,6 @@ PrefabInstance:
     - target: {fileID: 7912917559982073238, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8422612445926229325, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e47a1599449eb3143b01e3e4bc197f83, type: 3}
-    - target: {fileID: 8422612445926229325, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: m_Color.b
-      value: 0.6132076
-      objectReference: {fileID: 0}
-    - target: {fileID: 8422612445926229325, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: m_Color.g
-      value: 0.6132076
-      objectReference: {fileID: 0}
-    - target: {fileID: 8422612445926229325, guid: 16743bc38fabc3a43863151c6b35ab3a, type: 3}
-      propertyPath: m_Color.r
-      value: 0.6132076
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
