@@ -373,7 +373,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 60f))
             {
                 ForceDir = (hit.point - playerShootPosG.position).normalized;
             }
