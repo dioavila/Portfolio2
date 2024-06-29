@@ -43,7 +43,7 @@ public class CreateBullet : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 500f))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 10f))
         {
             ForceDir = (hit.point - shootPos.position).normalized;
         }
