@@ -321,16 +321,17 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     {
         //anim.SetTrigger("JumpAnim");
         canSprint = false;
-        if (jumpCount < 1)
+        if (jumpCount == 0)
         {
             anim.SetTrigger("JumpAnim");
+            ++jumpCount;
         }
-        else
+        else if(jumpCount == 1)
         {
             //anim.SetBool("JumpBool1", false);
             anim.SetTrigger("JumpAnim2");
+            ++jumpCount;
         }
-        ++jumpCount;
         playerVel.y = jumpSpeed;
         onAir = true;
     }
