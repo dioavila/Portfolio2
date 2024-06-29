@@ -22,9 +22,10 @@ public class Player_Interact_Button : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerInRange && Input.GetKeyDown(KeyCode.E))
+        if(playerInRange && Input.GetKeyDown(KeyCode.F))
         {
             PerformAction();
+            GameManager.instance.CloseMessagePanel("");
         }
 
         if (openSesame)
@@ -67,6 +68,7 @@ public class Player_Interact_Button : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            GameManager.instance.OpenMessagePanel("");
         }
     }
 
@@ -75,6 +77,7 @@ public class Player_Interact_Button : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            GameManager.instance.CloseMessagePanel("");
         }
     }
 
