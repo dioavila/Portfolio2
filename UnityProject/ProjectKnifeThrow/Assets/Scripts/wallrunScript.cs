@@ -373,12 +373,12 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 10f))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 60f))
             {
                 ForceDir = (hit.point - playerShootPosG.position).normalized;
             }
 
-            Vector3 forcetoadd = ForceDir * bulletType.GetComponent<GrindBullet>().Speed + bulletType.transform.transform.up * UpWardForce;
+            Vector3 forcetoadd = ForceDir * Projectile.GetComponent<GrindBullet>().Speed + Projectile.transform.transform.up * UpWardForce;
 
             ProjectileRB.AddForce(forcetoadd, ForceMode.Impulse);
             yield return new WaitForSeconds(shootRateType);
