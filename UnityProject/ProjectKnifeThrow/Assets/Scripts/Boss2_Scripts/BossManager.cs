@@ -227,14 +227,10 @@ public class BossManager : MonoBehaviour
     /// </summary>
     void ShowVulnerable()
     {
-
         for (int i = 0; i < barrierList.Count; ++i)
         {
             if (barrierList[i] != null)
             {
-                barrierSound[i].clip = clipList[1];
-                barrierSound[i].pitch = 0.5f;
-                barrierSound[i].Play();
                 barrierList[i].SetActive(false);
             }
                 
@@ -266,9 +262,6 @@ public class BossManager : MonoBehaviour
                 if (barrierList[i] != null)
                 {
                     barrierList[i].SetActive(true);
-                    barrierSound[i].clip = clipList[1];
-                    barrierSound[i].pitch = 0.8f;
-                    barrierSound[i].Play();
                 }
             }
             PatternTransitionTimer();
@@ -350,10 +343,10 @@ public class BossManager : MonoBehaviour
     IEnumerator spawnLasers()
     {
         laserOn = true;
-        int patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
+        int patternIndex = UnityEngine.Random.Range(0, laserList.Count);
         Instantiate(laserList[patternIndex], lSpawn1.transform.position, lSpawn1.transform.rotation);
         yield return new WaitForSeconds(laserSpawnDelay);
-        patternIndex = UnityEngine.Random.Range(0, laserList.Count - 1);
+        patternIndex = UnityEngine.Random.Range(0, laserList.Count);
         Instantiate(laserList[patternIndex], lSpawn2.transform.position, lSpawn2.transform.rotation);
         --lasersToSpawn;
         yield return new WaitForSeconds(laserSpawnDelay);
@@ -490,11 +483,14 @@ public class BossManager : MonoBehaviour
                 yield return new WaitForSeconds(4);
             }
             yield return new WaitForSeconds(4);
-            GameObject lastEye = listEyes[0];
-            listEyes.Clear();
-            Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
-            Destroy(lastEye);
-            eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
+            if (listEyes.Count != 0)
+            {
+                GameObject lastEye = listEyes[0];
+                listEyes.Clear();
+                Instantiate(deathEye, lastEye.transform.position, Quaternion.identity);
+                Destroy(lastEye);
+                eyeSound.PlayOneShot(clipList[0], eyeSound.volume);
+            }
             yield return new WaitForSeconds(4);
             GameManager.instance.updateGameGoal(-1);
         }
