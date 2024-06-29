@@ -205,14 +205,6 @@ PrefabInstance:
       propertyPath: boss2Scene
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2246634639036814657, guid: d6c5b255f21b1e647932d1607f866518, type: 3}
-      propertyPath: m_Size.x
-      value: 3.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2246634639036814657, guid: d6c5b255f21b1e647932d1607f866518, type: 3}
-      propertyPath: m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6522499028888694995, guid: d6c5b255f21b1e647932d1607f866518, type: 3}
       propertyPath: m_Name
       value: Level4
