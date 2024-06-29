@@ -176,25 +176,34 @@ public class GameManager : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetButtonDown("Cancel") && !playerScript.isDead)
+        if (Input.GetButtonDown("Cancel"))
         {
             if (SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 6 && !isLoading)
             {
-                if (menuActive == null)
+                if (playerScript != null)
                 {
-                    statePause();
-                    menuActive = menuPause;
-                    menuActive.SetActive(isPaused);
-                    exitMenu.SetActive(false);
+                    if (!playerScript.isDead)
+                    {
+                        if (menuActive == null)
+                        {
+                            statePause();
+                            menuActive = menuPause;
+                            menuActive.SetActive(isPaused);
+                            exitMenu.SetActive(false);
+                        }
+                        else if (menuActive == menuPause)
+                        {
+                            stateUnPause();
+                            menuSettings.SetActive(false);
+                        }
+                    }
                 }
-                else if (menuActive == menuPause)
-                {
-                    stateUnPause();
-                    menuSettings.SetActive(false);
-                }
-            }
-        }
 
+
+
+            }
+
+        }
     }
 
     public void InitializeSettings()
