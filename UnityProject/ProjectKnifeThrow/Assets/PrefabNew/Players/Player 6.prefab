@@ -1891,7 +1891,7 @@ MonoBehaviour:
   selectedKnife: 0
   knifeModel: {fileID: 0}
   freezeTime: 0
-  UpWardForce: 0
+  UpWardForce: 10
   jumpSpeed: 12
   jumpMax: 2
   playerSpeed: 10

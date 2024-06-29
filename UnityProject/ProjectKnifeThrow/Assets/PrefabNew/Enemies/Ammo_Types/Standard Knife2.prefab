@@ -80,6 +80,8 @@ MonoBehaviour:
   hitConfirm: {fileID: 1001809201420523908, guid: 570a605fcc230dd43b71997a7867a9a8, type: 3}
   hitBlock: {fileID: 5513334090030241347, guid: 1d5f26d5d0630a847ac5e62c89c19628, type: 3}
   hitMiss: {fileID: 0}
+  collisionAudio: []
+  source: {fileID: 0}
 --- !u!1001 &6585156022767917424
 PrefabInstance:
   m_ObjectHideFlags: 0
