@@ -288,10 +288,8 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         if (playerCanMove) {
             controller.Move(moveDir * playerSpeed * Time.deltaTime);
         }
-        if(!onAir)
-        {
-            sprint();
-        }
+        
+        sprint();
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -319,20 +317,21 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
         }
     }
 
-    void jump()
+    public void jump()
     {
         //anim.SetTrigger("JumpAnim");
         canSprint = false;
-        if (jumpCount < 1)
+        if (jumpCount == 0)
         {
             anim.SetTrigger("JumpAnim");
+            ++jumpCount;
         }
-        else
+        else if(jumpCount == 1)
         {
             //anim.SetBool("JumpBool1", false);
             anim.SetTrigger("JumpAnim2");
+            ++jumpCount;
         }
-        ++jumpCount;
         playerVel.y = jumpSpeed;
         onAir = true;
     }
@@ -344,7 +343,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             anim.SetFloat("Speed", Mathf.Lerp(0, 1, 1));
             playerSpeed = sprintSpeed;
         }
-        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero || isWallRunning)
+        else if(Input.GetButtonUp("Sprint") || moveDir == Vector3.zero || isWallRunning || onAir)
         {
             anim.SetFloat("Speed", Mathf.Lerp(1, 0, 1));
             playerSpeed = playerSpeedStorage;
@@ -488,7 +487,7 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     {
         Vector3 wallTouchChecker;
 
-        if(jumpCount == 2)
+        if (jumpCount == 2)
         {
             jumpCount = 1;
         }
@@ -503,11 +502,11 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         RaycastHit wallTouch;
         bool TouchCheck = Physics.Raycast(playerObj.transform.position, (wallTouchChecker + -playerObj.transform.forward), out wallTouch, 3);
-        
+
         controller.Move(wallDirection * (sprintSpeed) * Time.deltaTime);
         isWallRunning = true;
 
-        if(playerCanMove)
+        if (playerCanMove)
         {
             //anim.SetBool("Jump1Bool", false);
             //anim.SetBool("Jump2Bool", false);
@@ -516,9 +515,9 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
             playerCanMove = false;
         }
 
-        if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides)
+        if (!TouchCheck || Input.GetButtonDown("Jump") || !transform.hasChanged || controller.collisionFlags == CollisionFlags.Sides || !wallTouch.collider.CompareTag("enableWallRun"))
         {
-            //jump();
+            jump();
             ValuesReset();
         }
 
