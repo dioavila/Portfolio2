@@ -33,7 +33,7 @@ public class testDBullet : MonoBehaviour
 
         IDamage dmg = other.gameObject.GetComponent<IDamage>();
 
-        if (dmg != null)
+        if (dmg != null && !GameManager.instance.playerScript.isDead)
         {
             dmg.TakeDamage(damage);
         }

@@ -10,6 +10,9 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
     [Header("Boss Toggle")]
     [SerializeField] bool belongsToGORE = false;
 
+    [Header("Level 3 Toggle")]
+    [SerializeField] bool belongsToL3 = false;
+
     [Header("Big Grunt")]
     public NavMeshAgent agent;
     [SerializeField] Renderer model;
@@ -106,13 +109,16 @@ public class EnemyAI_BigGrunt : MonoBehaviour, IFreeze
                     gameObject.GetComponent<Rigidbody>().useGravity = true;
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
-                    if (!belongsToGORE)
+                    if (!belongsToL3)
                     {
-                        GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
-                    }
-                    else
-                    {
-                        GameManager.instance.bossManager.enemiesAlive -= 1;
+                        if (!belongsToGORE)
+                        {
+                            GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+                        }
+                        else
+                        {
+                            GameManager.instance.bossManager.enemiesAlive -= 1;
+                        }
                     }
                         isDead = true;
                     robotExplosion.Play();

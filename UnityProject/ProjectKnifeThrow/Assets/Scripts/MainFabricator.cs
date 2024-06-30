@@ -580,6 +580,7 @@ public class MainFabricator : MonoBehaviour
         {
             Destroy(laserF2);
             F2Laser = false;
+            GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive = 0;
         }
     }
 

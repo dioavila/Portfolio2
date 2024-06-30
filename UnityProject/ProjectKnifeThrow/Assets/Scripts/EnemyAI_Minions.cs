@@ -10,6 +10,8 @@ public class enemyAI : MonoBehaviour, IFreeze
 {
     [Header("Boss Toggle")]
     [SerializeField] bool belongsToGORE = false;
+    [Header("Level 3 Toggle")]
+    [SerializeField] bool belongsToL3 = false;
 
     [Header("Grunt")]
     public NavMeshAgent agent;
@@ -105,13 +107,16 @@ public class enemyAI : MonoBehaviour, IFreeze
                     if (dropOnDeath != null)
                         Instantiate(dropOnDeath, transform.position, Quaternion.identity);
                     isDead = true;
-                    if (!belongsToGORE)
+                    if (!belongsToL3)
                     {
-                        GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
-                    }
-                    else
-                    {
-                        GameManager.instance.bossManager.enemiesAlive -= 1;
+                        if (!belongsToGORE)
+                        {
+                            GameManager.instance.sceneSpawners[GameManager.instance.sceneBattleRoomIndex].GetComponent<SpawnTrig>().enemiesAlive--;
+                        }
+                        else
+                        {
+                            GameManager.instance.bossManager.enemiesAlive -= 1;
+                        }
                     }
                     robotExplosion.Play();
                     deathSound.Play();
