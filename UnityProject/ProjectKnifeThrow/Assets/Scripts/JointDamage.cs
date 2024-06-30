@@ -29,7 +29,7 @@ public class JointDamage : MonoBehaviour, IDamage, IFire
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 100, Color.green);
+       // Debug.DrawRay(gameObject.transform.position, gameObject.transform.forward * 100, Color.green);
         jointMovement();
     }
 
