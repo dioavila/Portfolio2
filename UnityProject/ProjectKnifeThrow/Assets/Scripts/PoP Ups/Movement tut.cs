@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Movementtut : MonoBehaviour
 {
-    private bool isplayerintrigger = false;
+    //private bool isplayerintrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isplayerintrigger = true;
+            //isplayerintrigger = true;
             OpenMovementMessage("");
         }
     }
@@ -18,7 +18,7 @@ public class Movementtut : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isplayerintrigger = false;
+            //isplayerintrigger = false;
             CloseMovementMessage();
         }
     }

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TutorialTut : MonoBehaviour
 {
-    private bool isPlayerInTrigger = false;
+    //private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = true;
+            //isPlayerInTrigger = true;
             OpenTutorial1Message("");
         }
     }
@@ -17,7 +17,7 @@ public class TutorialTut : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = false;
+            //isPlayerInTrigger = false;
             CloseTutorial1Message();
         }
     }

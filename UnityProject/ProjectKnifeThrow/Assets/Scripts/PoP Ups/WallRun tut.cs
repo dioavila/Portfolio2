@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WallRunTut : MonoBehaviour
 {
-    private bool isPlayerInTrigger = false;
+    //private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = true;
+            //isPlayerInTrigger = true;
             OpenWallRunMessage("");
         }
     }
@@ -17,7 +17,7 @@ public class WallRunTut : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = false;
+            //isPlayerInTrigger = false;
             CloseWallRunMessage();
         }
     }
