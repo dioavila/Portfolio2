@@ -44,7 +44,7 @@ public class FireKnife : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
         {
             IFire fmg = other.gameObject.GetComponent<IFire>();
-            if (fmg != null && other.gameObject.CompareTag("Enemy") && !hitBlocked)
+            if (fmg != null && !hitBlocked)
             {
                 fmg.FireDamage(Damage, Time);
                 Instantiate(hitConfirm, transform.position, Quaternion.identity);
