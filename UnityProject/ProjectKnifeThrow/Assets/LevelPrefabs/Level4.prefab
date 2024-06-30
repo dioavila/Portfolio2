@@ -6296,7 +6296,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -37931,7 +37931,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -39505,7 +39505,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -44159,6 +44159,10 @@ PrefabInstance:
     - target: {fileID: 2940578733603573593, guid: 3edcf32fef3978241b6bdc4e6967dfa7, type: 3}
       propertyPath: m_Name
       value: FloorLava
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168336660426508191, guid: 3edcf32fef3978241b6bdc4e6967dfa7, type: 3}
+      propertyPath: m_Size.x
+      value: 3.75
       objectReference: {fileID: 0}
     - target: {fileID: 6374763974597738607, guid: 3edcf32fef3978241b6bdc4e6967dfa7, type: 3}
       propertyPath: m_LocalScale.x
