@@ -20,6 +20,7 @@ public class KBullet : MonoBehaviour
     [Header("Audio System")]
     [SerializeField] List<AudioClip> collisionAudio;
     [SerializeField] AudioSource source;
+    bool soundPlayed = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,17 +47,25 @@ public class KBullet : MonoBehaviour
                 if (dmg == null && !hitConfirmed && other.gameObject.CompareTag("Enemy"))
                 {
                     Instantiate(hitBlock, transform.position, Quaternion.identity);
-                    source.clip = collisionAudio[0];
-                    source.pitch = Random.Range(0.50f, 0.80f);
-                    source.Play();
                     hitBlocked = true;
+                    if (soundPlayed)
+                    {
+                        source.clip = collisionAudio[0];
+                        source.pitch = Random.Range(0.50f, 0.80f);
+                        source.Play();
+                        soundPlayed = true;
+                    }
                 }
                 else
                 {
                     Instantiate(hitMiss, transform.position, Quaternion.identity);
-                    source.clip = collisionAudio[1];
-                    source.pitch = Random.Range(0.50f, 0.80f);
-                    source.Play();
+                    if (soundPlayed)
+                    {
+                        source.clip = collisionAudio[1];
+                        source.pitch = Random.Range(0.50f, 0.80f);
+                        source.Play();
+                        soundPlayed = true;
+                    }
                 }
                 Destroy(gameObject, 1);
             }

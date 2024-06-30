@@ -173,10 +173,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7216590534143105, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 105100733972868219, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1393.2
@@ -184,14 +180,6 @@ PrefabInstance:
     - target: {fileID: 105100733972868219, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -131.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 418518260475406768, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 613742223470690733, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1102835104746755752, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,14 +229,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1554970155598421475, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1600736818190007103, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1722704593352381128, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: layerSettings.Array.data[0].modifierStack.Array.data[0]
       value: 
@@ -257,10 +237,6 @@ PrefabInstance:
       propertyPath: layerSettings.Array.data[1].modifierStack.Array.data[0]
       value: 
       objectReference: {fileID: 1426130461}
-    - target: {fileID: 2016092781829847835, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2141581256984757804, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.z
       value: -87.9
@@ -272,18 +248,6 @@ PrefabInstance:
     - target: {fileID: 2659968508154420217, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1123.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2885182382767532316, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3595102430875449454, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4753997068620975318, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4838179623095095943, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -297,10 +261,6 @@ PrefabInstance:
         at you feet.\n\n\u2022Press E on the knife at you feet to grind along the
         path to the first knife thrown.\r\n\n\u2022Press R to recall your knives.\n\nPRESS
         K TO CLOSE\r\n\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 5242565483428203783, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6371950704042849188, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -318,10 +278,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1594.3
       objectReference: {fileID: 0}
-    - target: {fileID: 8356521862135747956, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8390535055911457025, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1298.3
@@ -330,21 +286,9 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 222.7
       objectReference: {fileID: 0}
-    - target: {fileID: 8740674376752103888, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8857877636364986059, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
       propertyPath: m_Name
       value: Tutorial
-      objectReference: {fileID: 0}
-    - target: {fileID: 9065634905327072365, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9077353116996805649, guid: fd0ce06752b05c4458905decfe50dad6, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

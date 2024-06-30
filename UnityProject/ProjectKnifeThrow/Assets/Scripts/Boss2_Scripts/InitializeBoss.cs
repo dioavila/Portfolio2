@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class InitializeBoss : MonoBehaviour
 {
+    bool soundOn = false;
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             GameManager.instance.bossManager.startOff = true;
-            AudioManager.instance.PlayMusic("Boss");
+            if (!soundOn)
+            {
+                soundOn = true;
+                AudioManager.instance.PlayMusic("Boss");
+            }
         }
     }
 }

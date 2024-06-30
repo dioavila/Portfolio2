@@ -293,20 +293,6 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
-            ////anim.SetTrigger("JumpAnim");
-            //canSprint = false;
-            //if(jumpCount < 1)
-            //{
-            //    anim.SetTrigger("JumpAnim");
-            //}
-            //else 
-            //{
-            //    //anim.SetBool("JumpBool1", false);
-            //    anim.SetTrigger("JumpAnim2");
-            //}
-            //++jumpCount;
-            //playerVel.y = jumpSpeed;
-            //onAir = true;
             jump();
         }
 
@@ -321,15 +307,15 @@ public class wallRun : MonoBehaviour, IDamage, IPushback
     {
         //anim.SetTrigger("JumpAnim");
         canSprint = false;
-        if (jumpCount == 0)
-        {
-            anim.SetTrigger("JumpAnim");
-            ++jumpCount;
-        }
-        else if(jumpCount == 1)
+        if(jumpCount == 1)
         {
             //anim.SetBool("JumpBool1", false);
             anim.SetTrigger("JumpAnim2");
+            ++jumpCount;
+        }
+        else if (jumpCount == 0)
+        {
+            anim.SetTrigger("JumpAnim");
             ++jumpCount;
         }
         playerVel.y = jumpSpeed;
