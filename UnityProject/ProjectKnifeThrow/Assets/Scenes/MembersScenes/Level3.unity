@@ -1273,6 +1273,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -53.01
       objectReference: {fileID: 0}
+    - target: {fileID: 4172841385190418845, guid: 58edf7a08c7609846ad4bf44354465db, type: 3}
+      propertyPath: enemyToSpawn
+      value: 
+      objectReference: {fileID: 7652027725428645852, guid: cd7252b067f777043b4696f4361b3b28, type: 3}
     - target: {fileID: 4207552829633716835, guid: 58edf7a08c7609846ad4bf44354465db, type: 3}
       propertyPath: m_Mesh
       value: 
