@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Grindtut : MonoBehaviour
 {
-    private bool isPlayerInTrigger = false;
+    //private bool isPlayerInTrigger = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = true;
+            //isPlayerInTrigger = true;
             OpenGrindMessage("");
         }
     }
@@ -18,7 +18,7 @@ public class Grindtut : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInTrigger = false;
+            //isPlayerInTrigger = false;
             CloseGrindMessage();
         }
     }
