@@ -1327,10 +1327,11 @@ PrefabInstance:
         Menu UI by Slim UI\n\u2022Simple Laser by Agoston_R\n\u2022Hit Impact Effects
         FREE by Travis Game Assets\n\u2022Tower The Last\r by Rusik3Dmodels\n\u2022Mountain
         Terrain, Rocks and Tree by Jermesa Studio\n\u2022Single Detailed Truck by
-        VIS Games\n\nExternal Assets:\n\u2022Mixamo by Adobe\n\u2022Main Menu Image
-        by https://www.unstability.ai\n\u2022Icons by https://www.img2go.com/\n\nSound
-        Assets:\n\u2022 Grenade Sound FX by MGWSoundDesign\n\u2022Westar Music &
-        Sound Effects\n\u2022Player Death Sound by d4nhardt\n\u2022hit002 by leviclaassen\n\n"
+        VIS Games\n\u2022Procedural Terrain Painter by Staggart Creations\n\nExternal
+        Assets:\n\u2022Mixamo by Adobe\n\u2022Main Menu Image by https://www.unstability.ai\n\u2022Icons
+        by https://www.img2go.com/\n\nSound Assets:\n\u2022 Grenade Sound FX by MGWSoundDesign\n\u2022Westar
+        Music & Sound Effects\n\u2022Player Death Sound by d4nhardt\n\u2022hit002
+        by leviclaassen\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_fontSize
