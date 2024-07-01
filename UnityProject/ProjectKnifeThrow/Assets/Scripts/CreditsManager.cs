@@ -98,7 +98,7 @@ public class CreditsManager : MonoBehaviour
         // Calculate the end position for scrolling
         float startPositionY = creditsRectTransform.anchoredPosition.y;
         float endPositionY = startPositionY + creditsRectTransform.rect.height + Screen.height;
-
+        endPositionY *= 10;
         // Scroll the credits until they reach the end position
         while (creditsRectTransform.anchoredPosition.y < endPositionY)
         {

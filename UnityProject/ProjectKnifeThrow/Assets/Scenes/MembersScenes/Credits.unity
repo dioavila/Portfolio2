@@ -1301,37 +1301,34 @@ PrefabInstance:
       value: "Thank you for playing!\n\n\nCredits\r\n\n\nGame Title: \nCyber Breach\n\n\nDeveloped
         By: Lazy Dev Studios\r\n\n\n\nCore Team:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
         Kasey Russell\r\n\n\u2022 Josh Brouillette\r\n\n\u2022 David Mereles\r\n\n\u2022
-        Daniel Bumbarger\r\n\nLevel Designers:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
-        Josh Brouillette\r\n\n\u2022 Daniel Bumbarger\r\n\nGameplay Programmers:\r\n\n\n\u2022
+        Daniel Bumbarger\r\n\n\nLevel Designers:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
+        Josh Brouillette\r\n\n\u2022 Daniel Bumbarger\r\n\n\nGameplay Programmers:\r\n\n\n\u2022
         Diogo Vieira Avila\r\n\n\u2022 Kasey Russell\r\n\n\u2022 Josh Brouillette\r\n\n\nSystems
         Programmers:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022 Kasey Russell\n\n\u2022
-        David Mereles\n\n\u2022 Daniel Bumbarger\r\n\n\u2022 Josh Brouillette\r\n\nAI
+        David Mereles\n\n\u2022 Daniel Bumbarger\r\n\n\u2022 Josh Brouillette\r\n\n\nAI
         Programmer:\r\n\n\n\u2022 Daniel Bumbarger\r\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
-        Kasey Russell\r\n\nUI/UX Programmers / Designers:\r\n\n\n\u2022 David Mereles\r\n\n\u2022
-        Josh Brouillette\r\n\nCharacter Designers:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022
-        Josh Brouillette\r\n\n\u2022 Kasey Russell\r\n\r\nPlatform/Asset Designers:\r\n\n\n\u2022
-        Kasey Russell\r\n\nComposer:\r\n\n\n\u2022 Tom\xE1s \u2018White Beatz\u2019
-        Pedroza\n\nLogo Design:\r\n\n\n\u2022 Trinity Williams\r\n\nGameplay Mechanics
-        Designers:\r\n\n\n\u2022 Diogo Vieira Avila\r\n\n\u2022 Daniel Bumbarger\r\n\nAnimation:\r\n\n\n\u2022
-        Diogo Vieira Avila\r\n\nVFX Programmers:\r\n\n\n\u2022 Daniel Bumbarger\r\n\n\u2022
-        Kasey Russell\r\n\n\u2022 Diogo Vieira Avila\n\nPlaytesters:\r\n\n\n\u2022
+        Kasey Russell\r\n\n\nUI/UX Programmers / Designers:\r\n\n\n\u2022 David Mereles\r\n\n\u2022
+        Josh Brouillette\r\n\n\nPlatform/Asset Designers:\r\n\n\n\u2022 Kasey Russell\r\n\n\nComposer:\r\n\n\n\u2022
+        Tom\xE1s \u2018White Beatz\u2019 Pedroza\n\n\nLogo Design:\r\n\n\n\u2022
+        Trinity Williams\r\n\n\nGameplay Mechanics Designers:\r\n\n\n\u2022 Diogo
+        Vieira Avila\r\n\n\u2022 Daniel Bumbarger\r\n\n\nAnimation:\r\n\n\n\u2022
+        Diogo Vieira Avila\r\n\n\nVFX Programmers:\r\n\n\n\u2022 Daniel Bumbarger\r\n\n\u2022
+        Kasey Russell\r\n\n\u2022 Diogo Vieira Avila\n\n\nPlaytesters:\r\n\n\n\u2022
         Diogo Vieira Avila\r\n\n\u2022 Kasey Russell\r\n\n\u2022 Josh Brouillette\n\n\u2022
-        Daniel Bumbarger\r\n\nUnity Asset Store Assets:\n\u2022 Enemy Robots by OVector
-        Technologies\n\u2022 SCI-Fi Battery Pack Free By Sagital3D\n\u2022 Free Laser
-        Weapons by Daniel SoundsGood\n\u2022ATM by CGY (YEMELYAN K.)\n\u2022Sci-Fi
-        Construction Kit (Modular) by Sickhead Games\n\u2022Particle Pack by Unity
-        Technologies\n\u2022Speedball Player by Character Ink.\n\u2022Stylized Lava
-        materials by Rob Luo\n\u2022Particle ProFX One by GIANT GREY\r\n\u2022Little
-        Enchant Mesh VFX by ALPHAIME CORPORATION\r\n\u2022Cyberpunk Material Pack
-        by Ethan Taylor\n\u2022[Free] Throwing Knife by float3D\n\u20223D Modern
-        Menu UI by Slim UI\n\u2022Simple Laser by Agoston_R\n\u2022Hit Impact Effects
-        FREE by Travis Game Assets\n\u2022Tower The Last\r by Rusik3Dmodels\n\u2022Mountain
-        Terrain, Rocks and Tree by Jermesa Studio\n\u2022Single Detailed Truck by
-        VIS Games\n\u2022Procedural Terrain Painter by Staggart Creations\n\nExternal
-        Assets:\n\u2022Mixamo by Adobe\n\u2022Main Menu Image by https://www.unstability.ai\n\u2022Icons
-        by https://www.img2go.com/\n\nSound Assets:\n\u2022 Grenade Sound FX by MGWSoundDesign\n\u2022Westar
-        Music & Sound Effects\n\u2022Player Death Sound by d4nhardt\n\u2022hit002
-        by leviclaassen\n\n"
+        Daniel Bumbarger\r\n\n\nUnity Asset Store Assets:\n\n\nEnemy Robots by OVector
+        Technologies\n\nSCI-Fi Battery Pack Free By Sagital3D\n\nFree Laser Weapons
+        by Daniel SoundsGood\n\nATM by CGY (YEMELYAN K.)\n\nSci-Fi Construction Kit
+        (Modular) by Sickhead Games\n\nParticle Pack by Unity Technologies\n\nSpeedball
+        Player by Character Ink.\n\nStylized Lava materials by Rob Luo\n\nParticle
+        ProFX One by GIANT GREY\r\n\nLittle Enchant Mesh VFX by ALPHAIME CORPORATION\r\n\nCyberpunk
+        Material Pack by Ethan Taylor\n\n[Free] Throwing Knife by float3D\n\n3D Modern
+        Menu UI by Slim UI\n\nSimple Laser by Agoston_R\n\nHit Impact Effects FREE
+        by Travis Game Assets\n\nMountain Terrain, Rocks and Tree by Jermesa Studio\n\nSingle
+        Detailed Truck by VIS Games\n\nProcedural Terrain Painter by Staggart Creations\n\nTower
+        the Last by Rusik3DModels\n\n\nExternal Assets:\n\n\nMixamo by Adobe\n\nMain
+        Menu Image by https://www.unstability.ai\n\nIcons by https://www.img2go.com/\n\nSound
+        Assets:\n\n\nGrenade Sound FX by MGWSoundDesign\n\nWestar Music & Sound Effects\n\nPlayer
+        Death Sound by d4nhardt\n\nhit002 by leviclaassen\n\n"
       objectReference: {fileID: 0}
     - target: {fileID: 553164005932102453, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_fontSize
@@ -1396,6 +1393,22 @@ PrefabInstance:
     - target: {fileID: 1330080595127920766, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598305202493277317, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598305202493277317, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598305202493277317, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598305202493277317, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2658906782514589013, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: dashMes
@@ -1462,12 +1475,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6031367115323318728, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031367115323318728, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -100
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 6789567710331581524, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972938728109422293, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
+      propertyPath: scrollSpeed
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8456057814463884402, guid: a3434c6e27bb41443837dda8de3ddc1d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
